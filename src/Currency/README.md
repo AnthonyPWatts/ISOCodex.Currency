@@ -78,6 +78,23 @@ var cashTotal = Money.Of(1.03m, CurrencyCode.CHF)
     .Round(CurrencyRoundingPolicy.Cash()); // CHF 1.05
 ```
 
+## Allocation and installments
+
+Split money into exact minor-unit parts:
+
+```csharp
+var allocation = Money.Of(10.00m, CurrencyCode.GBP)
+    .Allocate(3, AllocationRemainderStrategy.First);
+```
+
+Create installment plans with Money-based strategies:
+
+```csharp
+var strategy = new EvenSplitInstallmentStrategy(AllocationRemainderStrategy.Last);
+var plan = strategy.CalculateInstallments(
+    new InstallmentRequest(Money.Of(10.00m, CurrencyCode.GBP), 3));
+```
+
 ## Boundaries and persistence
 
 At API, import, and database boundaries, keep amount and currency code separate:
@@ -91,4 +108,4 @@ For exact payment boundaries, `Money.ToMinorUnits()` and `Money.FromMinorUnits(.
 
 ## Current limitations
 
-This pre-1.0 package does not yet include money formatting, structured validation results, JSON converters, EF Core helpers, allocation/installment helpers, or exchange-rate abstractions.
+This pre-1.0 package does not yet include money formatting, structured validation results, JSON converters, EF Core helpers, or exchange-rate abstractions.

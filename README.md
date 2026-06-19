@@ -16,7 +16,7 @@ The package does not try to be an accounting system. It gives application code a
 
 ## Project status
 
-This package is pre-1.0. The implemented API is useful, but broader features such as allocation, formatting, structured validation, JSON converters, persistence helpers, and exchange-rate abstractions are still planned.
+This package is pre-1.0. The implemented API is useful, but broader features such as formatting, structured validation, JSON converters, persistence helpers, and exchange-rate abstractions are still planned.
 
 Current implemented scope:
 
@@ -29,6 +29,9 @@ Current implemented scope:
 - `Money`
 - `CurrencyRoundingPolicy`
 - `CurrencyRoundingService`
+- `MoneyAllocator`
+- `InstallmentPlan`
+- built-in Money-based installment strategies
 
 ## Projects
 
@@ -158,6 +161,37 @@ Cash rounding example:
 var cashTotal = Money.Of(1.03m, CurrencyCode.CHF)
     .Round(CurrencyRoundingPolicy.Cash()); // CHF 1.05
 ```
+
+## Allocation and installments
+
+`MoneyAllocator` splits a valid `Money` value into exact minor-unit parts. The allocation always preserves the original total.
+
+```csharp
+var allocation = Money.Of(10.00m, CurrencyCode.GBP)
+    .Allocate(3, AllocationRemainderStrategy.Last);
+
+// GBP 3.33, GBP 3.33, GBP 3.34
+```
+
+Remainder placement is explicit:
+
+- `AllocationRemainderStrategy.First`
+- `AllocationRemainderStrategy.Last`
+- `AllocationRemainderStrategy.Spread`
+
+Installment strategies are built on top of `Money` and allocation:
+
+```csharp
+var strategy = new FixedFirstInstallmentStrategy(
+    Money.Of(4.00m, CurrencyCode.GBP));
+
+var plan = strategy.CalculateInstallments(
+    new InstallmentRequest(Money.Of(10.01m, CurrencyCode.GBP), 3));
+
+// GBP 4.00, GBP 3.01, GBP 3.00
+```
+
+Built-in strategies include even split, fixed first installment, and whole-major-unit first installment. They do not hard-code currency symbols.
 
 ## Imports and API boundaries
 

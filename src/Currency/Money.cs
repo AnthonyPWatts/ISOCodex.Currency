@@ -176,6 +176,16 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
         return new CurrencyRoundingService().Round(this, policy);
     }
 
+    /// <summary>
+    /// Allocates this money value into exact minor-unit parts while preserving the total.
+    /// </summary>
+    public MoneyAllocation Allocate(
+        int parts,
+        AllocationRemainderStrategy remainderStrategy = AllocationRemainderStrategy.First)
+    {
+        return new MoneyAllocator().Allocate(this, parts, remainderStrategy);
+    }
+
     /// <inheritdoc />
     public int CompareTo(Money other)
     {
