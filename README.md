@@ -206,7 +206,7 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 
 ## Current limitations
 
-- Currency data is currently a small checked-in seed, not a full generated ISO/CLDR snapshot.
+- Currency data is currently generated from a small checked-in seed, not a full ISO/CLDR snapshot.
 - There is no formatter API yet; display examples use currency codes rather than symbols.
 - There is no structured validation result API yet; invalid domain construction throws.
 - There are no JSON converters yet.
@@ -231,3 +231,14 @@ dotnet build ISOCodex.Currency.sln --no-restore
 dotnet test ISOCodex.Currency.sln --no-build
 dotnet pack src/Currency/Currency.csproj -c Release
 ```
+
+## Currency data workflow
+
+The current pre-1.0 registry is generated from `data/source/currency-data.seed.json`:
+
+```powershell
+pwsh ./scripts/update-currency-data.ps1
+dotnet test ISOCodex.Currency.sln --filter CurrencyData
+```
+
+The seed is deliberately small. A later data epic should replace it with pinned SIX ISO 4217 and Unicode CLDR source files.

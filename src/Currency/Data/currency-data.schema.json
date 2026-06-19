@@ -4,14 +4,35 @@
   "type": "array",
   "items": {
     "type": "object",
-    "required": [ "code", "numericCode", "englishName", "minorUnit" ],
+    "required": [ "code", "numericCode", "englishName", "decimalPlaces", "kind", "isTender", "territories" ],
     "properties": {
       "code": { "type": "string", "pattern": "^[A-Z]{3}$" },
       "numericCode": { "type": "string", "pattern": "^[0-9]{3}$" },
       "englishName": { "type": "string" },
-      "minorUnit": {
+      "decimalPlaces": {
         "oneOf": [
           { "type": "integer", "minimum": 0 },
+          { "type": "null" }
+        ]
+      },
+      "kind": {
+        "type": "string",
+        "enum": [ "NationalCurrency", "Fund", "PreciousMetal", "Testing", "NoCurrency", "Unknown" ]
+      },
+      "isTender": { "type": "boolean" },
+      "territories": {
+        "type": "array",
+        "items": { "type": "string", "pattern": "^[A-Z]{2}$" }
+      },
+      "cashDecimalPlaces": {
+        "oneOf": [
+          { "type": "integer", "minimum": 0 },
+          { "type": "null" }
+        ]
+      },
+      "cashRoundingIncrement": {
+        "oneOf": [
+          { "type": "number", "exclusiveMinimum": 0 },
           { "type": "null" }
         ]
       }
