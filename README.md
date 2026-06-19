@@ -16,7 +16,7 @@ The package does not try to be an accounting system. It gives application code a
 
 ## Project status
 
-This package is pre-1.0. The implemented API is useful, but broader features such as formatting, structured validation, JSON converters, persistence helpers, and exchange-rate abstractions are still planned.
+This package is pre-1.0. The implemented API is useful, but broader features such as JSON converters, persistence helpers, and exchange-rate abstractions are still planned.
 
 Current implemented scope:
 
@@ -32,6 +32,8 @@ Current implemented scope:
 - `MoneyAllocator`
 - `InstallmentPlan`
 - built-in Money-based installment strategies
+- `MoneyFormatter`
+- `MoneyParser`
 
 ## Projects
 
@@ -193,6 +195,57 @@ var plan = strategy.CalculateInstallments(
 
 Built-in strategies include even split, fixed first installment, and whole-major-unit first installment. They do not hard-code currency symbols.
 
+## Formatting and parsing
+
+`MoneyFormatter` formats values with explicit currency display choices.
+
+```csharp
+var formatter = new MoneyFormatter();
+var price = Money.Of(12.34m, CurrencyCode.GBP);
+
+formatter.Format(price); // GBP 12.34
+
+formatter.Format(
+    price,
+    new MoneyFormatOptions(
+        new CultureInfo("en-GB"),
+        MoneyCurrencyDisplay.Symbol)); // £12.34
+```
+
+Supported display modes are:
+
+- `MoneyCurrencyDisplay.Code`
+- `MoneyCurrencyDisplay.Symbol`
+- `MoneyCurrencyDisplay.CodeAndSymbol`
+- `MoneyCurrencyDisplay.None`
+
+Formatting uses culture-specific separators and currency patterns, while currency decimal places come from the registry metadata by default.
+
+`MoneyParser` is deliberately conservative. By default, it parses alpha-3 currency codes rather than guessing from symbols.
+
+```csharp
+var parser = new MoneyParser();
+var result = parser.Parse("GBP 12.34", new MoneyParseOptions(CultureInfo.InvariantCulture));
+
+if (result.Succeeded)
+{
+    var money = result.Money.Value;
+}
+```
+
+Symbol parsing requires an expected currency:
+
+```csharp
+var result = parser.Parse(
+    "£12.34",
+    new MoneyParseOptions(
+        new CultureInfo("en-GB"),
+        CurrencyCode.GBP,
+        MoneyParseCurrencyStyles.CodeOrSymbol));
+```
+
+Failed parses return `MoneyParseResult` with a `MoneyParseFailureReason`; they do not throw for ordinary invalid input.
+
 ## Imports and API boundaries
 
 At application boundaries, prefer primitive DTOs and convert into domain values after validation.
@@ -241,8 +294,9 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 ## Current limitations
 
 - Currency data is currently generated from a small checked-in seed, not a full ISO/CLDR snapshot.
-- There is no formatter API yet; display examples use currency codes rather than symbols.
-- There is no structured validation result API yet; invalid domain construction throws.
+- Formatting is intended for display, not persistence. Store amount and currency code separately.
+- Money parsing is conservative and does not infer a currency from ambiguous symbols without an expected currency.
+- There is no general structured validation result API yet; invalid domain construction throws.
 - There are no JSON converters yet.
 - There are no Entity Framework Core helpers yet.
 - There are no exchange-rate abstractions yet.

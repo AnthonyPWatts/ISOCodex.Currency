@@ -18,6 +18,7 @@ Use this package when application code needs to:
 - prevent accidental cross-currency arithmetic
 - enforce currency-specific amount precision
 - make rounding rules explicit and testable
+- format and conservatively parse money values
 
 ## Quick start
 
@@ -95,6 +96,27 @@ var plan = strategy.CalculateInstallments(
     new InstallmentRequest(Money.Of(10.00m, CurrencyCode.GBP), 3));
 ```
 
+## Formatting and parsing
+
+Format with explicit currency display choices:
+
+```csharp
+var formatter = new MoneyFormatter();
+var price = Money.Of(12.34m, CurrencyCode.GBP);
+
+formatter.Format(price); // GBP 12.34
+formatter.Format(price, new MoneyFormatOptions(new CultureInfo("en-GB"), MoneyCurrencyDisplay.Symbol)); // £12.34
+```
+
+Parse conservatively with result objects:
+
+```csharp
+var parser = new MoneyParser();
+var result = parser.Parse("GBP 12.34", new MoneyParseOptions(CultureInfo.InvariantCulture));
+```
+
+Symbol parsing requires an expected currency, because symbols can be ambiguous.
+
 ## Boundaries and persistence
 
 At API, import, and database boundaries, keep amount and currency code separate:
@@ -108,4 +130,4 @@ For exact payment boundaries, `Money.ToMinorUnits()` and `Money.FromMinorUnits(.
 
 ## Current limitations
 
-This pre-1.0 package does not yet include money formatting, structured validation results, JSON converters, EF Core helpers, or exchange-rate abstractions.
+This pre-1.0 package does not yet include JSON converters, EF Core helpers, or exchange-rate abstractions.
