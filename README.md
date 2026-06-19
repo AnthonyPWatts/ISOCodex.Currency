@@ -1,6 +1,6 @@
 # ISOCodex.Currency
 
-ISOCodex.Currency is an early-stage .NET library for ISO 4217-style currency codes and metadata. The current implementation covers the first slice of the public API: currency code parsing, currency metadata, and a default registry.
+ISOCodex.Currency is an early-stage .NET library for ISO 4217-style currency codes, currency metadata, and immutable money values.
 
 ## Project status
 
@@ -30,7 +30,7 @@ Console.WriteLine(currency.EnglishName); // Pound Sterling
 
 ## Current scope
 
-The first implementation slice includes:
+The current implementation includes:
 
 - `CurrencyCode`
 - `CurrencyInfo`
@@ -38,8 +38,9 @@ The first implementation slice includes:
 - `CurrencyKind`
 - `ICurrencyRegistry`
 - `DefaultCurrencyRegistry`
+- `Money`
 
-Money values, rounding, allocation, formatting, validation, JSON, persistence, and exchange-rate abstractions are planned follow-up epics.
+Rounding, allocation, formatting, validation, JSON, persistence, and exchange-rate abstractions are planned follow-up epics.
 
 ## Non-goals
 
