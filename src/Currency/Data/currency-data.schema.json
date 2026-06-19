@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ISOCodex.Currency currency data",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [ "code", "numericCode", "englishName", "minorUnit" ],
+    "properties": {
+      "code": { "type": "string", "pattern": "^[A-Z]{3}$" },
+      "numericCode": { "type": "string", "pattern": "^[0-9]{3}$" },
+      "englishName": { "type": "string" },
+      "minorUnit": {
+        "oneOf": [
+          { "type": "integer", "minimum": 0 },
+          { "type": "null" }
+        ]
+      }
+    }
+  }
+}
