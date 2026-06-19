@@ -1,36 +1,24 @@
 # ISOCodex.Currency
 
-ISOCodex.Currency is an early-stage .NET library for ISO 4217-style currency codes, currency metadata, immutable money values, and explicit currency rounding.
+ISOCodex.Currency is a small, framework-agnostic .NET library for working with ISO 4217-style currency codes, currency metadata, immutable money values, and explicit currency rounding.
+
+It is aimed at the common places where application code tends to drift into fragile money handling:
+
+- accepting amount/currency input from APIs, forms, files, and integrations
+- checking that a currency code is real before storing it
+- enforcing currency-specific precision, such as `JPY` having no minor units and `KWD` having three
+- keeping amounts and currencies together as one value object
+- preventing accidental cross-currency arithmetic
+- making rounding decisions explicit and testable
+- using currency metadata in checkout, import, billing, and reporting workflows
+
+The package does not try to be an accounting system. It gives application code a safer currency and money foundation.
 
 ## Project status
 
-This package is pre-1.0. Public APIs may change while the money, rounding, formatting, validation, and persistence features are implemented.
+This package is pre-1.0. The implemented API is useful, but broader features such as allocation, formatting, structured validation, JSON converters, persistence helpers, and exchange-rate abstractions are still planned.
 
-## Projects
-
-- `src/Currency` - core package.
-- `tests/Currency.Tests` - xUnit test suite.
-- `ManualTestRig` - manual console rig retained for local experiments.
-
-## Package identity
-
-- Package ID: `ISOCodex.Currency`
-- Root namespace: `ISOCodex.Currency`
-- Target framework: `netstandard2.1`
-
-## Quick start
-
-```csharp
-var code = CurrencyCode.Parse("gbp");
-var registry = DefaultCurrencyRegistry.Instance;
-var currency = registry.Get(code);
-
-Console.WriteLine(currency.EnglishName); // Pound Sterling
-```
-
-## Current scope
-
-The current implementation includes:
+Current implemented scope:
 
 - `CurrencyCode`
 - `CurrencyInfo`
@@ -42,17 +30,204 @@ The current implementation includes:
 - `CurrencyRoundingPolicy`
 - `CurrencyRoundingService`
 
-Allocation, formatting, validation, JSON, persistence, and exchange-rate abstractions are planned follow-up epics.
+## Projects
+
+- `src/Currency` - core package.
+- `tests/Currency.Tests` - xUnit test suite.
+- `ManualTestRig` - small manual console rig for currency metadata.
+- `ExtendedTestRigs/BulkMoneyImportTool` - CSV import example for mixed-currency money data.
+- `ExtendedTestRigs/CheckoutPricingApi` - Minimal API example for checkout quote calculation.
+
+## Package identity
+
+- Package ID: `ISOCodex.Currency`
+- Root namespace: `ISOCodex.Currency`
+- Target framework: `netstandard2.1`
+- Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
+
+## Quick start
+
+```csharp
+using ISOCodex.Currency;
+
+var code = CurrencyCode.Parse("gbp");
+var currency = DefaultCurrencyRegistry.Instance.Get(code);
+
+Console.WriteLine(currency.EnglishName); // Pound Sterling
+Console.WriteLine(currency.MinorUnit.DecimalPlaces); // 2
+```
+
+## Currency codes and metadata
+
+`CurrencyCode` accepts registered alpha-3 currency codes and normalises them to uppercase.
+
+```csharp
+var gbp = CurrencyCode.Parse("gbp");
+
+if (CurrencyCode.TryParse("JPY", out var jpy))
+{
+    var metadata = DefaultCurrencyRegistry.Instance.Get(jpy);
+    Console.WriteLine(metadata.MinorUnit.DecimalPlaces); // 0
+}
+```
+
+Invalid, unknown, or malformed codes are rejected:
+
+```csharp
+CurrencyCode.TryParse("GB", out _);  // false
+CurrencyCode.TryParse("ABC", out _); // false unless registered in the packaged data
+```
+
+The registry exposes metadata such as numeric code, English name, minor-unit precision, cash rounding increment, tender status, kind, and associated territories.
+
+## Money value object
+
+`Money` always carries a currency. It validates the amount against that currency's standard minor-unit precision.
+
+```csharp
+var price = Money.Of(12.34m, CurrencyCode.GBP);
+var shipping = Money.Of(3.49m, CurrencyCode.GBP);
+var total = price + shipping;
+```
+
+Precision is currency-specific:
+
+```csharp
+Money.Of(10.99m, CurrencyCode.GBP); // valid
+Money.Of(10.999m, CurrencyCode.GBP); // throws
+
+Money.Of(100m, CurrencyCode.JPY); // valid
+Money.Of(100.01m, CurrencyCode.JPY); // throws
+
+Money.Of(1.234m, CurrencyCode.KWD); // valid
+```
+
+Cross-currency arithmetic is blocked:
+
+```csharp
+var gbp = Money.Of(10m, CurrencyCode.GBP);
+var usd = Money.Of(10m, CurrencyCode.USD);
+
+var invalid = gbp + usd; // throws InvalidOperationException
+```
+
+Use minor-unit conversion when a storage or payment boundary needs integer minor units:
+
+```csharp
+var money = Money.Of(12.34m, CurrencyCode.GBP);
+var minorUnits = money.ToMinorUnits(); // 1234
+
+var roundTrip = Money.FromMinorUnits(1234, CurrencyCode.GBP);
+```
 
 ## Rounding
 
-Rounding is explicit. `Money.Multiply`, `Money.Divide`, and `Money.Round` require a `CurrencyRoundingPolicy` so business code chooses the midpoint behaviour and whether standard, cash, custom decimal-place, or custom-increment rounding applies.
+Rounding is explicit. Constructors validate precision; they do not silently fix it. Use `CurrencyRoundingService` when incoming data has extra precision and needs a deliberate rounding decision.
 
 ```csharp
-var rounded = Money.Of(1m, CurrencyCode.GBP)
-    .Multiply(1.005m, CurrencyRoundingPolicy.AwayFromZero());
+var registry = DefaultCurrencyRegistry.Instance;
+var rounding = new CurrencyRoundingService();
+var currency = registry.Get(CurrencyCode.GBP);
+
+var amount = rounding.RoundAmount(
+    12.345m,
+    currency,
+    CurrencyRoundingPolicy.AwayFromZero());
+
+var money = Money.Of(amount, CurrencyCode.GBP); // GBP 12.35
 ```
+
+`Money.Multiply`, `Money.Divide`, and `Money.Round` also require a `CurrencyRoundingPolicy`.
+
+```csharp
+var tax = Money.Of(19.99m, CurrencyCode.GBP)
+    .Multiply(0.2m, CurrencyRoundingPolicy.Standard(MidpointRounding.ToEven));
+```
+
+Supported policies:
+
+- `CurrencyRoundingPolicy.Standard(...)` uses the currency's standard minor-unit precision.
+- `CurrencyRoundingPolicy.AwayFromZero()` is a standard precision shortcut using away-from-zero midpoint handling.
+- `CurrencyRoundingPolicy.Cash(...)` uses cash rounding metadata, such as CHF `0.05`.
+- `CurrencyRoundingPolicy.Custom(decimalPlaces, midpoint)` rounds to a caller-supplied number of decimal places.
+- `CurrencyRoundingPolicy.CustomIncrement(increment, midpoint)` rounds to an explicit increment.
+
+Cash rounding example:
+
+```csharp
+var cashTotal = Money.Of(1.03m, CurrencyCode.CHF)
+    .Round(CurrencyRoundingPolicy.Cash()); // CHF 1.05
+```
+
+## Imports and API boundaries
+
+At application boundaries, prefer primitive DTOs and convert into domain values after validation.
+
+```csharp
+public sealed record PriceInput(decimal Amount, string Currency);
+
+Money ToMoney(PriceInput input)
+{
+    var code = CurrencyCode.Parse(input.Currency);
+    return Money.Of(input.Amount, code);
+}
+```
+
+If imports may contain over-precise amounts, round the raw amount first using the registry metadata, then construct `Money`.
+
+## Recommended persistence shape
+
+For relational storage, prefer storing amount and currency code separately:
+
+| Column | Suggested type | Notes |
+| --- | --- | --- |
+| `Amount` | `decimal(19,4)` or wider | Choose scale for the domain. Four decimals covers common ISO tender currencies and CLF/UYW-style units in the current data. |
+| `CurrencyCode` | `char(3)` | Store uppercase ISO 4217-style alpha-3 codes. |
+
+For payment-style exact minor-unit storage, use:
+
+| Column | Suggested type | Notes |
+| --- | --- | --- |
+| `MinorUnits` | `bigint` | Suitable where the currency has applicable minor units and the scale is stable for the record. |
+| `CurrencyCode` | `char(3)` | Required to interpret the integer amount. |
+
+Do not store a currency symbol as the domain currency. Symbols are display concerns and can be ambiguous.
+
+## Extended examples
+
+The extended test rigs are deliberately consumer-shaped examples rather than unit tests.
+
+```bash
+dotnet run --project ExtendedTestRigs/BulkMoneyImportTool -- SampleData/money-import.csv
+dotnet run --project ExtendedTestRigs/CheckoutPricingApi --urls http://localhost:5000
+```
+
+See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
+
+## Current limitations
+
+- Currency data is currently a small checked-in seed, not a full generated ISO/CLDR snapshot.
+- There is no formatter API yet; display examples use currency codes rather than symbols.
+- There is no structured validation result API yet; invalid domain construction throws.
+- There are no JSON converters yet.
+- There are no Entity Framework Core helpers yet.
+- There are no exchange-rate abstractions yet.
 
 ## Non-goals
 
-This package does not provide live exchange rates, financial advice, tax logic, accounting decisions, or runtime network updates for currency data.
+- This package does not provide live exchange rates.
+- This package does not make financial, tax, accounting, or regulatory decisions.
+- This package does not infer a user's business currency from locale.
+- This package does not provide arbitrary-precision crypto-asset modelling as a first-class goal.
+- This package does not guarantee that a currency is currently legal tender unless the metadata says so and the data snapshot is current for that release.
+
+## Verification
+
+From the repository root:
+
+```bash
+dotnet restore ISOCodex.Currency.sln
+dotnet build ISOCodex.Currency.sln --no-restore
+dotnet test ISOCodex.Currency.sln --no-build
+dotnet pack src/Currency/Currency.csproj -c Release
+```

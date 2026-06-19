@@ -1,0 +1,32 @@
+@host = http://localhost:5000
+
+GET {{host}}/currencies/GBP
+
+###
+
+POST {{host}}/quotes
+Content-Type: application/json
+
+{
+  "currency": "GBP",
+  "taxRate": 0.2,
+  "rounding": "AwayFromZero",
+  "items": [
+    { "sku": "BOOK-001", "unitPrice": 12.99, "quantity": 2 },
+    { "sku": "SHIP", "unitPrice": 3.49, "quantity": 1 }
+  ]
+}
+
+###
+
+POST {{host}}/quotes
+Content-Type: application/json
+
+{
+  "currency": "CHF",
+  "taxRate": 0.077,
+  "rounding": "Cash",
+  "items": [
+    { "sku": "COFFEE", "unitPrice": 4.95, "quantity": 3 }
+  ]
+}

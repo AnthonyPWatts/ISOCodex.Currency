@@ -1,0 +1,9 @@
+Reference,Amount,Currency,Rounding
+INV-1001,12.34,GBP,None
+INV-1002,12.345,GBP,Standard
+INV-1003,100.4,JPY,Standard
+INV-1004,1.234,KWD,None
+INV-1005,1.2345,KWD,AwayFromZero
+INV-1006,1.03,CHF,Cash
+INV-1007,10.99,ABC,None
+INV-1008,19.999,GBP,None
