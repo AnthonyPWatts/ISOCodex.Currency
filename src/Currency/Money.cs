@@ -131,6 +131,51 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
         return new Money(Math.Abs(Amount), Currency);
     }
 
+    /// <summary>
+    /// Multiplies this money value and rounds the result using an explicit policy.
+    /// </summary>
+    public Money Multiply(decimal factor, CurrencyRoundingPolicy roundingPolicy)
+    {
+        if (roundingPolicy == null)
+        {
+            throw new ArgumentNullException(nameof(roundingPolicy));
+        }
+
+        var currency = DefaultCurrencyRegistry.Instance.Get(Currency);
+        var roundedAmount = new CurrencyRoundingService().RoundAmount(Amount * factor, currency, roundingPolicy);
+
+        return Of(roundedAmount, Currency);
+    }
+
+    /// <summary>
+    /// Divides this money value and rounds the result using an explicit policy.
+    /// </summary>
+    public Money Divide(decimal divisor, CurrencyRoundingPolicy roundingPolicy)
+    {
+        if (divisor == 0m)
+        {
+            throw new DivideByZeroException("Money cannot be divided by zero.");
+        }
+
+        if (roundingPolicy == null)
+        {
+            throw new ArgumentNullException(nameof(roundingPolicy));
+        }
+
+        var currency = DefaultCurrencyRegistry.Instance.Get(Currency);
+        var roundedAmount = new CurrencyRoundingService().RoundAmount(Amount / divisor, currency, roundingPolicy);
+
+        return Of(roundedAmount, Currency);
+    }
+
+    /// <summary>
+    /// Rounds this money value using an explicit policy.
+    /// </summary>
+    public Money Round(CurrencyRoundingPolicy policy)
+    {
+        return new CurrencyRoundingService().Round(this, policy);
+    }
+
     /// <inheritdoc />
     public int CompareTo(Money other)
     {

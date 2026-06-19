@@ -1,6 +1,6 @@
 # ISOCodex.Currency
 
-ISOCodex.Currency is an early-stage .NET library for ISO 4217-style currency codes, currency metadata, and immutable money values.
+ISOCodex.Currency is an early-stage .NET library for ISO 4217-style currency codes, currency metadata, immutable money values, and explicit currency rounding.
 
 ## Project status
 
@@ -39,8 +39,19 @@ The current implementation includes:
 - `ICurrencyRegistry`
 - `DefaultCurrencyRegistry`
 - `Money`
+- `CurrencyRoundingPolicy`
+- `CurrencyRoundingService`
 
-Rounding, allocation, formatting, validation, JSON, persistence, and exchange-rate abstractions are planned follow-up epics.
+Allocation, formatting, validation, JSON, persistence, and exchange-rate abstractions are planned follow-up epics.
+
+## Rounding
+
+Rounding is explicit. `Money.Multiply`, `Money.Divide`, and `Money.Round` require a `CurrencyRoundingPolicy` so business code chooses the midpoint behaviour and whether standard, cash, custom decimal-place, or custom-increment rounding applies.
+
+```csharp
+var rounded = Money.Of(1m, CurrencyCode.GBP)
+    .Multiply(1.005m, CurrencyRoundingPolicy.AwayFromZero());
+```
 
 ## Non-goals
 
