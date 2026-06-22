@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.9.0-alpha.2
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.3
 ```
 
 ## What it is useful for
@@ -45,7 +45,7 @@ var total = item + shipping;
 
 For API and import boundaries, use `Money.TryCreate(...)` or `Money.TryFromMinorUnits(...)` to receive a `MoneyValidationResult` with a stable `MoneyValidationFailureReason` instead of using exceptions for ordinary invalid input.
 
-`CurrencyDataVersion` exposes the current checked-in seed provenance at runtime. The prerelease data is intentionally small and is not a full ISO/CLDR snapshot.
+`CurrencyDataVersion` exposes the current pinned seed provenance at runtime. The prerelease data is intentionally small and is not a full ISO/CLDR snapshot.
 
 Different currencies cannot be added, subtracted, or compared.
 

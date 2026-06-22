@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha.3
+
+Adds auditable currency data source provenance.
+
+Includes:
+
+- Checked-in source manifest with SHA-256 and entry-count pinning for the generated currency seed.
+- `scripts/update-currency-data.ps1` verification of the manifest before generated data is written.
+- Generated `CurrencyDataVersion` values from the source manifest.
+- Tests proving the manifest, source seed, generated registry data, and runtime provenance stay aligned.
+
 ## 0.9.0-alpha.2
 
 Polishes rounding, allocation, and installment documentation and tests.

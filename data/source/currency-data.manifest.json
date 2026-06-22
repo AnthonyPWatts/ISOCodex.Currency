@@ -1,0 +1,26 @@
+{
+  "identifier": "seed-2026-06-22-8d366aa7",
+  "checkedOn": "2026-06-22",
+  "sourceKind": "CheckedInSeed",
+  "description": "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; SHA-256 8d366aa7146571ca699f02d1160aecfb0d083941ccb3c7141bc2464738409a35; not a full ISO/CLDR snapshot.",
+  "sources": [
+    {
+      "path": "data/source/currency-data.seed.json",
+      "format": "ISOCodex.Currency seed JSON",
+      "sha256": "8d366aa7146571ca699f02d1160aecfb0d083941ccb3c7141bc2464738409a35",
+      "entryCount": 30,
+      "notes": "Curated prerelease seed used by the generated registry until the full ISO/CLDR data snapshot epic replaces it."
+    }
+  ],
+  "upstreamReferences": [
+    {
+      "name": "SIX ISO 4217 currency and funds code list",
+      "usage": "Reference source for ISO-style alpha-3 code, numeric code, English name, and minor-unit fields."
+    },
+    {
+      "name": "Unicode CLDR supplemental currency data",
+      "usage": "Reference source for decimal and cash fraction metadata where used."
+    }
+  ],
+  "redistributionNotice": "This package data is a derived, curated metadata snapshot and is not an official ISO 4217 redistribution."
+}

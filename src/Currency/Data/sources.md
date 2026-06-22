@@ -2,7 +2,7 @@
 
 The current data set is a curated pre-1.0 seed, generated from `data/source/currency-data.seed.json` by `scripts/update-currency-data.ps1`.
 
-It is intentionally small and reviewable. It is not yet a complete ISO 4217 list.
+It is intentionally small and reviewable. It is pinned by `data/source/currency-data.manifest.json`, which records the source SHA-256, entry count, checked date, and generated runtime provenance values. It is not yet a complete ISO 4217 list.
 
 ## Current generation workflow
 
@@ -13,11 +13,11 @@ pwsh ./scripts/update-currency-data.ps1
 dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
-Review `data/source/currency-data.seed.json` and `src/Currency/Data/CurrencyData.generated.cs` together.
+Review `data/source/currency-data.seed.json`, `data/source/currency-data.manifest.json`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` together.
 
 ## Source provenance
 
-Source locations checked on 2026-06-19:
+The current seed manifest was checked on 2026-06-22. Source locations were last checked on 2026-06-19:
 
 - ISO describes ISO 4217 as the international standard for alphabetic and numeric currency codes and links to the SIX-hosted XLS/XML code lists.
 - SIX identifies itself as the official ISO 4217 Maintenance Agency and publishes current and historical currency code lists online free of charge.

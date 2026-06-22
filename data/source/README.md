@@ -5,10 +5,11 @@ This folder contains the checked-in source snapshot used by `scripts/update-curr
 ## Files
 
 - `currency-data.seed.json` is a small curated seed for the current pre-1.0 package. It mirrors the generated data in reviewable JSON form.
+- `currency-data.manifest.json` pins the seed by SHA-256, entry count, checked date, and generated runtime provenance values.
 
 ## Provenance
 
-The seed is not yet a complete ISO 4217 data set. It is a curated subset based on:
+The seed is not yet a complete ISO 4217 data set. It is a pinned curated subset based on:
 
 - ISO 4217-style alpha code, numeric code, currency name, and minor-unit metadata.
 - CLDR supplemental currency fraction metadata where it affects decimal places or cash rounding.
@@ -23,7 +24,9 @@ pwsh ./scripts/update-currency-data.ps1
 dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
-Review both `data/source/currency-data.seed.json` and `src/Currency/Data/CurrencyData.generated.cs` in the same change.
+The generator verifies the manifest hash and entry count before writing generated source.
+
+Review `data/source/currency-data.seed.json`, `data/source/currency-data.manifest.json`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` in the same change.
 
 ## Future full-data workflow
 
