@@ -38,12 +38,15 @@ Current implemented scope:
 - `MoneyFormatter`
 - `MoneyParser`
 - optional `ISOCodex.Currency.Json.SystemTextJson` converters
+- optional `ISOCodex.Currency.Countries` bridge package
 
 ## Projects
 
 - `src/Currency` - core package.
+- `src/Currency.Countries` - optional Countries bridge package.
 - `src/Currency.Json.SystemTextJson` - optional System.Text.Json integration package.
 - `tests/Currency.Tests` - xUnit test suite.
+- `tests/Currency.Countries.Tests` - Countries bridge xUnit test suite.
 - `tests/Currency.Json.SystemTextJson.Tests` - JSON converter xUnit test suite.
 - `ManualTestRig` - small manual console rig for currency metadata.
 - `ExtendedTestRigs/BulkMoneyImportTool` - CSV import example for mixed-currency money data.
@@ -52,7 +55,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.5`
+- Version: `0.1.0-alpha.6`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -60,7 +63,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.5
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.6
 ```
 
 ## Quick start
@@ -266,7 +269,7 @@ Failed parses return `MoneyParseResult` with a `MoneyParseFailureReason`; they d
 JSON support lives in the optional `ISOCodex.Currency.Json.SystemTextJson` package so the core package remains independent of `System.Text.Json`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.1.0-alpha.5
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.1.0-alpha.6
 ```
 
 Register the converters explicitly:
@@ -281,6 +284,29 @@ options.Converters.Add(new MoneyJsonConverter());
 ```
 
 `CurrencyCode` serialises as `"GBP"`. `Money` serialises as `{ "amount": 12.34, "currency": "GBP" }`. Deserialisation rejects invalid currency codes and over-precise money amounts; it does not infer from symbols and does not silently round.
+
+## Countries Bridge
+
+Country/currency validation lives in the optional `ISOCodex.Currency.Countries` package. The core package does not depend on `ISOCodex.Countries`.
+
+```bash
+dotnet add package ISOCodex.Currency.Countries --version 0.1.0-alpha.6
+```
+
+The initial bridge seed is deliberately small:
+
+```csharp
+using ISOCodex.Currency;
+using ISOCodex.Currency.Countries;
+using ISOCodex.Countries;
+
+var result = DefaultCountryCurrencyRegistry.Instance.Validate(
+    CountryAlpha2Code.Parse("GB"),
+    CurrencyCode.GBP,
+    CountryCurrencyValidationPolicy.PrimaryTenderOnly);
+```
+
+The seed currently covers GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD, and NZ/NZD. It is not a complete legal-tender dataset or geopolitical authority.
 
 ## Imports and API boundaries
 
@@ -352,14 +378,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.5 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.6 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.5
+pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.6
 ```
 
 ## Currency data workflow

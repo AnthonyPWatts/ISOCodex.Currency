@@ -14,55 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-9 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, `0.1.0-alpha.4` currency data provenance work, and `0.1.0-alpha.5` System.Text.Json integration work, then removed from this remaining-task prompt list.
-
----
-
-## Task 10 — create Currency.Countries bridge package skeleton
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Create the initial ISOCodex.Currency.Countries bridge package skeleton.
-
-Context:
-- ISOCodex.Countries owns country codes, country metadata, aliases, display names, subdivisions, and special code elements.
-- Currency must not recreate country-code types.
-- This is a bridge package, not a core dependency.
-
-Implement:
-1. Add new project: ISOCodex.Currency.Countries.
-2. Reference ISOCodex.Currency and ISOCodex.Countries.
-3. Add CountryCurrencyInfo with CountryAlpha2Code and CurrencyCode.
-4. Add CountryCurrencyRole enum.
-5. Add ICountryCurrencyRegistry.
-6. Add DefaultCountryCurrencyRegistry with a small explicit seed for common countries/currencies sufficient for tests: GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD, NZ/NZD.
-7. Add CountryCurrencyValidationPolicy with PrimaryTenderOnly and AnyLegalTender presets.
-8. Add CountryCurrencyValidationResult and reason enum.
-9. Add tests.
-10. Add README documentation that this is an initial seed and not official geopolitical authority.
-11. Do not add Addressing dependency.
-12. Add project to solution.
-
-Run:
-- dotnet restore ISOCodex.Currency.sln
-- dotnet build ISOCodex.Currency.sln -c Release --no-restore
-- dotnet test ISOCodex.Currency.sln -c Release --no-build
-
-Report:
-- package API;
-- dependencies;
-- validation examples;
-- tests.
-```
-
-### Acceptance criteria
-
-- bridge package compiles and tests.
-- no country-code duplication.
-- no dependency from core Currency to Countries.
+Tasks 1-10 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, `0.1.0-alpha.4` currency data provenance work, `0.1.0-alpha.5` System.Text.Json integration work, and `0.1.0-alpha.6` Countries bridge work, then removed from this remaining-task prompt list.
 
 ---
 

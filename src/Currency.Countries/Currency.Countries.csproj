@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>ISOCodex.Currency.Countries</PackageId>
+    <Title>ISOCodex.Currency.Countries</Title>
+    <RootNamespace>ISOCodex.Currency.Countries</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.Countries</AssemblyName>
+    <Description>Bridge package connecting ISOCodex.Currency with ISOCodex.Countries country codes.</Description>
+    <PackageTags>currency;countries;iso4217;iso3166;money;dotnet;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ISOCodex.Countries" Version="1.0.0-alpha.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

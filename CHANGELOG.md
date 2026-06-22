@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.6
+
+Adds optional `ISOCodex.Currency.Countries` bridge package.
+
+Includes:
+
+- `CountryCurrencyInfo`.
+- `CountryCurrencyRole`.
+- `ICountryCurrencyRegistry`.
+- `DefaultCountryCurrencyRegistry` with a small prerelease seed: GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD, and NZ/NZD.
+- `CountryCurrencyValidationPolicy` with `PrimaryTenderOnly` and `AnyLegalTender` presets.
+- `CountryCurrencyValidationResult` and `CountryCurrencyValidationFailureReason`.
+- Tests that the core package does not depend on `ISOCodex.Countries`.
+
 ## 0.1.0-alpha.5
 
 Adds optional System.Text.Json integration package.

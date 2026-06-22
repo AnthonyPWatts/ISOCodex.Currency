@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.0-alpha.6
+
+Adds the optional `ISOCodex.Currency.Countries` bridge package.
+
+This release adds a small prerelease country/currency seed and structured validation policies using `ISOCodex.Countries` country-code types. The core `ISOCodex.Currency` package remains independent of Countries.
+
 ## 0.1.0-alpha.5
 
 Adds the optional `ISOCodex.Currency.Json.SystemTextJson` package.

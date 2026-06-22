@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.5",
+    [string]$Version = "0.1.0-alpha.6",
     [switch]$UseMajorRollForward
 )
 
@@ -46,7 +46,9 @@ $program = @'
 using System;
 using System.Text.Json;
 using ISOCodex.Currency;
+using ISOCodex.Currency.Countries;
 using ISOCodex.Currency.Json.SystemTextJson;
+using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 
 var gbp = CurrencyCode.Parse("gbp");
 var metadata = DefaultCurrencyRegistry.Instance.Get(gbp);
@@ -69,6 +71,10 @@ jsonOptions.Converters.Add(new CurrencyCodeJsonConverter());
 jsonOptions.Converters.Add(new MoneyJsonConverter());
 var moneyJson = JsonSerializer.Serialize(amount, jsonOptions);
 var parsedJsonMoney = JsonSerializer.Deserialize<Money>(moneyJson, jsonOptions);
+var countryCurrency = DefaultCountryCurrencyRegistry.Instance.Validate(
+    CountryAlpha2Code.Parse("GB"),
+    CurrencyCode.GBP,
+    CountryCurrencyValidationPolicy.PrimaryTenderOnly);
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
 
@@ -132,6 +138,11 @@ if (moneyJson != "{\"amount\":12.34,\"currency\":\"GBP\"}" || parsedJsonMoney !=
     throw new InvalidOperationException("JSON converter smoke test failed.");
 }
 
+if (!countryCurrency.Succeeded || countryCurrency.CountryCurrency?.CurrencyCode != CurrencyCode.GBP)
+{
+    throw new InvalidOperationException("Country/currency bridge smoke test failed.");
+}
+
 Console.WriteLine(gbp);
 Console.WriteLine(metadata.EnglishName);
 Console.WriteLine(amount);
@@ -144,6 +155,7 @@ Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
 Console.WriteLine(moneyJson);
+Console.WriteLine(countryCurrency.CountryCurrency?.CountryAlpha2Code);
 Console.WriteLine(defaultMoneyDetected);
 '@
 
@@ -181,6 +193,7 @@ Set-Content -Path $consumerProject -Value $project -Encoding UTF8
 Set-Content -Path $nugetConfig -Value $config -Encoding UTF8
 $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8
 Invoke-DotNet restore $consumerProject --configfile $nugetConfig

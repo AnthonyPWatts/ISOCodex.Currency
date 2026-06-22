@@ -63,7 +63,9 @@ ISOCodex.Currency.Addressing
 
 ### MVP
 
-Create `ISOCodex.Currency.Countries` with:
+Status: initial skeleton implemented in `0.1.0-alpha.6`.
+
+Created `ISOCodex.Currency.Countries` with:
 
 - `CountryCurrencyInfo`
 - `CountryCurrencyRole`
@@ -72,15 +74,16 @@ Create `ISOCodex.Currency.Countries` with:
 - `CountryCurrencyValidationPolicy`
 - `CountryCurrencyValidationResult`
 - small checked-in seed for initial country/currency mappings
-- data version/provenance class
+
+Future enrichment can add a bridge-specific data version/provenance class when the country/currency seed grows beyond the initial prerelease skeleton.
 
 ### Example API
 
 ```csharp
 CountryAlpha2Code country = CountryAlpha2Code.Parse("GB");
 
-IReadOnlyList<CountryCurrencyInfo> currencies =
-    registry.GetCurrenciesForCountry(country);
+IReadOnlyCollection<CountryCurrencyInfo> currencies =
+    registry.GetByCountry(country);
 
 CountryCurrencyValidationResult result = registry.Validate(
     country,
@@ -388,7 +391,6 @@ public readonly struct ScaledMoney
 
 ### Then: ISOCodex ecosystem features
 
-- `ISOCodex.Currency.Countries`;
 - `ISOCodex.Currency.Addressing`.
 
 ### Later: advanced enterprise features
