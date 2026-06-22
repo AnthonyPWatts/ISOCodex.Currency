@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.0-alpha.6
+
+Adds README example compile coverage for the package surface.
+
+Includes:
+
+- `Currency.ReadmeExamples.Tests` covering the README quick start, rounding, allocation, JSON, country, exchange, advanced registry, and data-provenance examples.
+- Solution-level test coverage for optional package examples that consume the public APIs together.
+- Versioned release-gate, package README, and smoke-test defaults for `0.9.0-alpha.6`.
+
 ## 0.9.0-alpha.5
 
 Adds optional Newtonsoft.Json integration.

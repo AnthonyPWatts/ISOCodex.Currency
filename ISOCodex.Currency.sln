@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Json.NewtonsoftJso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Json.NewtonsoftJson.Tests", "tests\Currency.Json.NewtonsoftJson.Tests\Currency.Json.NewtonsoftJson.Tests.csproj", "{1E5BF16E-69C9-4C37-A691-AE9B79A8A903}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.ReadmeExamples.Tests", "tests\Currency.ReadmeExamples.Tests\Currency.ReadmeExamples.Tests.csproj", "{5A1F7E6C-594A-48D2-9881-D405AE21DECB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +231,18 @@ Global
 		{1E5BF16E-69C9-4C37-A691-AE9B79A8A903}.Release|x64.Build.0 = Release|Any CPU
 		{1E5BF16E-69C9-4C37-A691-AE9B79A8A903}.Release|x86.ActiveCfg = Release|Any CPU
 		{1E5BF16E-69C9-4C37-A691-AE9B79A8A903}.Release|x86.Build.0 = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|x64.Build.0 = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,5 +262,6 @@ Global
 		{C3B60ADC-AE4F-416F-8024-9236DDEEEE23} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{2AD5CF98-4161-4B89-A610-9AF664AFDC3B} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{1E5BF16E-69C9-4C37-A691-AE9B79A8A903} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{5A1F7E6C-594A-48D2-9881-D405AE21DECB} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

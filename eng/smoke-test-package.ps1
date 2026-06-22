@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.5",
+    [string]$Version = "0.9.0-alpha.6",
     [switch]$UseMajorRollForward
 )
 

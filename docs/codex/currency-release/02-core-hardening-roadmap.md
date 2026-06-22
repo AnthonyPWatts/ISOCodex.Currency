@@ -272,6 +272,8 @@ Add docs and tests for:
 
 ## Hardening epic 6 — first-class package quality tests
 
+Status: implemented in `0.9.0-alpha.6`.
+
 ### Add tests/scripts
 
 - `eng/smoke-test-package.ps1`
