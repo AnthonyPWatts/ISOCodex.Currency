@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.8
+
+Adds optional Entity Framework Core integration.
+
+Includes:
+
+- `ISOCodex.Currency.EntityFrameworkCore` targeting `net10.0`.
+- `CurrencyCodeValueConverter` and `HasCurrencyCodeConversion()` for uppercase alpha-3 currency-code columns.
+- `ComplexMoney(...)` for mapping `Money` as separate amount and currency-code columns.
+- SQLite-backed integration tests covering converter behaviour, schema shape, and round-tripping.
+- Package smoke-test and publish-workflow coverage for the new EF Core package.
+
 ## 0.9.0-alpha.7
 
 Replaces the curated currency seed with a pinned SIX ISO 4217 and Unicode CLDR data snapshot.

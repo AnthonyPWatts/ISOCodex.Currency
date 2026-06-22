@@ -162,6 +162,8 @@ Mirror System.Text.Json behaviour as closely as possible for enterprise/legacy s
 
 ## Integration package 3 — Entity Framework Core
 
+Status: initial implementation in `0.9.0-alpha.8`.
+
 ### Package
 
 ```text
@@ -171,7 +173,7 @@ ISOCodex.Currency.EntityFrameworkCore
 ### Dependencies
 
 - `ISOCodex.Currency`
-- `Microsoft.EntityFrameworkCore`
+- `Microsoft.EntityFrameworkCore.Relational` 10.x
 
 ### Scope
 
@@ -191,13 +193,15 @@ MinorUnits bigint not null,
 CurrencyCode char(3) not null
 ```
 
+The `0.9.0-alpha.8` package provides a `Money` complex-property helper for the amount+currency-code shape. Exact minor-unit storage should be modelled explicitly by the application as `long MinorUnits` plus `CurrencyCode CurrencyCode`, then converted at the boundary with `Money.FromMinorUnits(...)` or `Money.TryFromMinorUnits(...)`.
+
 ### API sketch
 
 ```csharp
 modelBuilder.Entity<Order>(entity =>
 {
-    entity.OwnsMoney(
-        property: x => x.Total,
+    entity.ComplexMoney(
+        x => x.Total,
         amountColumn: "TotalAmount",
         currencyColumn: "TotalCurrency");
 });
@@ -222,9 +226,9 @@ builder.Property(x => x.Currency)
 ### Acceptance criteria
 
 - sample DbContext compiles;
-- migrations generate expected columns;
+- relational schema produces expected amount and currency-code columns;
 - round-trip tests with SQLite provider;
-- docs show amount+currency and minorUnits+currency choices.
+- docs show amount+currency helper usage and the explicit minorUnits+currency storage choice.
 
 ## Integration package 4 — ASP.NET Core
 
@@ -492,7 +496,7 @@ Recommended after first NuGet deploy:
 
 1. `ISOCodex.Currency.Json.SystemTextJson`
 2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
-3. `ISOCodex.Currency.EntityFrameworkCore`
+3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore`
 5. `ISOCodex.Currency.Countries`
 6. `ISOCodex.Currency.Addressing`

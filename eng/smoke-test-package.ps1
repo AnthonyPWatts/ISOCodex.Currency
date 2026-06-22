@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.7",
+    [string]$Version = "0.9.0-alpha.8",
     [switch]$UseMajorRollForward
 )
 
@@ -47,6 +47,7 @@ using System;
 using System.Text.Json;
 using ISOCodex.Currency;
 using ISOCodex.Currency.Countries;
+using ISOCodex.Currency.EntityFrameworkCore;
 using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
@@ -70,6 +71,7 @@ var validated = Money.TryCreate(12.34m, "GBP");
 var invalidPrecision = Money.TryCreate(12.345m, CurrencyCode.GBP);
 var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
 var dataVersion = CurrencyDataVersion.Identifier;
+var efCurrency = (CurrencyCode)CurrencyCodeValueConverter.Instance.ConvertFromProvider("gbp")!;
 var customCode = CurrencyCode.CreateCustom("zza");
 var customRegistry = new DefaultCurrencyRegistry(new[]
 {
@@ -173,6 +175,11 @@ if (dataVersion != "iso4217-cldr-2026-06-22-c1f3aaea" || CurrencyDataVersion.Sou
     throw new InvalidOperationException("Currency data version smoke test failed.");
 }
 
+if (efCurrency != gbp)
+{
+    throw new InvalidOperationException("Entity Framework Core converter smoke test failed.");
+}
+
 if (customMoney.Currency != customCode || customMoney.Amount != 1.2345m || customValidation.Succeeded || customValidation.FailureReason != MoneyValidationFailureReason.AmountPrecision)
 {
     throw new InvalidOperationException("MoneyFactory custom registry smoke test failed.");
@@ -209,6 +216,7 @@ Console.WriteLine(formatted);
 Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
+Console.WriteLine(efCurrency);
 Console.WriteLine(customMoney);
 Console.WriteLine(customValidation.FailureReason);
 Console.WriteLine(moneyJson);
@@ -248,7 +256,7 @@ $project = @'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -280,6 +288,7 @@ $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.EntityFrameworkCore --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Exchange.Abstractions --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.NewtonsoftJson --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore

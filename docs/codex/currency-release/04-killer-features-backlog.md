@@ -121,7 +121,7 @@ A money library becomes ubiquitous when it is easy to use at boundaries. Newtons
 
 1. `ISOCodex.Currency.Json.SystemTextJson`
 2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
-3. `ISOCodex.Currency.EntityFrameworkCore`
+3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore`
 5. `ISOCodex.Currency.Validation`
 6. `ISOCodex.Currency.Dapper`
@@ -394,9 +394,9 @@ public readonly struct ScaledMoney
 
 ### Then: adoption features
 
-- EF Core helpers;
 - ASP.NET Core helpers;
-- validation adapters.
+- validation adapters;
+- Dapper helpers.
 
 ### Then: ISOCodex ecosystem features
 
