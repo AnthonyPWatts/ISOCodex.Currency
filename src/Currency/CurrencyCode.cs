@@ -76,6 +76,31 @@ public readonly struct CurrencyCode : IEquatable<CurrencyCode>
     }
 
     /// <summary>
+    /// Creates an alpha-3 currency code without checking the packaged registry.
+    /// </summary>
+    /// <remarks>
+    /// Use this only with an explicit custom <see cref="ICurrencyRegistry"/>. The regular
+    /// <see cref="Parse(string)"/> and <see cref="TryParse(string?, out CurrencyCode)"/> methods remain strict
+    /// and only accept codes from the packaged registry.
+    /// </remarks>
+    public static CurrencyCode CreateCustom(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            throw new ArgumentException("Currency code must be a non-empty alpha-3 value.", nameof(input));
+        }
+
+        var normalized = input.Trim().ToUpperInvariant();
+
+        if (!IsAlpha3(normalized))
+        {
+            throw new ArgumentException($"'{input}' is not an alpha-3 currency code.", nameof(input));
+        }
+
+        return new CurrencyCode(normalized, true);
+    }
+
+    /// <summary>
     /// Attempts to parse a registered alpha-3 currency code.
     /// </summary>
     public static bool TryParse(string? input, out CurrencyCode currencyCode)

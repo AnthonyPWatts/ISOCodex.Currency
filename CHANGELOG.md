@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha.1
+
+Adds explicit registry-backed money creation.
+
+Includes:
+
+- `CurrencyCode.CreateCustom(...)` for custom alpha-3 codes used with explicit registries.
+- `MoneyFactory` for `Of(...)`, `TryCreate(...)`, `FromMinorUnits(...)`, and `TryFromMinorUnits(...)` using a supplied `ICurrencyRegistry`.
+- Tests proving custom registries do not mutate the default registry and static `Money` APIs continue to use packaged metadata.
+- Documentation for advanced registry scenarios.
+
 ## 0.1.0-alpha.8
 
 Adds optional `ISOCodex.Currency.Exchange.Abstractions` package.

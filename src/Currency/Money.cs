@@ -28,12 +28,7 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public static Money Of(decimal amount, CurrencyCode currency)
     {
-        ThrowIfDefaultCurrency(currency, nameof(currency));
-
-        var currencyInfo = DefaultCurrencyRegistry.Instance.Get(currency);
-        ValidateAmountPrecision(amount, currencyInfo);
-
-        return new Money(amount, currency);
+        return Of(amount, currency, DefaultCurrencyRegistry.Instance, nameof(currency));
     }
 
     /// <summary>
@@ -49,27 +44,7 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public static MoneyValidationResult TryCreate(decimal amount, CurrencyCode currency)
     {
-        if (currency.IsDefault)
-        {
-            return MoneyValidationResult.Failure(
-                MoneyValidationFailureReason.DefaultCurrency,
-                "Currency code must be initialised before it can be used to create money.");
-        }
-
-        if (!DefaultCurrencyRegistry.Instance.TryGet(currency, out var currencyInfo))
-        {
-            return MoneyValidationResult.Failure(
-                MoneyValidationFailureReason.UnknownCurrency,
-                $"Currency code '{currency}' is not registered.");
-        }
-
-        var validationFailure = ValidateAmountPrecisionOrFailure(amount, currencyInfo);
-        if (validationFailure != null)
-        {
-            return validationFailure;
-        }
-
-        return MoneyValidationResult.Success(new Money(amount, currency));
+        return TryCreate(amount, currency, DefaultCurrencyRegistry.Instance);
     }
 
     /// <summary>
@@ -122,22 +97,40 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public static Money FromMinorUnits(long minorUnits, CurrencyCode currency)
     {
-        ThrowIfDefaultCurrency(currency, nameof(currency));
-
-        var currencyInfo = DefaultCurrencyRegistry.Instance.Get(currency);
-
-        if (!currencyInfo.MinorUnit.IsApplicable)
-        {
-            throw new InvalidOperationException($"Currency '{currency}' does not define applicable minor units.");
-        }
-
-        return new Money(minorUnits * currencyInfo.MinorUnit.Increment, currency);
+        return FromMinorUnits(minorUnits, currency, DefaultCurrencyRegistry.Instance, nameof(currency));
     }
 
     /// <summary>
     /// Attempts to create a money value from exact integer minor units without throwing for ordinary validation failures.
     /// </summary>
     public static MoneyValidationResult TryFromMinorUnits(long minorUnits, CurrencyCode currency)
+    {
+        return TryFromMinorUnits(minorUnits, currency, DefaultCurrencyRegistry.Instance);
+    }
+
+    internal static Money Of(
+        decimal amount,
+        CurrencyCode currency,
+        ICurrencyRegistry registry,
+        string currencyParameterName)
+    {
+        if (registry == null)
+        {
+            throw new ArgumentNullException(nameof(registry));
+        }
+
+        ThrowIfDefaultCurrency(currency, currencyParameterName);
+
+        var currencyInfo = registry.Get(currency);
+        ValidateAmountPrecision(amount, currencyInfo);
+
+        return new Money(amount, currency);
+    }
+
+    internal static MoneyValidationResult TryCreate(
+        decimal amount,
+        CurrencyCode currency,
+        ICurrencyRegistry registry)
     {
         if (currency.IsDefault)
         {
@@ -146,7 +139,45 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
                 "Currency code must be initialised before it can be used to create money.");
         }
 
-        if (!DefaultCurrencyRegistry.Instance.TryGet(currency, out var currencyInfo))
+        if (registry == null)
+        {
+            throw new ArgumentNullException(nameof(registry));
+        }
+
+        if (!registry.TryGet(currency, out var currencyInfo))
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.UnknownCurrency,
+                $"Currency code '{currency}' is not registered.");
+        }
+
+        var validationFailure = ValidateAmountPrecisionOrFailure(amount, currencyInfo);
+        if (validationFailure != null)
+        {
+            return validationFailure;
+        }
+
+        return MoneyValidationResult.Success(new Money(amount, currency));
+    }
+
+    internal static MoneyValidationResult TryFromMinorUnits(
+        long minorUnits,
+        CurrencyCode currency,
+        ICurrencyRegistry registry)
+    {
+        if (currency.IsDefault)
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.DefaultCurrency,
+                "Currency code must be initialised before it can be used to create money.");
+        }
+
+        if (registry == null)
+        {
+            throw new ArgumentNullException(nameof(registry));
+        }
+
+        if (!registry.TryGet(currency, out var currencyInfo))
         {
             return MoneyValidationResult.Failure(
                 MoneyValidationFailureReason.UnknownCurrency,
@@ -170,6 +201,29 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
                 MoneyValidationFailureReason.Overflow,
                 $"Minor-unit value '{minorUnits}' is too large to convert for currency '{currency}'.");
         }
+    }
+
+    internal static Money FromMinorUnits(
+        long minorUnits,
+        CurrencyCode currency,
+        ICurrencyRegistry registry,
+        string currencyParameterName)
+    {
+        if (registry == null)
+        {
+            throw new ArgumentNullException(nameof(registry));
+        }
+
+        ThrowIfDefaultCurrency(currency, currencyParameterName);
+
+        var currencyInfo = registry.Get(currency);
+
+        if (!currencyInfo.MinorUnit.IsApplicable)
+        {
+            throw new InvalidOperationException($"Currency '{currency}' does not define applicable minor units.");
+        }
+
+        return new Money(minorUnits * currencyInfo.MinorUnit.Increment, currency);
     }
 
     /// <summary>

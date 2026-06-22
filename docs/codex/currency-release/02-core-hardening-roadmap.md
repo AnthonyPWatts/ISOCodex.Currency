@@ -207,6 +207,8 @@ Description: Small checked-in prerelease seed; not a full ISO/CLDR snapshot.
 
 ## Hardening epic 4 — currency registry extensibility review
 
+Status: implemented in `0.9.0-alpha.1`.
+
 ### Problem
 
 `DefaultCurrencyRegistry` can be constructed from supplied metadata, but most APIs use `DefaultCurrencyRegistry.Instance` directly. This makes the core convenient but can limit advanced scenarios.
@@ -223,10 +225,13 @@ public sealed class MoneyFactory
     public Money Of(decimal amount, CurrencyCode currency);
     public MoneyValidationResult TryCreate(decimal amount, CurrencyCode currency);
     public Money FromMinorUnits(long minorUnits, CurrencyCode currency);
+    public MoneyValidationResult TryFromMinorUnits(long minorUnits, CurrencyCode currency);
 }
 ```
 
 Keep static `Money.Of(...)` using `DefaultCurrencyRegistry.Instance` for convenience.
+
+The implemented API also adds `CurrencyCode.CreateCustom(...)` for explicit custom-registry scenarios. `CurrencyCode.Parse(...)` and `CurrencyCode.TryParse(...)` remain strict and only accept codes from the packaged registry.
 
 ### Tests
 
@@ -314,6 +319,5 @@ Country-typed territory relationships should live in `ISOCodex.Currency.Countrie
 
 ## Recommended first hardening sequence
 
-1. Registry/factory extensibility.
-2. Documentation polish.
-3. Full data generation epic.
+1. Documentation polish.
+2. Full data generation epic.

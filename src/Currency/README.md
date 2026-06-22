@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.8
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.1
 ```
 
 ## What it is useful for
@@ -133,6 +133,29 @@ At API, import, and database boundaries, keep amount and currency code separate:
 | Currency | uppercase `char(3)` alpha-3 code |
 
 For exact payment boundaries, `Money.ToMinorUnits()` and `Money.FromMinorUnits(...)` support integer minor-unit conversion where the currency defines applicable minor units.
+
+## Advanced registries
+
+Static `Money` factories use `DefaultCurrencyRegistry.Instance`. Use `MoneyFactory` when an application needs an explicit registry, such as a controlled test currency, an internal accounting unit, or an alternate metadata snapshot.
+
+```csharp
+var customCode = CurrencyCode.CreateCustom("ZZA");
+var registry = new DefaultCurrencyRegistry(new[]
+{
+    new CurrencyInfo(
+        customCode,
+        "999",
+        "Internal test unit",
+        new CurrencyMinorUnit(4),
+        CurrencyKind.Testing,
+        false)
+});
+
+var factory = new MoneyFactory(registry);
+var money = factory.Of(12.3456m, customCode);
+```
+
+`CurrencyCode.Parse(...)` and `CurrencyCode.TryParse(...)` remain strict and only accept codes from the packaged registry. Use `CurrencyCode.CreateCustom(...)` only with an explicit registry.
 
 ## Current limitations
 

@@ -30,6 +30,7 @@ Current implemented scope:
 - `Money`
 - `MoneyValidationFailureReason`
 - `MoneyValidationResult`
+- `MoneyFactory`
 - `CurrencyRoundingPolicy`
 - `CurrencyRoundingService`
 - `MoneyAllocator`
@@ -61,7 +62,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.8`
+- Version: `0.9.0-alpha.1`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -69,7 +70,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.8
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.1
 ```
 
 ## Quick start
@@ -275,7 +276,7 @@ Failed parses return `MoneyParseResult` with a `MoneyParseFailureReason`; they d
 JSON support lives in the optional `ISOCodex.Currency.Json.SystemTextJson` package so the core package remains independent of `System.Text.Json`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.1.0-alpha.8
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.1
 ```
 
 Register the converters explicitly:
@@ -296,7 +297,7 @@ options.Converters.Add(new MoneyJsonConverter());
 Country/currency validation lives in the optional `ISOCodex.Currency.Countries` package. The core package does not depend on `ISOCodex.Countries`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.1.0-alpha.8
+dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.1
 ```
 
 The initial bridge seed is deliberately small:
@@ -319,7 +320,7 @@ The seed currently covers GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD
 Provider-neutral exchange contracts live in the optional `ISOCodex.Currency.Exchange.Abstractions` package. The core package does not include live rates and does not make network calls.
 
 ```bash
-dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.1.0-alpha.8
+dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.1
 ```
 
 The initial converter supports direct rates only and requires an explicit rounding policy:
@@ -347,7 +348,7 @@ Applications provide their own `IExchangeRateProvider`. `ConversionResult` expos
 Analyzer support lives in the optional `ISOCodex.Currency.Analyzers` package.
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.1.0-alpha.8" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.1" PrivateAssets="all" />
 ```
 
 The initial rule is `ISOCCUR001`, which warns on `default(Money)` and `default` literals converted to `Money`. Use `Money.Zero(currency)` or `Money.Of(amount, currency)` instead.
@@ -370,6 +371,29 @@ MoneyValidationResult ToMoney(PriceInput input)
 Use the strict `Money.Of(...)` and `Money.FromMinorUnits(...)` factories in trusted domain code where invalid input should throw. Use `Money.TryCreate(...)` and `Money.TryFromMinorUnits(...)` for APIs, forms, CSV imports, and partner integrations where ordinary invalid input should become a validation response.
 
 If imports may contain over-precise amounts, either return the `AmountPrecision` validation reason or round the raw amount first using an explicit policy, then construct `Money`.
+
+## Advanced Registries
+
+Static `Money` factories use `DefaultCurrencyRegistry.Instance`. Use `MoneyFactory` when an application needs an explicit registry, such as a controlled test currency, an internal accounting unit, or an alternate metadata snapshot.
+
+```csharp
+var customCode = CurrencyCode.CreateCustom("ZZA");
+var registry = new DefaultCurrencyRegistry(new[]
+{
+    new CurrencyInfo(
+        customCode,
+        "999",
+        "Internal test unit",
+        new CurrencyMinorUnit(4),
+        CurrencyKind.Testing,
+        false)
+});
+
+var factory = new MoneyFactory(registry);
+var money = factory.Of(12.3456m, customCode);
+```
+
+`CurrencyCode.Parse(...)` and `CurrencyCode.TryParse(...)` remain strict and only accept codes from the packaged registry. Use `CurrencyCode.CreateCustom(...)` only with an explicit custom registry.
 
 ## Recommended persistence shape
 
@@ -422,14 +446,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.8 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.1 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.8
+pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.1
 ```
 
 ## Currency data workflow

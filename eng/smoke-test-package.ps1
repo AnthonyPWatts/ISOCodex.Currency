@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.8",
+    [string]$Version = "0.9.0-alpha.1",
     [switch]$UseMajorRollForward
 )
 
@@ -67,6 +67,20 @@ var validated = Money.TryCreate(12.34m, "GBP");
 var invalidPrecision = Money.TryCreate(12.345m, CurrencyCode.GBP);
 var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
 var dataVersion = CurrencyDataVersion.Identifier;
+var customCode = CurrencyCode.CreateCustom("zza");
+var customRegistry = new DefaultCurrencyRegistry(new[]
+{
+    new CurrencyInfo(
+        customCode,
+        "999",
+        "Smoke test account unit",
+        new CurrencyMinorUnit(4),
+        CurrencyKind.Testing,
+        false)
+});
+var customMoneyFactory = new MoneyFactory(customRegistry);
+var customMoney = customMoneyFactory.Of(1.2345m, customCode);
+var customValidation = customMoneyFactory.TryCreate(1.23456m, customCode);
 var jsonOptions = new JsonSerializerOptions();
 jsonOptions.Converters.Add(new CurrencyCodeJsonConverter());
 jsonOptions.Converters.Add(new MoneyJsonConverter());
@@ -151,6 +165,11 @@ if (dataVersion != "seed-0.1.0-alpha.4" || CurrencyDataVersion.SourceKind != "Ch
     throw new InvalidOperationException("Currency data version smoke test failed.");
 }
 
+if (customMoney.Currency != customCode || customMoney.Amount != 1.2345m || customValidation.Succeeded || customValidation.FailureReason != MoneyValidationFailureReason.AmountPrecision)
+{
+    throw new InvalidOperationException("MoneyFactory custom registry smoke test failed.");
+}
+
 if (moneyJson != "{\"amount\":12.34,\"currency\":\"GBP\"}" || parsedJsonMoney != amount)
 {
     throw new InvalidOperationException("JSON converter smoke test failed.");
@@ -177,6 +196,8 @@ Console.WriteLine(formatted);
 Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
+Console.WriteLine(customMoney);
+Console.WriteLine(customValidation.FailureReason);
 Console.WriteLine(moneyJson);
 Console.WriteLine(countryCurrency.CountryCurrency?.CountryAlpha2Code);
 Console.WriteLine(defaultMoneyDetected);

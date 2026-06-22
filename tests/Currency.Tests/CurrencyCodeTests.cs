@@ -25,6 +25,27 @@ public class CurrencyCodeTests
         Assert.Equal("GBP", code.Code);
     }
 
+    [Fact]
+    public void CreateCustom_NormalizesAlpha3CodeWithoutRegisteringIt()
+    {
+        var code = CurrencyCode.CreateCustom("zza");
+
+        Assert.Equal("ZZA", code.Code);
+        Assert.False(CurrencyCode.TryParse("ZZA", out _));
+        Assert.False(DefaultCurrencyRegistry.Instance.TryGet(code, out _));
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("GB")]
+    [InlineData("GB1")]
+    [InlineData("ABCD")]
+    public void CreateCustom_RejectsNonAlpha3Input(string input)
+    {
+        Assert.Throws<ArgumentException>(() => CurrencyCode.CreateCustom(input));
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
