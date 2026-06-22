@@ -27,6 +27,8 @@ Current implemented scope:
 - `ICurrencyRegistry`
 - `DefaultCurrencyRegistry`
 - `Money`
+- `MoneyValidationFailureReason`
+- `MoneyValidationResult`
 - `CurrencyRoundingPolicy`
 - `CurrencyRoundingService`
 - `MoneyAllocator`
@@ -46,7 +48,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.2`
+- Version: `0.1.0-alpha.3`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -54,7 +56,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.2
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.3
 ```
 
 ## Quick start
@@ -262,14 +264,17 @@ At application boundaries, prefer primitive DTOs and convert into domain values 
 ```csharp
 public sealed record PriceInput(decimal Amount, string Currency);
 
-Money ToMoney(PriceInput input)
+MoneyValidationResult ToMoney(PriceInput input)
 {
-    var code = CurrencyCode.Parse(input.Currency);
-    return Money.Of(input.Amount, code);
+    return Money.TryCreate(input.Amount, input.Currency);
 }
 ```
 
-If imports may contain over-precise amounts, round the raw amount first using the registry metadata, then construct `Money`.
+`MoneyValidationResult` exposes `Succeeded`, `Money`, `FailureReason`, and `ErrorMessage`. Stable failure reasons include `DefaultCurrency`, `UnknownCurrency`, `AmountPrecision`, `MinorUnitNotApplicable`, `Overflow`, and `InvalidAmount`.
+
+Use the strict `Money.Of(...)` and `Money.FromMinorUnits(...)` factories in trusted domain code where invalid input should throw. Use `Money.TryCreate(...)` and `Money.TryFromMinorUnits(...)` for APIs, forms, CSV imports, and partner integrations where ordinary invalid input should become a validation response.
+
+If imports may contain over-precise amounts, either return the `AmountPrecision` validation reason or round the raw amount first using an explicit policy, then construct `Money`.
 
 ## Recommended persistence shape
 
@@ -305,7 +310,6 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 - Currency data is currently generated from a small checked-in seed, not a full ISO/CLDR snapshot.
 - Formatting is intended for display, not persistence. Store amount and currency code separately.
 - Money parsing is conservative and does not infer a currency from ambiguous symbols without an expected currency.
-- There is no general structured validation result API yet; invalid domain construction throws.
 - There are no JSON converters yet.
 - There are no Entity Framework Core helpers yet.
 - There are no exchange-rate abstractions yet.
@@ -323,14 +327,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.3 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2
+pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.3
 ```
 
 ## Currency data workflow

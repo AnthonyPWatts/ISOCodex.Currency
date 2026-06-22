@@ -90,6 +90,8 @@ Do not make `default(Money).Equals(default(Money))` throw. Equality and hash cod
 
 ## Hardening epic 2 — non-throwing money creation and validation
 
+Status: implemented in `0.1.0-alpha.3`.
+
 ### Problem
 
 The current API is strict and throws on invalid construction. That is suitable for trusted domain code but awkward for boundary workflows such as APIs, imports, CSV files, and partner integrations.
@@ -181,7 +183,7 @@ public static class CurrencyDataVersion
 For the current seed, values can be explicit:
 
 ```text
-Identifier: seed-0.1.0-alpha.2
+Identifier: seed-0.1.0-alpha.3
 SourceKind: CheckedInSeed
 Description: Small checked-in prerelease seed; not a full ISO/CLDR snapshot.
 ```
@@ -308,8 +310,7 @@ Country-typed territory relationships should live in `ISOCodex.Currency.Countrie
 
 ## Recommended first hardening sequence
 
-1. Non-throwing money validation result API.
-2. Currency data version/provenance API.
-3. Registry/factory extensibility.
-4. Documentation polish.
-5. Full data generation epic.
+1. Currency data version/provenance API.
+2. Registry/factory extensibility.
+3. Documentation polish.
+4. Full data generation epic.

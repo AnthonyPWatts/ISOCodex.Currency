@@ -14,49 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-6 from the original implementation pack were completed during the NuGet-first release preparation and `0.1.0-alpha.2` default-value safety work, then removed from this remaining-task prompt list.
-
----
-
-## Task 7 — add non-throwing Money validation API
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Add non-throwing Money creation APIs for API/import boundaries.
-
-Context:
-- Money.Of currently throws for invalid amount precision or currency.
-- Currency currently needs a structured, non-throwing result pattern for API/import boundaries.
-- Follow the wider ISOCodex style: stable machine-readable failure reasons, human-readable messages, and no exceptions for ordinary invalid boundary input.
-
-Implement:
-1. Add MoneyValidationFailureReason enum.
-2. Add MoneyValidationResult type.
-3. Add Money.TryCreate(decimal amount, CurrencyCode currency) returning MoneyValidationResult.
-4. Add Money.TryCreate(decimal amount, string currencyCode) returning MoneyValidationResult.
-5. Add bool TryCreate overloads if they fit existing style.
-6. Add Money.TryFromMinorUnits(long minorUnits, CurrencyCode currency) returning MoneyValidationResult.
-7. Keep Money.Of and Money.FromMinorUnits behaviour unchanged.
-8. Add tests for valid input, over-precision, unknown currency, JPY precision, minor-unit-not-applicable cases.
-9. Update README import/API boundary section.
-
-Run:
-- dotnet test ISOCodex.Currency.sln -c Release
-
-Report:
-- API surface;
-- result reason codes;
-- tests added.
-```
-
-### Acceptance criteria
-
-- boundary code can validate without exception control flow.
-- existing APIs are preserved.
-- result reason codes are stable and documented.
+Tasks 1-7 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, and `0.1.0-alpha.3` non-throwing money validation work, then removed from this remaining-task prompt list.
 
 ---
 

@@ -80,6 +80,101 @@ public class MoneyTests
     }
 
     [Fact]
+    public void TryCreate_ReturnsSuccessForValidInput()
+    {
+        var result = Money.TryCreate(12.34m, CurrencyCode.GBP);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(MoneyValidationFailureReason.None, result.FailureReason);
+        Assert.Equal(Money.Of(12.34m, CurrencyCode.GBP), result.Money);
+        Assert.Null(result.ErrorMessage);
+    }
+
+    [Fact]
+    public void TryCreate_WithStringCurrency_ReturnsSuccessForValidInput()
+    {
+        var result = Money.TryCreate(12.34m, "gbp");
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(Money.Of(12.34m, CurrencyCode.GBP), result.Money);
+    }
+
+    [Fact]
+    public void TryCreate_BoolOverload_ReturnsTrueAndMoneyForValidInput()
+    {
+        var succeeded = Money.TryCreate(12.34m, CurrencyCode.GBP, out var money);
+
+        Assert.True(succeeded);
+        Assert.Equal(Money.Of(12.34m, CurrencyCode.GBP), money);
+    }
+
+    [Fact]
+    public void TryCreate_BoolStringOverload_ReturnsTrueAndMoneyForValidInput()
+    {
+        var succeeded = Money.TryCreate(12.34m, "gbp", out var money);
+
+        Assert.True(succeeded);
+        Assert.Equal(Money.Of(12.34m, CurrencyCode.GBP), money);
+    }
+
+    [Fact]
+    public void TryCreate_ReturnsAmountPrecisionForOverPreciseAmount()
+    {
+        var result = Money.TryCreate(12.345m, CurrencyCode.GBP);
+
+        Assert.False(result.Succeeded);
+        Assert.Null(result.Money);
+        Assert.Equal(MoneyValidationFailureReason.AmountPrecision, result.FailureReason);
+        Assert.Contains("GBP", result.ErrorMessage);
+        Assert.Contains("2", result.ErrorMessage);
+    }
+
+    [Fact]
+    public void TryCreate_ReturnsAmountPrecisionForFractionalZeroMinorUnitCurrency()
+    {
+        var result = Money.TryCreate(100.01m, CurrencyCode.JPY);
+
+        Assert.False(result.Succeeded);
+        Assert.Equal(MoneyValidationFailureReason.AmountPrecision, result.FailureReason);
+        Assert.Contains("JPY", result.ErrorMessage);
+    }
+
+    [Fact]
+    public void TryCreate_ReturnsDefaultCurrencyForDefaultCurrency()
+    {
+        var result = Money.TryCreate(12.34m, default(CurrencyCode));
+
+        Assert.False(result.Succeeded);
+        Assert.Null(result.Money);
+        Assert.Equal(MoneyValidationFailureReason.DefaultCurrency, result.FailureReason);
+        Assert.Contains("initialised", result.ErrorMessage);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData("ZZZ")]
+    [InlineData("GB")]
+    public void TryCreate_WithStringCurrency_ReturnsUnknownCurrencyForInvalidCode(string currencyCode)
+    {
+        var result = Money.TryCreate(12.34m, currencyCode);
+
+        Assert.False(result.Succeeded);
+        Assert.Null(result.Money);
+        Assert.Equal(MoneyValidationFailureReason.UnknownCurrency, result.FailureReason);
+        Assert.Contains("registered", result.ErrorMessage);
+    }
+
+    [Fact]
+    public void TryCreate_BoolOverload_ReturnsFalseAndDefaultMoneyForInvalidInput()
+    {
+        var succeeded = Money.TryCreate(12.345m, CurrencyCode.GBP, out var money);
+
+        Assert.False(succeeded);
+        Assert.Equal(default, money);
+    }
+
+    [Fact]
     public void Of_RejectsDefaultCurrency()
     {
         var exception = Assert.Throws<ArgumentException>(() => Money.Of(12.34m, default(CurrencyCode)));
@@ -118,6 +213,45 @@ public class MoneyTests
         var money = Money.FromMinorUnits(100, CurrencyCode.JPY);
 
         Assert.Equal(Money.Of(100m, CurrencyCode.JPY), money);
+    }
+
+    [Fact]
+    public void TryFromMinorUnits_ReturnsSuccessForApplicableMinorUnits()
+    {
+        var result = Money.TryFromMinorUnits(1234, CurrencyCode.GBP);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(MoneyValidationFailureReason.None, result.FailureReason);
+        Assert.Equal(Money.Of(12.34m, CurrencyCode.GBP), result.Money);
+    }
+
+    [Fact]
+    public void TryFromMinorUnits_ReturnsSuccessForZeroMinorUnitCurrency()
+    {
+        var result = Money.TryFromMinorUnits(100, CurrencyCode.JPY);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(Money.Of(100m, CurrencyCode.JPY), result.Money);
+    }
+
+    [Fact]
+    public void TryFromMinorUnits_ReturnsDefaultCurrencyForDefaultCurrency()
+    {
+        var result = Money.TryFromMinorUnits(1234, default(CurrencyCode));
+
+        Assert.False(result.Succeeded);
+        Assert.Equal(MoneyValidationFailureReason.DefaultCurrency, result.FailureReason);
+        Assert.Contains("initialised", result.ErrorMessage);
+    }
+
+    [Fact]
+    public void TryFromMinorUnits_ReturnsMinorUnitNotApplicableForNoCurrencyCode()
+    {
+        var result = Money.TryFromMinorUnits(1234, CurrencyCode.XXX);
+
+        Assert.False(result.Succeeded);
+        Assert.Equal(MoneyValidationFailureReason.MinorUnitNotApplicable, result.FailureReason);
+        Assert.Contains("XXX", result.ErrorMessage);
     }
 
     [Fact]

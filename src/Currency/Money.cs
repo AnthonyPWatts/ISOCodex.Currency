@@ -45,6 +45,69 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     }
 
     /// <summary>
+    /// Attempts to create a money value without throwing for ordinary validation failures.
+    /// </summary>
+    public static MoneyValidationResult TryCreate(decimal amount, CurrencyCode currency)
+    {
+        if (currency.IsDefault)
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.DefaultCurrency,
+                "Currency code must be initialised before it can be used to create money.");
+        }
+
+        if (!DefaultCurrencyRegistry.Instance.TryGet(currency, out var currencyInfo))
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.UnknownCurrency,
+                $"Currency code '{currency}' is not registered.");
+        }
+
+        var validationFailure = ValidateAmountPrecisionOrFailure(amount, currencyInfo);
+        if (validationFailure != null)
+        {
+            return validationFailure;
+        }
+
+        return MoneyValidationResult.Success(new Money(amount, currency));
+    }
+
+    /// <summary>
+    /// Attempts to parse a currency code and create a money value without throwing for ordinary validation failures.
+    /// </summary>
+    public static MoneyValidationResult TryCreate(decimal amount, string currencyCode)
+    {
+        if (!CurrencyCode.TryParse(currencyCode, out var parsedCurrency))
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.UnknownCurrency,
+                $"Currency code '{currencyCode}' is not a registered ISO 4217-style currency code.");
+        }
+
+        return TryCreate(amount, parsedCurrency);
+    }
+
+    /// <summary>
+    /// Attempts to create a money value without throwing for ordinary validation failures.
+    /// </summary>
+    public static bool TryCreate(decimal amount, CurrencyCode currency, out Money money)
+    {
+        var result = TryCreate(amount, currency);
+        money = result.Money.GetValueOrDefault();
+        return result.Succeeded;
+    }
+
+    /// <summary>
+    /// Attempts to parse a currency code and create a money value without throwing for ordinary validation failures.
+    /// </summary>
+    public static bool TryCreate(decimal amount, string currencyCode, out Money money)
+    {
+        var result = TryCreate(amount, currencyCode);
+        money = result.Money.GetValueOrDefault();
+        return result.Succeeded;
+    }
+
+    /// <summary>
     /// Creates a zero money value for the supplied currency.
     /// </summary>
     public static Money Zero(CurrencyCode currency)
@@ -69,6 +132,44 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
         }
 
         return new Money(minorUnits * currencyInfo.MinorUnit.Increment, currency);
+    }
+
+    /// <summary>
+    /// Attempts to create a money value from exact integer minor units without throwing for ordinary validation failures.
+    /// </summary>
+    public static MoneyValidationResult TryFromMinorUnits(long minorUnits, CurrencyCode currency)
+    {
+        if (currency.IsDefault)
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.DefaultCurrency,
+                "Currency code must be initialised before it can be used to create money.");
+        }
+
+        if (!DefaultCurrencyRegistry.Instance.TryGet(currency, out var currencyInfo))
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.UnknownCurrency,
+                $"Currency code '{currency}' is not registered.");
+        }
+
+        if (!currencyInfo.MinorUnit.IsApplicable)
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.MinorUnitNotApplicable,
+                $"Currency '{currency}' does not define applicable minor units.");
+        }
+
+        try
+        {
+            return MoneyValidationResult.Success(new Money(minorUnits * currencyInfo.MinorUnit.Increment, currency));
+        }
+        catch (OverflowException)
+        {
+            return MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.Overflow,
+                $"Minor-unit value '{minorUnits}' is too large to convert for currency '{currency}'.");
+        }
     }
 
     /// <summary>
@@ -299,27 +400,30 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
 
     private static void ValidateAmountPrecision(decimal amount, CurrencyInfo currencyInfo)
     {
+        var failure = ValidateAmountPrecisionOrFailure(amount, currencyInfo);
+        if (failure != null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), amount, failure.ErrorMessage);
+        }
+    }
+
+    private static MoneyValidationResult? ValidateAmountPrecisionOrFailure(decimal amount, CurrencyInfo currencyInfo)
+    {
         if (!currencyInfo.MinorUnit.IsApplicable)
         {
-            if (amount != decimal.Truncate(amount))
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(amount),
-                    amount,
+            return amount == decimal.Truncate(amount)
+                ? null
+                : MoneyValidationResult.Failure(
+                    MoneyValidationFailureReason.AmountPrecision,
                     $"Currency '{currencyInfo.Code}' does not define applicable fractional minor units.");
-            }
-
-            return;
         }
 
         var rounded = Math.Round(amount, currencyInfo.MinorUnit.DecimalPlaces, MidpointRounding.ToEven);
 
-        if (rounded != amount)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(amount),
-                amount,
+        return rounded == amount
+            ? null
+            : MoneyValidationResult.Failure(
+                MoneyValidationFailureReason.AmountPrecision,
                 $"Amount '{amount}' has more than {currencyInfo.MinorUnit.DecimalPlaces} fraction digit(s) for currency '{currencyInfo.Code}'.");
-        }
     }
 }

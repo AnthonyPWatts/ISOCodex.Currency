@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.3
+
+Adds non-throwing money validation APIs for API and import boundaries.
+
+Includes:
+
+- `MoneyValidationFailureReason`.
+- `MoneyValidationResult`.
+- `Money.TryCreate(decimal, CurrencyCode)`.
+- `Money.TryCreate(decimal, string)`.
+- bool `Money.TryCreate(...)` convenience overloads.
+- `Money.TryFromMinorUnits(long, CurrencyCode)`.
+- Tests for valid input, over-precision, unknown currencies, default currencies, JPY precision, and minor-unit-not-applicable failures.
+
 ## 0.1.0-alpha.2
 
 Adds default-value safety APIs for `CurrencyCode` and `Money`.
@@ -32,7 +46,6 @@ Includes:
 Known limitations:
 
 - Currency data is generated from a small checked-in seed rather than a full ISO/CLDR snapshot.
-- No structured validation result API yet.
 - No JSON converters yet.
 - No Entity Framework Core helpers yet.
 - No exchange-rate abstractions yet.
