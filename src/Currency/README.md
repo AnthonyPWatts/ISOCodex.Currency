@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.1
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.2
 ```
 
 ## What it is useful for
@@ -40,6 +40,8 @@ var item = Money.Of(12.99m, CurrencyCode.GBP);
 var shipping = Money.Of(3.49m, CurrencyCode.GBP);
 var total = item + shipping;
 ```
+
+`Money.IsDefault` and `CurrencyCode.IsDefault` detect uninitialised value-type defaults. Prefer `Money.Zero(currency)` or `Money.Of(amount, currency)` when creating real money values.
 
 Different currencies cannot be added, subtracted, or compared.
 

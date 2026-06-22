@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.1",
+    [string]$Version = "0.1.0-alpha.2",
     [switch]$UseMajorRollForward
 )
 
@@ -55,6 +55,8 @@ var strategy = new EvenSplitInstallmentStrategy(AllocationRemainderStrategy.Last
 var installmentPlan = strategy.CalculateInstallments(new InstallmentRequest(total, 3));
 var formatted = new MoneyFormatter().Format(amount);
 var parsed = new MoneyParser().Parse("GBP 12.34", MoneyParseOptions.Default);
+var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
+var defaultMoneyDetected = default(Money).IsDefault;
 
 if (metadata.Code != gbp)
 {
@@ -86,6 +88,11 @@ if (!parsed.Succeeded || parsed.Money.GetValueOrDefault() != amount)
     throw new InvalidOperationException("Money parsing smoke test failed.");
 }
 
+if (!defaultCurrencyDetected || !defaultMoneyDetected || amount.IsDefault)
+{
+    throw new InvalidOperationException("Default-value detection smoke test failed.");
+}
+
 Console.WriteLine(gbp);
 Console.WriteLine(metadata.EnglishName);
 Console.WriteLine(amount);
@@ -95,6 +102,7 @@ Console.WriteLine(minorUnits);
 Console.WriteLine(installmentPlan.Installments.Count);
 Console.WriteLine(formatted);
 Console.WriteLine(parsed.Money);
+Console.WriteLine(defaultMoneyDetected);
 '@
 
 $project = @'

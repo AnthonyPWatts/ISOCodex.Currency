@@ -378,7 +378,6 @@ public readonly struct ScaledMoney
 
 ### Next: core safety
 
-- default-value safety;
 - non-throwing validation result APIs;
 - currency data version/provenance;
 - documentation polish.

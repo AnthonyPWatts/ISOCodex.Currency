@@ -1,6 +1,6 @@
 # Release Gate
 
-Version: `0.1.0-alpha.1`
+Version: `0.1.0-alpha.2`
 
 ## Required checks
 
@@ -11,8 +11,8 @@ Version: `0.1.0-alpha.1`
 - [ ] `dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts`
 - [ ] `.nupkg` produced.
 - [ ] `.snupkg` produced.
-- [ ] `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.1`
-- [ ] If the local machine lacks the .NET 9 runtime but has a newer compatible runtime, `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.1 -UseMajorRollForward`
+- [ ] `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2`
+- [ ] If the local machine lacks the .NET 9 runtime but has a newer compatible runtime, `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2 -UseMajorRollForward`
 - [ ] Local package smoke test installs `ISOCodex.Currency` from the local package folder, not from a project reference.
 - [ ] README package section is accurate.
 - [ ] Changelog entry exists.
@@ -33,10 +33,10 @@ Version: `0.1.0-alpha.1`
 
 Use `.github/workflows/publish-nuget.yml`.
 
-Recommended first publish tag:
+Recommended publish tag:
 
 ```text
-v0.1.0-alpha.1
+v0.1.0-alpha.2
 ```
 
 Pushing a `v*` tag starts the trusted-publishing workflow. The workflow uses GitHub OIDC and `NuGet/login@v1` to obtain a short-lived NuGet API key, so no long-lived `NUGET_API_KEY` repository secret is required.
@@ -48,5 +48,5 @@ For recovery or rerun scenarios, the workflow can also be started manually with 
 - [ ] Install `ISOCodex.Currency` from NuGet.org in a fresh local project.
 - [ ] Confirm the package README renders correctly on NuGet.org.
 - [ ] Confirm symbol package indexing succeeds or record the NuGet validation error.
-- [ ] Create GitHub release notes for `v0.1.0-alpha.1`.
+- [ ] Create GitHub release notes for `v0.1.0-alpha.2`.
 - [ ] Open follow-up issues for JSON converters, structured validation, data provenance, data snapshot, and bridge packages as needed.

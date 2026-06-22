@@ -46,15 +46,15 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.1`
+- Version: `0.1.0-alpha.2`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
 
-After the first prerelease is published, install it with:
+Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.1
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.2
 ```
 
 ## Quick start
@@ -101,6 +101,8 @@ var price = Money.Of(12.34m, CurrencyCode.GBP);
 var shipping = Money.Of(3.49m, CurrencyCode.GBP);
 var total = price + shipping;
 ```
+
+Because `Money` and `CurrencyCode` are value types, `default(Money)` and `default(CurrencyCode)` can still exist in arrays, serializers, or incorrectly initialised DTOs. Use `IsDefault` to detect those values at boundaries. Operational `Money` methods fail clearly for default money values; construct valid values with `Money.Zero(currency)` or `Money.Of(amount, currency)`.
 
 Precision is currency-specific:
 
@@ -321,14 +323,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.1 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.1
+pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.2
 ```
 
 ## Currency data workflow

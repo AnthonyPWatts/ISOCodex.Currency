@@ -5,6 +5,18 @@ namespace Currency.Tests;
 public class CurrencyCodeTests
 {
     [Fact]
+    public void IsDefault_ReturnsTrueForDefaultValue()
+    {
+        Assert.True(default(CurrencyCode).IsDefault);
+    }
+
+    [Fact]
+    public void IsDefault_ReturnsFalseForInitializedValue()
+    {
+        Assert.False(CurrencyCode.GBP.IsDefault);
+    }
+
+    [Fact]
     public void Parse_NormalizesLowercaseCode()
     {
         var code = CurrencyCode.Parse("gbp");

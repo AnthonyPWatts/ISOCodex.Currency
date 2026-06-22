@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.0-alpha.2
+
+Adds default-value safety for `CurrencyCode` and `Money`.
+
+This release adds `IsDefault` detection for value-type defaults and clearer operational errors when uninitialised `Money` values leak into arithmetic, rounding, allocation, comparison, or minor-unit conversion.
+
 ## 0.1.0-alpha.1
 
 Initial public prerelease of `ISOCodex.Currency`.

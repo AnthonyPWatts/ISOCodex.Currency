@@ -20,11 +20,16 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// <summary>Gets the amount currency.</summary>
     public CurrencyCode Currency { get; }
 
+    /// <summary>Gets whether this value is the uninitialised default money value.</summary>
+    public bool IsDefault => Currency.IsDefault;
+
     /// <summary>
     /// Creates a money value after validating the amount against the currency minor unit.
     /// </summary>
     public static Money Of(decimal amount, CurrencyCode currency)
     {
+        ThrowIfDefaultCurrency(currency, nameof(currency));
+
         var currencyInfo = DefaultCurrencyRegistry.Instance.Get(currency);
         ValidateAmountPrecision(amount, currencyInfo);
 
@@ -44,6 +49,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public static Money Zero(CurrencyCode currency)
     {
+        ThrowIfDefaultCurrency(currency, nameof(currency));
+
         return Of(0m, currency);
     }
 
@@ -52,6 +59,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public static Money FromMinorUnits(long minorUnits, CurrencyCode currency)
     {
+        ThrowIfDefaultCurrency(currency, nameof(currency));
+
         var currencyInfo = DefaultCurrencyRegistry.Instance.Get(currency);
 
         if (!currencyInfo.MinorUnit.IsApplicable)
@@ -67,6 +76,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public long ToMinorUnits()
     {
+        ThrowIfDefault();
+
         var currencyInfo = DefaultCurrencyRegistry.Instance.Get(Currency);
 
         if (!currencyInfo.MinorUnit.IsApplicable)
@@ -89,6 +100,9 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money RequireSameCurrency(Money other)
     {
+        ThrowIfDefault();
+        ThrowIfDefault(other, nameof(other));
+
         if (Currency != other.Currency)
         {
             throw new InvalidOperationException($"Money values must use the same currency. Actual currencies were '{Currency}' and '{other.Currency}'.");
@@ -120,6 +134,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money Negate()
     {
+        ThrowIfDefault();
+
         return new Money(-Amount, Currency);
     }
 
@@ -128,6 +144,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money Abs()
     {
+        ThrowIfDefault();
+
         return new Money(Math.Abs(Amount), Currency);
     }
 
@@ -136,6 +154,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money Multiply(decimal factor, CurrencyRoundingPolicy roundingPolicy)
     {
+        ThrowIfDefault();
+
         if (roundingPolicy == null)
         {
             throw new ArgumentNullException(nameof(roundingPolicy));
@@ -152,6 +172,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money Divide(decimal divisor, CurrencyRoundingPolicy roundingPolicy)
     {
+        ThrowIfDefault();
+
         if (divisor == 0m)
         {
             throw new DivideByZeroException("Money cannot be divided by zero.");
@@ -173,6 +195,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     /// </summary>
     public Money Round(CurrencyRoundingPolicy policy)
     {
+        ThrowIfDefault();
+
         return new CurrencyRoundingService().Round(this, policy);
     }
 
@@ -183,6 +207,8 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
         int parts,
         AllocationRemainderStrategy remainderStrategy = AllocationRemainderStrategy.First)
     {
+        ThrowIfDefault();
+
         return new MoneyAllocator().Allocate(this, parts, remainderStrategy);
     }
 
@@ -248,6 +274,27 @@ public readonly struct Money : IEquatable<Money>, IComparable<Money>
     public static bool operator !=(Money left, Money right)
     {
         return !left.Equals(right);
+    }
+
+    private static void ThrowIfDefaultCurrency(CurrencyCode currency, string parameterName)
+    {
+        if (currency.IsDefault)
+        {
+            throw new ArgumentException("Currency code must be initialised before it can be used to create money.", parameterName);
+        }
+    }
+
+    private void ThrowIfDefault()
+    {
+        ThrowIfDefault(this, nameof(Money));
+    }
+
+    private static void ThrowIfDefault(Money money, string parameterName)
+    {
+        if (money.IsDefault)
+        {
+            throw new InvalidOperationException($"Money value '{parameterName}' is the uninitialised default value. Use Money.Zero(currency) or Money.Of(amount, currency).");
+        }
     }
 
     private static void ValidateAmountPrecision(decimal amount, CurrencyInfo currencyInfo)

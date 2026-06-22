@@ -15,6 +15,8 @@ This roadmap deliberately avoids optional Countries, Addressing, EF Core, ASP.NE
 
 ## Hardening epic 1 — default-value safety
 
+Status: implemented in `0.1.0-alpha.2`.
+
 ### Problem
 
 `CurrencyCode` and `Money` are value types. In .NET, value types can be default-initialised even if public construction paths validate input.
@@ -179,7 +181,7 @@ public static class CurrencyDataVersion
 For the current seed, values can be explicit:
 
 ```text
-Identifier: seed-0.1.0-alpha.1
+Identifier: seed-0.1.0-alpha.2
 SourceKind: CheckedInSeed
 Description: Small checked-in prerelease seed; not a full ISO/CLDR snapshot.
 ```
@@ -306,10 +308,8 @@ Country-typed territory relationships should live in `ISOCodex.Currency.Countrie
 
 ## Recommended first hardening sequence
 
-1. Package smoke test and release docs.
-2. Default value safety.
-3. Non-throwing money validation result API.
-4. Currency data version/provenance API.
-5. Registry/factory extensibility.
-6. Documentation polish.
-7. Full data generation epic.
+1. Non-throwing money validation result API.
+2. Currency data version/provenance API.
+3. Registry/factory extensibility.
+4. Documentation polish.
+5. Full data generation epic.

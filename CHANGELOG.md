@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.0-alpha.2
+
+Adds default-value safety APIs for `CurrencyCode` and `Money`.
+
+Includes:
+
+- `CurrencyCode.IsDefault`.
+- `Money.IsDefault`.
+- Clear default-value guard errors for operational `Money` methods.
+- Tests that equality and hash code remain safe for default `Money` values.
+
 ## 0.1.0-alpha.1
 
 Initial public prerelease of `ISOCodex.Currency`.

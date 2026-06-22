@@ -32,6 +32,9 @@ public readonly struct CurrencyCode : IEquatable<CurrencyCode>
     /// <summary>Gets the normalized alpha-3 code.</summary>
     public string Code { get; }
 
+    /// <summary>Gets whether this value is the uninitialised default currency code.</summary>
+    public bool IsDefault => string.IsNullOrEmpty(Code);
+
     /// <summary>Gets the pound sterling currency code.</summary>
     public static CurrencyCode GBP => new CurrencyCode("GBP", true);
 

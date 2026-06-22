@@ -14,48 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-5 from the original implementation pack were completed during the NuGet-first 0.1.0-alpha.1 release preparation and removed from this remaining-task prompt list.
-
-## Task 6 — add default-value safety APIs
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Add default-value safety APIs for CurrencyCode and Money.
-
-Context:
-- CurrencyCode and Money are readonly structs.
-- Public construction validates, but default(CurrencyCode) and default(Money) are still possible.
-
-Implement:
-1. Add CurrencyCode.IsDefault.
-2. Add Money.IsDefault.
-3. Add clear guard behaviour for operational Money methods when this or relevant other Money values are default.
-4. Do not make Equals or GetHashCode throw for default values.
-5. Keep changes additive.
-6. Add unit tests.
-7. Update README with a brief warning and recommended use of Money.Zero(currency) or Money.Of(amount, currency).
-
-Recommended semantics:
-- CurrencyCode.IsDefault is true when Code is null or empty.
-- Money.IsDefault is true when Currency.IsDefault is true.
-
-Run:
-- dotnet test ISOCodex.Currency.sln -c Release
-
-Report:
-- public API changes;
-- test coverage;
-- any compatibility considerations.
-```
-
-### Acceptance criteria
-
-- default values are detectable.
-- operations fail clearly rather than producing confusing registry errors.
-- equality/hash code remain safe.
+Tasks 1-6 from the original implementation pack were completed during the NuGet-first release preparation and `0.1.0-alpha.2` default-value safety work, then removed from this remaining-task prompt list.
 
 ---
 
