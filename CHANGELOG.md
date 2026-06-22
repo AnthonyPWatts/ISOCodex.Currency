@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.8
+
+Adds optional `ISOCodex.Currency.Exchange.Abstractions` package.
+
+Includes:
+
+- `CurrencyPair` direct base/quote rate pair.
+- `ExchangeRate`, `ExchangeRateKind`, `IExchangeRateProvider`, and `ExchangeRateLookupResult`.
+- `ConversionOptions` requiring target currency, effective date, rate kind, and explicit rounding policy.
+- `MoneyConverter` direct-rate conversion only for the MVP.
+- `ConversionResult` with input, output, direct rate, raw amount, rounded amount, requested effective date, requested rate kind, rounding policy, and rate source.
+- Tests proving deterministic direct conversion, explicit rounding, no inverse conversion, and no core dependency on the exchange abstractions package.
+
 ## 0.1.0-alpha.7
 
 Adds optional `ISOCodex.Currency.Analyzers` package.

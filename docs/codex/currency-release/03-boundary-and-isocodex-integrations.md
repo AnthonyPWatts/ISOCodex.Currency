@@ -43,7 +43,7 @@ ISOCodex.Currency.Addressing
     Address/currency validation helpers using ISOCodex.Addressing and ISOCodex.Countries.
 
 ISOCodex.Currency.Exchange.Abstractions
-    Provider-neutral, deterministic exchange-rate abstractions.
+    Provider-neutral, deterministic exchange-rate abstractions. Initial direct-rate package implemented in `0.1.0-alpha.8`.
 ```
 
 ## Integration package 1 — System.Text.Json
@@ -492,8 +492,8 @@ Recommended after first NuGet deploy:
 4. `ISOCodex.Currency.AspNetCore`
 5. `ISOCodex.Currency.Countries`
 6. `ISOCodex.Currency.Addressing`
-7. `ISOCodex.Currency.Exchange.Abstractions`
-8. `ISOCodex.Currency.Analyzers`
+7. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
+8. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
 
 ## Documentation examples to add over time
 

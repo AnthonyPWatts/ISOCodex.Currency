@@ -176,11 +176,13 @@ Add:
 public static class CurrencyDataVersion
 {
     public static string Identifier { get; }
-    public static DateOnly CheckedOn { get; }
+    public static DateTime CheckedOn { get; }
     public static string Description { get; }
     public static string SourceKind { get; }
 }
 ```
+
+The implemented API uses `DateTime` rather than `DateOnly` because the core package targets `netstandard2.1`.
 
 For the current seed, values can be explicit:
 

@@ -263,28 +263,34 @@ ISOCodex.Currency.Exchange.Csv
 ISOCodex.Currency.Exchange.Json
 ```
 
+Status: initial direct-rate package implemented in `0.1.0-alpha.8`. It uses `DateTime` for effective dates while the package targets `netstandard2.1`; inverse, triangulated, fixed-file, CSV, JSON, and live-provider packages remain future work.
+
 ### MVP API
 
 ```csharp
-public readonly record struct CurrencyPair(CurrencyCode BaseCurrency, CurrencyCode QuoteCurrency);
+public readonly record struct CurrencyPair
+{
+    public CurrencyCode BaseCurrency { get; }
+    public CurrencyCode QuoteCurrency { get; }
+}
 
 public sealed class ExchangeRate
 {
     public CurrencyPair Pair { get; }
     public decimal Rate { get; }
-    public DateOnly EffectiveDate { get; }
+    public DateTime EffectiveDate { get; }
     public string Source { get; }
     public ExchangeRateKind Kind { get; }
 }
 
 public interface IExchangeRateProvider
 {
-    ExchangeRateLookupResult TryGetRate(CurrencyPair pair, DateOnly effectiveDate, ExchangeRateKind kind);
+    ExchangeRateLookupResult GetRate(CurrencyPair pair, DateTime effectiveDate, ExchangeRateKind kind);
 }
 
 public sealed class MoneyConverter
 {
-    public ConversionResult Convert(Money source, CurrencyCode targetCurrency, ConversionOptions options);
+    public ConversionResult Convert(Money source, ConversionOptions options);
 }
 ```
 
@@ -294,10 +300,11 @@ Should include:
 
 - input money;
 - target currency;
-- direct/inverse/triangulated path;
+- direct rate used;
 - rate source;
 - rate effective date;
 - raw converted amount;
+- rounded amount;
 - rounding policy;
 - final money value.
 
@@ -305,7 +312,7 @@ Should include:
 
 - no network calls in abstractions package;
 - conversion requires explicit rounding;
-- direct and inverse rate tests;
+- direct rate tests;
 - deterministic replay test;
 - audit trail is available as structured data.
 

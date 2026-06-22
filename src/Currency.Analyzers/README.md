@@ -5,7 +5,7 @@ Roslyn analyzers for `ISOCodex.Currency`.
 ## Install
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.1.0-alpha.7" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.1.0-alpha.8" PrivateAssets="all" />
 ```
 
 ## Diagnostics

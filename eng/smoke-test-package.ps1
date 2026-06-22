@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.7",
+    [string]$Version = "0.1.0-alpha.8",
     [switch]$UseMajorRollForward
 )
 
@@ -47,6 +47,7 @@ using System;
 using System.Text.Json;
 using ISOCodex.Currency;
 using ISOCodex.Currency.Countries;
+using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 
@@ -75,6 +76,21 @@ var countryCurrency = DefaultCountryCurrencyRegistry.Instance.Validate(
     CountryAlpha2Code.Parse("GB"),
     CurrencyCode.GBP,
     CountryCurrencyValidationPolicy.PrimaryTenderOnly);
+var exchangeEffectiveDate = new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc);
+var exchangeRate = new ExchangeRate(
+    new CurrencyPair(CurrencyCode.GBP, CurrencyCode.USD),
+    1.2345m,
+    ExchangeRateKind.MidMarket,
+    exchangeEffectiveDate,
+    "smoke-test-feed");
+var exchangeConverter = new MoneyConverter(new StaticExchangeRateProvider(exchangeRate));
+var converted = exchangeConverter.Convert(
+    Money.Of(10.00m, CurrencyCode.GBP),
+    new ConversionOptions(
+        CurrencyCode.USD,
+        exchangeEffectiveDate,
+        ExchangeRateKind.MidMarket,
+        CurrencyRoundingPolicy.AwayFromZero()));
 #pragma warning disable ISOCCUR001
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
@@ -145,6 +161,11 @@ if (!countryCurrency.Succeeded || countryCurrency.CountryCurrency?.CurrencyCode 
     throw new InvalidOperationException("Country/currency bridge smoke test failed.");
 }
 
+if (converted.RawAmount != 12.345000m || converted.Output != Money.Of(12.35m, CurrencyCode.USD) || converted.RateSource != "smoke-test-feed")
+{
+    throw new InvalidOperationException("Exchange abstractions smoke test failed.");
+}
+
 Console.WriteLine(gbp);
 Console.WriteLine(metadata.EnglishName);
 Console.WriteLine(amount);
@@ -159,6 +180,33 @@ Console.WriteLine(dataVersion);
 Console.WriteLine(moneyJson);
 Console.WriteLine(countryCurrency.CountryCurrency?.CountryAlpha2Code);
 Console.WriteLine(defaultMoneyDetected);
+Console.WriteLine(converted.Output);
+Console.WriteLine(converted.RateSource);
+
+sealed class StaticExchangeRateProvider : IExchangeRateProvider
+{
+    private readonly ExchangeRate _rate;
+
+    public StaticExchangeRateProvider(ExchangeRate rate)
+    {
+        _rate = rate;
+    }
+
+    public ExchangeRateLookupResult GetRate(
+        CurrencyPair pair,
+        DateTime effectiveDate,
+        ExchangeRateKind rateKind)
+    {
+        if (_rate.Pair == pair && _rate.EffectiveDate == effectiveDate && _rate.Kind == rateKind)
+        {
+            return ExchangeRateLookupResult.Success(_rate);
+        }
+
+        return ExchangeRateLookupResult.Failure(
+            ExchangeRateLookupFailureReason.RateUnavailable,
+            $"No direct rate for {pair} on {effectiveDate:O}.");
+    }
+}
 '@
 
 $project = @'
@@ -197,6 +245,7 @@ $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Exchange.Abstractions --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8
 Invoke-DotNet restore $consumerProject --configfile $nugetConfig
