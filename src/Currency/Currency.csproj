@@ -3,11 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>ISOCodex.Currency</PackageId>
+    <Title>ISOCodex.Currency</Title>
     <RootNamespace>ISOCodex.Currency</RootNamespace>
     <AssemblyName>ISOCodex.Currency</AssemblyName>
-    <Description>Framework-agnostic ISO 4217 currency metadata and money primitives.</Description>
+    <Description>Framework-agnostic ISO 4217-style currency metadata and money primitives for .NET.</Description>
+    <PackageTags>currency;money;iso4217;rounding;finance;dotnet;netstandard</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

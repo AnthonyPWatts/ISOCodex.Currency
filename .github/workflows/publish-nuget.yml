@@ -1,0 +1,107 @@
+name: publish-nuget
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Release tag to publish, for example v0.1.0-alpha.1
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish NuGet package
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Resolve release ref
+        id: release
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            tag="${{ inputs.release_tag }}"
+          else
+            tag="${GITHUB_REF_NAME}"
+          fi
+
+          if [[ "$tag" != v* ]]; then
+            echo "Release tag must start with 'v'. Actual value was '$tag'." >&2
+            exit 1
+          fi
+
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore ISOCodex.Currency.sln
+
+      - name: Build
+        run: dotnet build ISOCodex.Currency.sln -c Release --no-restore /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.release.outputs.version }}
+
+      - name: Test
+        run: dotnet test ISOCodex.Currency.sln -c Release --no-build
+
+      - name: Pack
+        run: dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.release.outputs.version }}
+
+      - name: Verify package artifacts
+        shell: pwsh
+        run: |
+          $version = "${{ steps.release.outputs.version }}"
+          $package = "artifacts/ISOCodex.Currency.$version.nupkg"
+          $symbols = "artifacts/ISOCodex.Currency.$version.snupkg"
+
+          if (-not (Test-Path $package)) {
+            throw "Package artifact was not found: $package"
+          }
+
+          if (-not (Test-Path $symbols)) {
+            throw "Symbol package artifact was not found: $symbols"
+          }
+
+      - name: Upload package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages-${{ steps.release.outputs.version }}
+          path: |
+            artifacts/*.nupkg
+            artifacts/*.snupkg
+
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: AnthonyPWatts
+
+      - name: Publish package
+        shell: pwsh
+        working-directory: artifacts
+        run: |
+          $version = "${{ steps.release.outputs.version }}"
+          $package = "ISOCodex.Currency.$version.nupkg"
+
+          dotnet nuget push $package `
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
+            --source https://api.nuget.org/v3/index.json `
+            --skip-duplicate

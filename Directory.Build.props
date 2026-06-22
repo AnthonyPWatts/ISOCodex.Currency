@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-alpha.1</Version>
     <Authors>Anthony P Watts</Authors>
     <Company>ISOCodex</Company>
     <RepositoryUrl>https://github.com/AnthonyPWatts/ISOCodex.Currency</RepositoryUrl>
@@ -10,5 +10,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 </Project>
