@@ -120,7 +120,7 @@ A money library becomes ubiquitous when it is easy to use at boundaries. Newtons
 ### MVP sequence
 
 1. `ISOCodex.Currency.Json.SystemTextJson`
-2. `ISOCodex.Currency.Json.NewtonsoftJson`
+2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
 3. `ISOCodex.Currency.EntityFrameworkCore`
 4. `ISOCodex.Currency.AspNetCore`
 5. `ISOCodex.Currency.Validation`

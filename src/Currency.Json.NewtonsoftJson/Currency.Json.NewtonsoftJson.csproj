@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>ISOCodex.Currency.Json.NewtonsoftJson</PackageId>
+    <Title>ISOCodex.Currency.Json.NewtonsoftJson</Title>
+    <RootNamespace>ISOCodex.Currency.Json.NewtonsoftJson</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.Json.NewtonsoftJson</AssemblyName>
+    <Description>Newtonsoft.Json converters for ISOCodex.Currency value objects.</Description>
+    <PackageTags>currency;money;iso4217;json;newtonsoft-json;dotnet;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

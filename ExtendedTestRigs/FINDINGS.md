@@ -4,6 +4,6 @@ Use this file for notes found while exercising `ISOCodex.Currency` from the exte
 
 ## Current notes
 
-- There is no structured validation API yet, so the rigs currently catch exceptions and translate them into simple review results.
-- There is no formatter API yet, so examples display money with explicit currency codes rather than symbols.
-- There is no JSON converter package yet, so API DTOs use primitive amount/currency fields at the boundary.
+- The rigs are deliberately small examples rather than full framework integrations.
+- `BulkMoneyImportTool` still translates some domain exceptions into simple review rows instead of modelling every validation path as structured result objects.
+- `CheckoutPricingApi` still uses primitive DTOs at the HTTP boundary. JSON converter packages exist, but the rig keeps request and response contracts explicit for readability.

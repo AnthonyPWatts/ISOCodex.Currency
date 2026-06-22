@@ -69,18 +69,38 @@ jobs:
       - name: Verify package artifacts
         shell: pwsh
         run: |
-          $packages = @(Get-ChildItem artifacts -Filter "*.nupkg")
+          $version = "${{ steps.release.outputs.version }}"
+          $expectedPackageIds = @(
+            "ISOCodex.Currency",
+            "ISOCodex.Currency.Analyzers",
+            "ISOCodex.Currency.Countries",
+            "ISOCodex.Currency.Exchange.Abstractions",
+            "ISOCodex.Currency.Json.NewtonsoftJson",
+            "ISOCodex.Currency.Json.SystemTextJson"
+          )
+          $expectedPackages = @($expectedPackageIds | ForEach-Object { "$_.$version.nupkg" })
+          $expectedSymbols = @($expectedPackageIds | ForEach-Object { "$_.$version.snupkg" })
+          $actualPackages = @(Get-ChildItem artifacts -Filter "*.nupkg" | ForEach-Object Name | Sort-Object)
+          $actualSymbols = @(Get-ChildItem artifacts -Filter "*.snupkg" | ForEach-Object Name | Sort-Object)
 
-          if ($packages.Count -eq 0) {
-            throw "No package artifacts were found."
+          $missingPackages = @($expectedPackages | Where-Object { $_ -notin $actualPackages })
+          if ($missingPackages.Count -gt 0) {
+            throw "Expected package artifacts were not found: $($missingPackages -join ', ')"
           }
 
-          foreach ($package in $packages) {
-            $symbols = Join-Path $package.DirectoryName ($package.BaseName + ".snupkg")
+          $missingSymbols = @($expectedSymbols | Where-Object { $_ -notin $actualSymbols })
+          if ($missingSymbols.Count -gt 0) {
+            throw "Expected symbol package artifacts were not found: $($missingSymbols -join ', ')"
+          }
 
-            if (-not (Test-Path $symbols)) {
-              throw "Symbol package artifact was not found: $symbols"
-            }
+          $unexpectedPackages = @($actualPackages | Where-Object { $_ -notin $expectedPackages })
+          if ($unexpectedPackages.Count -gt 0) {
+            throw "Unexpected package artifacts were found: $($unexpectedPackages -join ', ')"
+          }
+
+          $unexpectedSymbols = @($actualSymbols | Where-Object { $_ -notin $expectedSymbols })
+          if ($unexpectedSymbols.Count -gt 0) {
+            throw "Unexpected symbol package artifacts were found: $($unexpectedSymbols -join ', ')"
           }
 
       - name: Upload package artifacts

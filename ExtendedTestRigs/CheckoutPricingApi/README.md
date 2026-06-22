@@ -22,5 +22,5 @@ Then use `CheckoutPricingApi.http` or call the endpoints directly.
 ## Known limitations
 
 - This is not a real checkout workflow.
-- There is no JSON converter package yet, so responses use simple amount/currency DTOs.
-- Validation is intentionally API-local until the library has structured validation results.
+- Responses use simple amount/currency DTOs even though optional JSON converter packages exist.
+- Validation is intentionally API-local rather than a full ASP.NET Core integration package.

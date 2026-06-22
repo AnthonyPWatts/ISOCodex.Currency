@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.4",
+    [string]$Version = "0.9.0-alpha.5",
     [switch]$UseMajorRollForward
 )
 
@@ -50,6 +50,9 @@ using ISOCodex.Currency.Countries;
 using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
+using NewtonsoftCurrencyCodeJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.CurrencyCodeJsonConverter;
+using NewtonsoftJson = Newtonsoft.Json.JsonConvert;
+using NewtonsoftMoneyJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.MoneyJsonConverter;
 
 var gbp = CurrencyCode.Parse("gbp");
 var metadata = DefaultCurrencyRegistry.Instance.Get(gbp);
@@ -86,6 +89,11 @@ jsonOptions.Converters.Add(new CurrencyCodeJsonConverter());
 jsonOptions.Converters.Add(new MoneyJsonConverter());
 var moneyJson = JsonSerializer.Serialize(amount, jsonOptions);
 var parsedJsonMoney = JsonSerializer.Deserialize<Money>(moneyJson, jsonOptions);
+var newtonsoftSettings = new Newtonsoft.Json.JsonSerializerSettings();
+newtonsoftSettings.Converters.Add(new NewtonsoftCurrencyCodeJsonConverter());
+newtonsoftSettings.Converters.Add(new NewtonsoftMoneyJsonConverter());
+var newtonsoftMoneyJson = NewtonsoftJson.SerializeObject(amount, newtonsoftSettings);
+var parsedNewtonsoftMoney = NewtonsoftJson.DeserializeObject<Money>(newtonsoftMoneyJson, newtonsoftSettings);
 var countryCurrency = DefaultCountryCurrencyRegistry.Instance.Validate(
     CountryAlpha2Code.Parse("GB"),
     CurrencyCode.GBP,
@@ -172,7 +180,12 @@ if (customMoney.Currency != customCode || customMoney.Amount != 1.2345m || custo
 
 if (moneyJson != "{\"amount\":12.34,\"currency\":\"GBP\"}" || parsedJsonMoney != amount)
 {
-    throw new InvalidOperationException("JSON converter smoke test failed.");
+    throw new InvalidOperationException("System.Text.Json converter smoke test failed.");
+}
+
+if (newtonsoftMoneyJson != "{\"amount\":12.34,\"currency\":\"GBP\"}" || parsedNewtonsoftMoney != amount)
+{
+    throw new InvalidOperationException("Newtonsoft.Json converter smoke test failed.");
 }
 
 if (!countryCurrency.Succeeded || countryCurrency.CountryCurrency?.CurrencyCode != CurrencyCode.GBP)
@@ -199,6 +212,7 @@ Console.WriteLine(dataVersion);
 Console.WriteLine(customMoney);
 Console.WriteLine(customValidation.FailureReason);
 Console.WriteLine(moneyJson);
+Console.WriteLine(newtonsoftMoneyJson);
 Console.WriteLine(countryCurrency.CountryCurrency?.CountryAlpha2Code);
 Console.WriteLine(defaultMoneyDetected);
 Console.WriteLine(converted.Output);
@@ -267,6 +281,7 @@ Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version 
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Exchange.Abstractions --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.NewtonsoftJson --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8
 Invoke-DotNet restore $consumerProject --configfile $nugetConfig

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.5
+
+Adds optional Newtonsoft.Json integration.
+
+Includes:
+
+- `ISOCodex.Currency.Json.NewtonsoftJson`.
+- `CurrencyCodeJsonConverter`, serialising currency codes as alpha-3 strings.
+- `MoneyJsonConverter`, serialising money as `{ "amount": 12.34, "currency": "GBP" }`.
+- Strict deserialisation for invalid currency codes, over-precise money amounts, missing properties, and default values.
+- Package smoke-test coverage for both JSON integration packages.
+
 ## 0.9.0-alpha.4
 
 Adds auditable currency data source provenance.

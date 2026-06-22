@@ -2,7 +2,7 @@
 
 This folder contains remaining roadmap notes for `ISOCodex.Currency`.
 
-The NuGet-first release preparation has been implemented and the package is now in the `0.1.0-alpha.*` prerelease line. Keep future work scoped to APIs that exist in the checkout unless the task explicitly adds them.
+The NuGet-first release preparation has been implemented and the package is now in the `0.9.0-alpha.*` prerelease line. Keep future work scoped to APIs that exist in the checkout unless the task explicitly adds them.
 
 Recommended remaining roadmap order:
 

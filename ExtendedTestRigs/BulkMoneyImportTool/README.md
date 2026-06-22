@@ -34,5 +34,5 @@ Outputs are written under the built app's `Output` directory:
 ## Known limitations
 
 - The CSV reader is intentionally small and only supports simple single-line records.
-- There is no structured validation API yet, so the tool maps exceptions into review messages.
+- Some import paths still map domain exceptions into review messages instead of modelling every case through structured validation results.
 - Output files are written beside the compiled application, not back into source.

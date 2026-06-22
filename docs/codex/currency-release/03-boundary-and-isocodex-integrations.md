@@ -48,6 +48,8 @@ ISOCodex.Currency.Exchange.Abstractions
 
 ## Integration package 1 — System.Text.Json
 
+Status: implemented in `0.1.0-alpha.5`.
+
 ### Package
 
 ```text
@@ -134,6 +136,8 @@ public sealed class MoneyJsonOptions
 - package has tests against `JsonSerializerOptions`.
 
 ## Integration package 2 — Newtonsoft.Json
+
+Status: implemented in `0.9.0-alpha.5`.
 
 ### Package
 
@@ -487,7 +491,7 @@ public sealed class AddressCurrencyValidator
 Recommended after first NuGet deploy:
 
 1. `ISOCodex.Currency.Json.SystemTextJson`
-2. `ISOCodex.Currency.Json.NewtonsoftJson`
+2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
 3. `ISOCodex.Currency.EntityFrameworkCore`
 4. `ISOCodex.Currency.AspNetCore`
 5. `ISOCodex.Currency.Countries`
