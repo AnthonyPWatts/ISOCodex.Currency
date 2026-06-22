@@ -287,7 +287,7 @@ Add docs and tests for:
 
 ## Post-0.1.0 data epic — full auditable currency data snapshot
 
-Status: auditability foundation implemented in `0.9.0-alpha.3`; full ISO/CLDR source replacement remains pending.
+Status: auditability foundation implemented in `0.9.0-alpha.4`; full ISO/CLDR source replacement remains pending.
 
 This is not required for the first NuGet release, but it is the highest credibility improvement after release.
 

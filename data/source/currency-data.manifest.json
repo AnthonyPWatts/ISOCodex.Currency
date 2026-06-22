@@ -1,15 +1,15 @@
 {
-  "identifier": "seed-2026-06-22-8d366aa7",
+  "identifier": "seed-2026-06-22-7d26419d",
   "checkedOn": "2026-06-22",
   "sourceKind": "CheckedInSeed",
-  "description": "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; SHA-256 8d366aa7146571ca699f02d1160aecfb0d083941ccb3c7141bc2464738409a35; not a full ISO/CLDR snapshot.",
+  "description": "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; normalized UTF-8/LF SHA-256 7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573; not a full ISO/CLDR snapshot.",
   "sources": [
     {
       "path": "data/source/currency-data.seed.json",
       "format": "ISOCodex.Currency seed JSON",
-      "sha256": "8d366aa7146571ca699f02d1160aecfb0d083941ccb3c7141bc2464738409a35",
+      "sha256": "7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573",
       "entryCount": 30,
-      "notes": "Curated prerelease seed used by the generated registry until the full ISO/CLDR data snapshot epic replaces it."
+      "notes": "Curated prerelease seed used by the generated registry until the full ISO/CLDR data snapshot epic replaces it. The hash is calculated over normalized UTF-8 text with LF line endings."
     }
   ],
   "upstreamReferences": [

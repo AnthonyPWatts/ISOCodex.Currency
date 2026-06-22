@@ -10,13 +10,13 @@ namespace ISOCodex.Currency;
 public static class CurrencyDataVersion
 {
     /// <summary>Gets the version identifier for the packaged currency data.</summary>
-    public static string Identifier { get; } = "seed-2026-06-22-8d366aa7";
+    public static string Identifier { get; } = "seed-2026-06-22-7d26419d";
 
     /// <summary>Gets the date this source snapshot was checked, expressed as UTC midnight.</summary>
     public static DateTime CheckedOn { get; } = new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc);
 
     /// <summary>Gets a description of the packaged currency data source.</summary>
-    public static string Description { get; } = "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; SHA-256 8d366aa7146571ca699f02d1160aecfb0d083941ccb3c7141bc2464738409a35; not a full ISO/CLDR snapshot.";
+    public static string Description { get; } = "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; normalized UTF-8/LF SHA-256 7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573; not a full ISO/CLDR snapshot.";
 
     /// <summary>Gets the kind of source used for the packaged currency data.</summary>
     public static string SourceKind { get; } = "CheckedInSeed";

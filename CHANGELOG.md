@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.0-alpha.3
+## 0.9.0-alpha.4
 
 Adds auditable currency data source provenance.
 

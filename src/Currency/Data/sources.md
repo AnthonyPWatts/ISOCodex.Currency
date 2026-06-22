@@ -2,7 +2,7 @@
 
 The current data set is a curated pre-1.0 seed, generated from `data/source/currency-data.seed.json` by `scripts/update-currency-data.ps1`.
 
-It is intentionally small and reviewable. It is pinned by `data/source/currency-data.manifest.json`, which records the source SHA-256, entry count, checked date, and generated runtime provenance values. It is not yet a complete ISO 4217 list.
+It is intentionally small and reviewable. It is pinned by `data/source/currency-data.manifest.json`, which records the normalized UTF-8/LF source SHA-256, entry count, checked date, and generated runtime provenance values. It is not yet a complete ISO 4217 list.
 
 ## Current generation workflow
 

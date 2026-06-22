@@ -5,7 +5,7 @@ This folder contains the checked-in source snapshot used by `scripts/update-curr
 ## Files
 
 - `currency-data.seed.json` is a small curated seed for the current pre-1.0 package. It mirrors the generated data in reviewable JSON form.
-- `currency-data.manifest.json` pins the seed by SHA-256, entry count, checked date, and generated runtime provenance values.
+- `currency-data.manifest.json` pins the seed by normalized UTF-8/LF SHA-256, entry count, checked date, and generated runtime provenance values.
 
 ## Provenance
 

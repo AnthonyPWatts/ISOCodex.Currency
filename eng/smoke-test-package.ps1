@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.3",
+    [string]$Version = "0.9.0-alpha.4",
     [switch]$UseMajorRollForward
 )
 
@@ -160,7 +160,7 @@ if (!defaultCurrencyDetected || !defaultMoneyDetected || amount.IsDefault)
     throw new InvalidOperationException("Default-value detection smoke test failed.");
 }
 
-if (dataVersion != "seed-2026-06-22-8d366aa7" || CurrencyDataVersion.SourceKind != "CheckedInSeed")
+if (dataVersion != "seed-2026-06-22-7d26419d" || CurrencyDataVersion.SourceKind != "CheckedInSeed")
 {
     throw new InvalidOperationException("Currency data version smoke test failed.");
 }
