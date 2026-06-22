@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish NuGet package
+    name: Publish NuGet packages
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -63,21 +63,24 @@ jobs:
         run: dotnet test ISOCodex.Currency.sln -c Release --no-build
 
       - name: Pack
-        run: dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.release.outputs.version }}
+        shell: pwsh
+        run: ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version "${{ steps.release.outputs.version }}" -ContinuousIntegrationBuild
 
       - name: Verify package artifacts
         shell: pwsh
         run: |
-          $version = "${{ steps.release.outputs.version }}"
-          $package = "artifacts/ISOCodex.Currency.$version.nupkg"
-          $symbols = "artifacts/ISOCodex.Currency.$version.snupkg"
+          $packages = @(Get-ChildItem artifacts -Filter "*.nupkg")
 
-          if (-not (Test-Path $package)) {
-            throw "Package artifact was not found: $package"
+          if ($packages.Count -eq 0) {
+            throw "No package artifacts were found."
           }
 
-          if (-not (Test-Path $symbols)) {
-            throw "Symbol package artifact was not found: $symbols"
+          foreach ($package in $packages) {
+            $symbols = Join-Path $package.DirectoryName ($package.BaseName + ".snupkg")
+
+            if (-not (Test-Path $symbols)) {
+              throw "Symbol package artifact was not found: $symbols"
+            }
           }
 
       - name: Upload package artifacts
@@ -98,10 +101,9 @@ jobs:
         shell: pwsh
         working-directory: artifacts
         run: |
-          $version = "${{ steps.release.outputs.version }}"
-          $package = "ISOCodex.Currency.$version.nupkg"
-
-          dotnet nuget push $package `
-            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
-            --source https://api.nuget.org/v3/index.json `
-            --skip-duplicate
+          Get-ChildItem -Filter "*.nupkg" | Sort-Object Name | ForEach-Object {
+            dotnet nuget push $_.Name `
+              --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
+          }

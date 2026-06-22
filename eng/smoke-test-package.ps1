@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.4",
+    [string]$Version = "0.1.0-alpha.5",
     [switch]$UseMajorRollForward
 )
 
@@ -35,13 +35,18 @@ New-Item -ItemType Directory -Force -Path $tempRoot | Out-Null
 Invoke-DotNet restore "$repoRoot\ISOCodex.Currency.sln"
 Invoke-DotNet build "$repoRoot\ISOCodex.Currency.sln" -c $Configuration --no-restore /p:Version=$Version
 Invoke-DotNet test "$repoRoot\ISOCodex.Currency.sln" -c $Configuration --no-build
-Invoke-DotNet pack "$repoRoot\src\Currency\Currency.csproj" -c $Configuration --no-build -o $artifacts /p:Version=$Version
+& "$PSScriptRoot\pack-packages.ps1" -Configuration $Configuration -OutputPath $artifacts -Version $Version
+if ($LASTEXITCODE -ne 0) {
+    throw "Package creation failed with exit code $LASTEXITCODE."
+}
 
 Invoke-DotNet new console -n CurrencySmoke -o $tempRoot
 
 $program = @'
 using System;
+using System.Text.Json;
 using ISOCodex.Currency;
+using ISOCodex.Currency.Json.SystemTextJson;
 
 var gbp = CurrencyCode.Parse("gbp");
 var metadata = DefaultCurrencyRegistry.Instance.Get(gbp);
@@ -59,6 +64,11 @@ var validated = Money.TryCreate(12.34m, "GBP");
 var invalidPrecision = Money.TryCreate(12.345m, CurrencyCode.GBP);
 var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
 var dataVersion = CurrencyDataVersion.Identifier;
+var jsonOptions = new JsonSerializerOptions();
+jsonOptions.Converters.Add(new CurrencyCodeJsonConverter());
+jsonOptions.Converters.Add(new MoneyJsonConverter());
+var moneyJson = JsonSerializer.Serialize(amount, jsonOptions);
+var parsedJsonMoney = JsonSerializer.Deserialize<Money>(moneyJson, jsonOptions);
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
 
@@ -117,6 +127,11 @@ if (dataVersion != "seed-0.1.0-alpha.4" || CurrencyDataVersion.SourceKind != "Ch
     throw new InvalidOperationException("Currency data version smoke test failed.");
 }
 
+if (moneyJson != "{\"amount\":12.34,\"currency\":\"GBP\"}" || parsedJsonMoney != amount)
+{
+    throw new InvalidOperationException("JSON converter smoke test failed.");
+}
+
 Console.WriteLine(gbp);
 Console.WriteLine(metadata.EnglishName);
 Console.WriteLine(amount);
@@ -128,6 +143,7 @@ Console.WriteLine(formatted);
 Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
+Console.WriteLine(moneyJson);
 Console.WriteLine(defaultMoneyDetected);
 '@
 
@@ -152,7 +168,7 @@ $config = @"
   </packageSources>
   <packageSourceMapping>
     <packageSource key="local-smoke">
-      <package pattern="ISOCodex.Currency" />
+      <package pattern="ISOCodex.Currency*" />
     </packageSource>
     <packageSource key="nuget.org">
       <package pattern="*" />
@@ -165,6 +181,7 @@ Set-Content -Path $consumerProject -Value $project -Encoding UTF8
 Set-Content -Path $nugetConfig -Value $config -Encoding UTF8
 $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8
 Invoke-DotNet restore $consumerProject --configfile $nugetConfig
 Invoke-DotNet run --project $consumerProject -c Release --no-restore

@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.4
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.5
 ```
 
 ## What it is useful for
@@ -136,4 +136,5 @@ For exact payment boundaries, `Money.ToMinorUnits()` and `Money.FromMinorUnits(.
 
 ## Current limitations
 
-This pre-1.0 package does not yet include JSON converters, EF Core helpers, or exchange-rate abstractions.
+This pre-1.0 core package does not include EF Core helpers or exchange-rate abstractions.
+JSON converters are available in the optional `ISOCodex.Currency.Json.SystemTextJson` package.

@@ -382,7 +382,6 @@ public readonly struct ScaledMoney
 
 ### Then: adoption features
 
-- JSON converters;
 - EF Core helpers;
 - ASP.NET Core helpers;
 - validation adapters.

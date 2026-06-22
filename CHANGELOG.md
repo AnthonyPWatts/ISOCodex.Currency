@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0-alpha.5
+
+Adds optional System.Text.Json integration package.
+
+Includes:
+
+- `ISOCodex.Currency.Json.SystemTextJson`.
+- `CurrencyCodeJsonConverter`, serialising currency codes as alpha-3 strings.
+- `MoneyJsonConverter`, serialising money as `{ "amount": 12.34, "currency": "GBP" }`.
+- Strict deserialisation for invalid currency codes, over-precise money amounts, missing properties, and default values.
+- CI, publish workflow, and smoke-test updates for multi-package releases.
+
 ## 0.1.0-alpha.4
 
 Adds runtime-visible currency data provenance.

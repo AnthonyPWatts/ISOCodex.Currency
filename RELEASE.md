@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.0-alpha.5
+
+Adds the optional `ISOCodex.Currency.Json.SystemTextJson` package.
+
+This release adds explicit System.Text.Json converters for `CurrencyCode` and `Money`. The core package remains independent of `System.Text.Json`; consumers opt in by referencing the integration package and registering the converters.
+
 ## 0.1.0-alpha.4
 
 Adds runtime-visible currency data provenance.

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>ISOCodex.Currency.Json.SystemTextJson</PackageId>
+    <Title>ISOCodex.Currency.Json.SystemTextJson</Title>
+    <RootNamespace>ISOCodex.Currency.Json.SystemTextJson</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.Json.SystemTextJson</AssemblyName>
+    <Description>System.Text.Json converters for ISOCodex.Currency value objects.</Description>
+    <PackageTags>currency;money;iso4217;json;system-text-json;dotnet;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

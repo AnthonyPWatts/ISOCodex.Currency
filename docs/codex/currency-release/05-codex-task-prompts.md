@@ -14,55 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-8 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, and `0.1.0-alpha.4` currency data provenance work, then removed from this remaining-task prompt list.
-
----
-
-## Task 9 — create System.Text.Json integration package
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Create an optional System.Text.Json integration package.
-
-Package:
-- ISOCodex.Currency.Json.SystemTextJson
-
-Constraints:
-- Do not add System.Text.Json dependency to the core package unless unavoidable.
-- Do not change Money core semantics.
-- Default JSON shape for Money should be { "amount": 12.34, "currency": "GBP" }.
-- CurrencyCode should serialize as "GBP".
-- Deserialization should reject invalid currency and over-precise amount by default.
-- Do not silently round.
-- Do not infer from symbols.
-
-Implement:
-1. Add new project under src/Currency.Json.SystemTextJson or equivalent repo convention.
-2. Add tests under tests/Currency.Json.SystemTextJson.Tests or equivalent.
-3. Add converters for CurrencyCode and Money.
-4. Add options only if needed; keep MVP simple.
-5. Add README section for registration.
-6. Add project to solution.
-
-Run:
-- dotnet restore ISOCodex.Currency.sln
-- dotnet build ISOCodex.Currency.sln -c Release --no-restore
-- dotnet test ISOCodex.Currency.sln -c Release --no-build
-
-Report:
-- package/project names;
-- JSON shapes;
-- tests.
-```
-
-### Acceptance criteria
-
-- converters round-trip valid values.
-- invalid values fail predictably.
-- core package remains independent.
+Tasks 1-9 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, `0.1.0-alpha.4` currency data provenance work, and `0.1.0-alpha.5` System.Text.Json integration work, then removed from this remaining-task prompt list.
 
 ---
 

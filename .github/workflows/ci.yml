@@ -35,7 +35,8 @@ jobs:
         run: dotnet test ISOCodex.Currency.sln -c Release --no-build --logger trx --results-directory TestResults
 
       - name: Pack
-        run: dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts /p:ContinuousIntegrationBuild=true
+        shell: pwsh
+        run: ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -ContinuousIntegrationBuild
 
       - name: Upload package artifacts
         uses: actions/upload-artifact@v4

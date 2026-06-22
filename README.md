@@ -37,11 +37,14 @@ Current implemented scope:
 - built-in Money-based installment strategies
 - `MoneyFormatter`
 - `MoneyParser`
+- optional `ISOCodex.Currency.Json.SystemTextJson` converters
 
 ## Projects
 
 - `src/Currency` - core package.
+- `src/Currency.Json.SystemTextJson` - optional System.Text.Json integration package.
 - `tests/Currency.Tests` - xUnit test suite.
+- `tests/Currency.Json.SystemTextJson.Tests` - JSON converter xUnit test suite.
 - `ManualTestRig` - small manual console rig for currency metadata.
 - `ExtendedTestRigs/BulkMoneyImportTool` - CSV import example for mixed-currency money data.
 - `ExtendedTestRigs/CheckoutPricingApi` - Minimal API example for checkout quote calculation.
@@ -49,7 +52,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.4`
+- Version: `0.1.0-alpha.5`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -57,7 +60,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.4
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.5
 ```
 
 ## Quick start
@@ -258,6 +261,27 @@ var result = parser.Parse(
 
 Failed parses return `MoneyParseResult` with a `MoneyParseFailureReason`; they do not throw for ordinary invalid input.
 
+## System.Text.Json
+
+JSON support lives in the optional `ISOCodex.Currency.Json.SystemTextJson` package so the core package remains independent of `System.Text.Json`.
+
+```bash
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.1.0-alpha.5
+```
+
+Register the converters explicitly:
+
+```csharp
+using System.Text.Json;
+using ISOCodex.Currency.Json.SystemTextJson;
+
+var options = new JsonSerializerOptions();
+options.Converters.Add(new CurrencyCodeJsonConverter());
+options.Converters.Add(new MoneyJsonConverter());
+```
+
+`CurrencyCode` serialises as `"GBP"`. `Money` serialises as `{ "amount": 12.34, "currency": "GBP" }`. Deserialisation rejects invalid currency codes and over-precise money amounts; it does not infer from symbols and does not silently round.
+
 ## Imports and API boundaries
 
 At application boundaries, prefer primitive DTOs and convert into domain values after validation.
@@ -311,7 +335,7 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 - Currency data is currently generated from a small checked-in seed, not a full ISO/CLDR snapshot.
 - Formatting is intended for display, not persistence. Store amount and currency code separately.
 - Money parsing is conservative and does not infer a currency from ambiguous symbols without an expected currency.
-- There are no JSON converters yet.
+- JSON converters are available in the optional `ISOCodex.Currency.Json.SystemTextJson` package.
 - There are no Entity Framework Core helpers yet.
 - There are no exchange-rate abstractions yet.
 
@@ -328,14 +352,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.4 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.5 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
-dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.4
+pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts
+pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.5
 ```
 
 ## Currency data workflow
