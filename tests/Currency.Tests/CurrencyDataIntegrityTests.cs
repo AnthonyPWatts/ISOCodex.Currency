@@ -104,6 +104,26 @@ public class CurrencyDataIntegrityTests
         Assert.Contains("SourceSnapshot = \"data/source/currency-data.seed.json\"", generatedText);
     }
 
+    [Fact]
+    public void CurrencyDataVersion_RecordsSeedProvenance()
+    {
+        Assert.Equal("seed-0.1.0-alpha.4", CurrencyDataVersion.Identifier);
+        Assert.Equal(new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc), CurrencyDataVersion.CheckedOn);
+        Assert.Equal(DateTimeKind.Utc, CurrencyDataVersion.CheckedOn.Kind);
+        Assert.Equal("CheckedInSeed", CurrencyDataVersion.SourceKind);
+        Assert.Contains("checked-in", CurrencyDataVersion.Description);
+        Assert.Contains("seed", CurrencyDataVersion.Description);
+        Assert.Contains("not a full ISO/CLDR snapshot", CurrencyDataVersion.Description);
+    }
+
+    [Fact]
+    public void CurrencyDataVersion_DoesNotReplacePackagedRegistryData()
+    {
+        Assert.True(DefaultCurrencyRegistry.Instance.TryGet(CurrencyCode.GBP, out _));
+        Assert.True(DefaultCurrencyRegistry.Instance.TryGet(CurrencyCode.USD, out _));
+        Assert.True(DefaultCurrencyRegistry.Instance.TryGet(CurrencyCode.EUR, out _));
+    }
+
     private static IReadOnlyList<CurrencySourceEntry> LoadSourceSeed()
     {
         var path = Path.Combine(FindRepositoryRoot(), "data", "source", "currency-data.seed.json");

@@ -24,6 +24,7 @@ Current implemented scope:
 - `CurrencyInfo`
 - `CurrencyMinorUnit`
 - `CurrencyKind`
+- `CurrencyDataVersion`
 - `ICurrencyRegistry`
 - `DefaultCurrencyRegistry`
 - `Money`
@@ -48,7 +49,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.1.0-alpha.3`
+- Version: `0.1.0-alpha.4`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -56,7 +57,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.3
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.4
 ```
 
 ## Quick start
@@ -327,14 +328,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.3 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.4 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 dotnet pack src/Currency/Currency.csproj -c Release --no-build -o artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.3
+pwsh ./eng/smoke-test-package.ps1 -Version 0.1.0-alpha.4
 ```
 
 ## Currency data workflow
@@ -347,3 +348,12 @@ dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
 The seed is deliberately small. A later data epic should replace it with pinned SIX ISO 4217 and Unicode CLDR source files.
+
+Runtime code can log the packaged data provenance:
+
+```csharp
+Console.WriteLine(CurrencyDataVersion.Identifier);  // seed-0.1.0-alpha.4
+Console.WriteLine(CurrencyDataVersion.SourceKind);  // CheckedInSeed
+Console.WriteLine(CurrencyDataVersion.CheckedOn);   // 2026-06-22 UTC midnight
+Console.WriteLine(CurrencyDataVersion.Description); // small checked-in prerelease seed; not a full ISO/CLDR snapshot
+```

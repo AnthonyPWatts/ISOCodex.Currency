@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.1.0-alpha.3
+dotnet add package ISOCodex.Currency --version 0.1.0-alpha.4
 ```
 
 ## What it is useful for
@@ -44,6 +44,8 @@ var total = item + shipping;
 `Money.IsDefault` and `CurrencyCode.IsDefault` detect uninitialised value-type defaults. Prefer `Money.Zero(currency)` or `Money.Of(amount, currency)` when creating real money values.
 
 For API and import boundaries, use `Money.TryCreate(...)` or `Money.TryFromMinorUnits(...)` to receive a `MoneyValidationResult` with a stable `MoneyValidationFailureReason` instead of using exceptions for ordinary invalid input.
+
+`CurrencyDataVersion` exposes the current checked-in seed provenance at runtime. The prerelease data is intentionally small and is not a full ISO/CLDR snapshot.
 
 Different currencies cannot be added, subtracted, or compared.
 

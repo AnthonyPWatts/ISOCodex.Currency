@@ -378,7 +378,6 @@ public readonly struct ScaledMoney
 
 ### Next: core safety
 
-- currency data version/provenance;
 - documentation polish.
 
 ### Then: adoption features

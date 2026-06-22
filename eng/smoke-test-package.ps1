@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.3",
+    [string]$Version = "0.1.0-alpha.4",
     [switch]$UseMajorRollForward
 )
 
@@ -58,6 +58,7 @@ var parsed = new MoneyParser().Parse("GBP 12.34", MoneyParseOptions.Default);
 var validated = Money.TryCreate(12.34m, "GBP");
 var invalidPrecision = Money.TryCreate(12.345m, CurrencyCode.GBP);
 var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
+var dataVersion = CurrencyDataVersion.Identifier;
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
 
@@ -111,6 +112,11 @@ if (!defaultCurrencyDetected || !defaultMoneyDetected || amount.IsDefault)
     throw new InvalidOperationException("Default-value detection smoke test failed.");
 }
 
+if (dataVersion != "seed-0.1.0-alpha.4" || CurrencyDataVersion.SourceKind != "CheckedInSeed")
+{
+    throw new InvalidOperationException("Currency data version smoke test failed.");
+}
+
 Console.WriteLine(gbp);
 Console.WriteLine(metadata.EnglishName);
 Console.WriteLine(amount);
@@ -121,6 +127,7 @@ Console.WriteLine(installmentPlan.Installments.Count);
 Console.WriteLine(formatted);
 Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
+Console.WriteLine(dataVersion);
 Console.WriteLine(defaultMoneyDetected);
 '@
 

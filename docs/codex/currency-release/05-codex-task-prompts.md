@@ -14,49 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-7 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, and `0.1.0-alpha.3` non-throwing money validation work, then removed from this remaining-task prompt list.
-
----
-
-## Task 8 — add CurrencyDataVersion
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Add runtime-visible currency data provenance.
-
-Context:
-- README says current data is generated from a small checked-in seed, not a full ISO/CLDR snapshot.
-- This limitation should be visible at runtime and in docs.
-
-Implement:
-1. Add public static CurrencyDataVersion class.
-2. Include Identifier, CheckedOn, Description, and SourceKind properties.
-3. Values should truthfully describe the current checked-in seed.
-4. Add tests that these properties are populated and mention the seed/source limitation.
-5. Update README data workflow section with example usage.
-
-Do not:
-- fetch data at runtime;
-- claim official ISO authority;
-- replace the data generation pipeline in this task.
-
-Run:
-- dotnet test ISOCodex.Currency.sln -c Release
-
-Report:
-- API;
-- exact values;
-- tests.
-```
-
-### Acceptance criteria
-
-- users can log data version/provenance.
-- docs remain truthful.
-- no runtime network calls.
+Tasks 1-8 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, and `0.1.0-alpha.4` currency data provenance work, then removed from this remaining-task prompt list.
 
 ---
 

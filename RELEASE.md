@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.0-alpha.4
+
+Adds runtime-visible currency data provenance.
+
+This release adds `CurrencyDataVersion` so applications can log that the current prerelease registry is backed by a small checked-in seed rather than a full ISO/CLDR snapshot. No runtime network calls or data pipeline changes were introduced.
+
 ## 0.1.0-alpha.3
 
 Adds non-throwing `Money` validation APIs for boundary input.

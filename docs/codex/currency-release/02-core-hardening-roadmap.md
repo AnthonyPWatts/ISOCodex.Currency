@@ -162,6 +162,8 @@ public static bool TryCreate(decimal amount, string currencyCode, out Money mone
 
 ## Hardening epic 3 — currency data version and provenance
 
+Status: implemented in `0.1.0-alpha.4`.
+
 ### Problem
 
 The README states that current data is generated from a small checked-in seed rather than a full ISO/CLDR snapshot. That is acceptable for prerelease but must be transparent and machine-readable.
@@ -183,7 +185,7 @@ public static class CurrencyDataVersion
 For the current seed, values can be explicit:
 
 ```text
-Identifier: seed-0.1.0-alpha.3
+Identifier: seed-0.1.0-alpha.4
 SourceKind: CheckedInSeed
 Description: Small checked-in prerelease seed; not a full ISO/CLDR snapshot.
 ```
@@ -310,7 +312,6 @@ Country-typed territory relationships should live in `ISOCodex.Currency.Countrie
 
 ## Recommended first hardening sequence
 
-1. Currency data version/provenance API.
-2. Registry/factory extensibility.
-3. Documentation polish.
-4. Full data generation epic.
+1. Registry/factory extensibility.
+2. Documentation polish.
+3. Full data generation epic.

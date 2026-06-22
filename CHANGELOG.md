@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0-alpha.4
+
+Adds runtime-visible currency data provenance.
+
+Includes:
+
+- `CurrencyDataVersion.Identifier`.
+- `CurrencyDataVersion.CheckedOn`.
+- `CurrencyDataVersion.Description`.
+- `CurrencyDataVersion.SourceKind`.
+- Tests that the data provenance describes the checked-in seed and preserves known registry entries.
+
 ## 0.1.0-alpha.3
 
 Adds non-throwing money validation APIs for API and import boundaries.
