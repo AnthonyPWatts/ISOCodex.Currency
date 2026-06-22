@@ -14,52 +14,7 @@ General constraints for every task:
 
 ---
 
-Tasks 1-10 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, `0.1.0-alpha.4` currency data provenance work, `0.1.0-alpha.5` System.Text.Json integration work, and `0.1.0-alpha.6` Countries bridge work, then removed from this remaining-task prompt list.
-
----
-
-## Task 11 — create initial analyzer project spike
-
-### Prompt
-
-```text
-You are working in AnthonyPWatts/ISOCodex.Currency.
-
-Create an initial analyzer package spike for default Money/CurrencyCode misuse.
-
-Package:
-- ISOCodex.Currency.Analyzers
-
-Implement only the first rule unless the repo already has analyzer infrastructure.
-
-Rule:
-- ISOCCUR001: Avoid default(Money). Use Money.Zero(currency) or Money.Of(amount, currency).
-
-Optional second rule:
-- ISOCCUR002: Avoid default(CurrencyCode). Parse, TryParse, or use a known static code.
-
-Constraints:
-- Analyzer package must be separate from core.
-- Do not add analyzer dependencies to runtime package.
-- Include analyzer tests.
-- If analyzer infrastructure is too large for one PR, create a minimal compiling project and document next steps.
-
-Run:
-- dotnet build
-- analyzer tests if added
-
-Report:
-- analyzer IDs;
-- diagnostics implemented;
-- code fixes if any;
-- known limitations.
-```
-
-### Acceptance criteria
-
-- analyzer project compiles.
-- at least one diagnostic is covered by tests.
-- runtime package is unaffected.
+Tasks 1-11 from the original implementation pack were completed during the NuGet-first release preparation, `0.1.0-alpha.2` default-value safety work, `0.1.0-alpha.3` non-throwing money validation work, `0.1.0-alpha.4` currency data provenance work, `0.1.0-alpha.5` System.Text.Json integration work, `0.1.0-alpha.6` Countries bridge work, and `0.1.0-alpha.7` analyzer spike work, then removed from this remaining-task prompt list.
 
 ---
 

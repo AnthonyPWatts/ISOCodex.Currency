@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.1.0-alpha.6",
+    [string]$Version = "0.1.0-alpha.7",
     [switch]$UseMajorRollForward
 )
 
@@ -75,8 +75,10 @@ var countryCurrency = DefaultCountryCurrencyRegistry.Instance.Validate(
     CountryAlpha2Code.Parse("GB"),
     CurrencyCode.GBP,
     CountryCurrencyValidationPolicy.PrimaryTenderOnly);
+#pragma warning disable ISOCCUR001
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
+#pragma warning restore ISOCCUR001
 
 if (metadata.Code != gbp)
 {
@@ -193,6 +195,7 @@ Set-Content -Path $consumerProject -Value $project -Encoding UTF8
 Set-Content -Path $nugetConfig -Value $config -Encoding UTF8
 $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8

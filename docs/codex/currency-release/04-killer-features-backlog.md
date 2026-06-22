@@ -321,6 +321,8 @@ Make Currency attractive to large codebases and high-volume systems through anal
 ISOCodex.Currency.Analyzers
 ```
 
+Status: initial package and `ISOCCUR001` implemented in `0.1.0-alpha.7`.
+
 ### Baseline analyzer rules
 
 ```text

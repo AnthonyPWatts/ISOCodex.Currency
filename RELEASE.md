@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.0-alpha.7
+
+Adds the optional `ISOCodex.Currency.Analyzers` package.
+
+This release introduces `ISOCCUR001`, an initial Roslyn diagnostic for direct `default(Money)` usage. No code fix is included yet, and runtime packages remain unaffected.
+
 ## 0.1.0-alpha.6
 
 Adds the optional `ISOCodex.Currency.Countries` bridge package.

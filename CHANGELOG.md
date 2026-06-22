@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.7
+
+Adds optional `ISOCodex.Currency.Analyzers` package.
+
+Includes:
+
+- `ISOCCUR001`, warning on `default(Money)` and `default` literals converted to `Money`.
+- Analyzer package layout under `analyzers/dotnet/cs`.
+- Analyzer tests using in-memory Roslyn compilation.
+
 ## 0.1.0-alpha.6
 
 Adds optional `ISOCodex.Currency.Countries` bridge package.
