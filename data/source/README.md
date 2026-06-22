@@ -1,38 +1,34 @@
 # Currency Data Source Snapshot
 
-This folder contains the checked-in source snapshot used by `scripts/update-currency-data.ps1` to generate `src/Currency/Data/CurrencyData.generated.cs`.
+This folder contains the checked-in source snapshot used to generate `src/Currency/Data/CurrencyData.generated.cs`.
 
 ## Files
 
-- `currency-data.seed.json` is a small curated seed for the current pre-1.0 package. It mirrors the generated data in reviewable JSON form.
-- `currency-data.manifest.json` pins the seed by normalized UTF-8/LF SHA-256, entry count, checked date, and generated runtime provenance values.
+- `currency-data.snapshot.json` is the derived reviewable snapshot consumed by `scripts/update-currency-data.ps1`.
+- `currency-data.manifest.json` pins the derived snapshot and raw source files by normalized UTF-8/LF SHA-256.
+- `upstream/six/list-one.xml` is the checked-in SIX ISO 4217 List One XML source.
+- `upstream/cldr/supplementalData.xml` is the checked-in Unicode CLDR supplemental data source.
 
 ## Provenance
 
-The seed is not yet a complete ISO 4217 data set. It is a pinned curated subset based on:
+The derived snapshot is generated from:
 
-- ISO 4217-style alpha code, numeric code, currency name, and minor-unit metadata.
-- CLDR supplemental currency fraction metadata where it affects decimal places or cash rounding.
-- Manual territory metadata for the currently included entries.
+- SIX ISO 4217 List One XML for current currency and funds code, numeric code, English name, and standard minor-unit metadata.
+- Unicode CLDR supplemental currency data for cash fraction metadata and current territory-to-currency relationships.
+
+This package data is derived metadata and is not an official ISO 4217 redistribution.
 
 ## Update workflow
 
 From the repository root:
 
 ```powershell
+pwsh ./scripts/build-currency-data-snapshot.ps1
 pwsh ./scripts/update-currency-data.ps1
 dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
-The generator verifies the manifest hash and entry count before writing generated source.
+`build-currency-data-snapshot.ps1` merges the checked-in upstream XML files into `currency-data.snapshot.json`.
+`update-currency-data.ps1` verifies the manifest hashes and entry count before writing generated source.
 
-Review `data/source/currency-data.seed.json`, `data/source/currency-data.manifest.json`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` in the same change.
-
-## Future full-data workflow
-
-A later data epic should replace this seed with pinned source downloads:
-
-- SIX ISO 4217 List One XML for current currencies and funds.
-- Unicode CLDR `common/supplemental/supplementalData.xml` for fraction, cash digit, and cash rounding metadata.
-
-The generator should then merge those source files into the public registry and record exact source dates or upstream revisions.
+Review `currency-data.snapshot.json`, `currency-data.manifest.json`, `upstream/`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` in the same change.

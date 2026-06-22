@@ -45,7 +45,7 @@ var total = item + shipping;
 
 For API and import boundaries, use `Money.TryCreate(...)` or `Money.TryFromMinorUnits(...)` to receive a `MoneyValidationResult` with a stable `MoneyValidationFailureReason` instead of using exceptions for ordinary invalid input.
 
-`CurrencyDataVersion` exposes the current pinned seed provenance at runtime. The prerelease data is intentionally small and is not a full ISO/CLDR snapshot.
+`CurrencyDataVersion` exposes the current pinned SIX ISO 4217 and Unicode CLDR snapshot provenance at runtime. The data is derived metadata, not an official ISO 4217 redistribution.
 
 Different currencies cannot be added, subtracted, or compared.
 

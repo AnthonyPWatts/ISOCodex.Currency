@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.7
+
+Replaces the curated currency seed with a pinned SIX ISO 4217 and Unicode CLDR data snapshot.
+
+Includes:
+
+- Checked-in SIX ISO 4217 List One XML and Unicode CLDR supplemental currency data source files.
+- A generated 178-entry `currency-data.snapshot.json` source for packaged registry generation.
+- Manifest pinning for the derived snapshot and raw upstream sources by normalized UTF-8/LF SHA-256.
+- Generated `CurrencyDataVersion` provenance for the full source snapshot.
+- Tests proving every SIX List One code is represented and CLDR cash metadata is applied.
+
 ## 0.9.0-alpha.6
 
 Adds README example compile coverage for the package surface.

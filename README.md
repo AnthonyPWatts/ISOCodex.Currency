@@ -65,7 +65,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.9.0-alpha.6`
+- Version: `0.9.0-alpha.7`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -73,7 +73,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.9.0-alpha.6
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.7
 ```
 
 ## Quick start
@@ -309,7 +309,7 @@ JSON support lives in optional packages so the core package remains independent 
 ### System.Text.Json
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.6
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.7
 ```
 
 Register the converters explicitly:
@@ -328,7 +328,7 @@ options.Converters.Add(new MoneyJsonConverter());
 ### Newtonsoft.Json
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 0.9.0-alpha.6
+dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 0.9.0-alpha.7
 ```
 
 Register the converters explicitly:
@@ -349,7 +349,7 @@ The Newtonsoft.Json package uses the same default wire shape and validation sema
 Country/currency validation lives in the optional `ISOCodex.Currency.Countries` package. The core package does not depend on `ISOCodex.Countries`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.6
+dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.7
 ```
 
 The initial bridge seed is deliberately small:
@@ -372,7 +372,7 @@ The seed currently covers GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD
 Provider-neutral exchange contracts live in the optional `ISOCodex.Currency.Exchange.Abstractions` package. The core package does not include live rates and does not make network calls.
 
 ```bash
-dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.6
+dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.7
 ```
 
 The initial converter supports direct rates only and requires an explicit rounding policy:
@@ -400,7 +400,7 @@ Applications provide their own `IExchangeRateProvider`. `ConversionResult` expos
 Analyzer support lives in the optional `ISOCodex.Currency.Analyzers` package.
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.6" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.7" PrivateAssets="all" />
 ```
 
 The initial rule is `ISOCCUR001`, which warns on `default(Money)` and `default` literals converted to `Money`. Use `Money.Zero(currency)` or `Money.Of(amount, currency)` instead.
@@ -478,7 +478,7 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 
 ## Current limitations
 
-- Currency data is currently generated from a pinned checked-in seed, not a full ISO/CLDR snapshot.
+- Currency data is generated from pinned checked-in SIX ISO 4217 and Unicode CLDR source files. It is a derived metadata snapshot, not an official ISO 4217 redistribution.
 - Formatting is intended for display, not persistence. Store amount and currency code separately.
 - Money parsing is conservative and does not infer a currency from ambiguous symbols without an expected currency.
 - JSON converters are available in the optional `ISOCodex.Currency.Json.SystemTextJson` and `ISOCodex.Currency.Json.NewtonsoftJson` packages.
@@ -498,32 +498,33 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.6 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.7 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
-pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.6
-pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.6
+pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.7
+pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.7
 ```
 
 ## Currency data workflow
 
-The current pre-1.0 registry is generated from `data/source/currency-data.seed.json`, pinned by `data/source/currency-data.manifest.json`:
+The current pre-1.0 registry is generated from a derived JSON snapshot built from checked-in SIX ISO 4217 and Unicode CLDR source files, pinned by `data/source/currency-data.manifest.json`:
 
 ```powershell
+pwsh ./scripts/build-currency-data-snapshot.ps1
 pwsh ./scripts/update-currency-data.ps1
 dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
-The manifest records the normalized UTF-8/LF source SHA-256, entry count, checked date, and runtime provenance values. The seed is deliberately small. A later data epic should replace it with pinned SIX ISO 4217 and Unicode CLDR source files.
+The manifest records normalized UTF-8/LF SHA-256 values for the derived snapshot and raw upstream source files, the derived entry count, checked date, and runtime provenance values. The snapshot currently contains 178 current SIX List One currency/fund codes and CLDR cash-fraction/territory metadata where available.
 
 Runtime code can log the packaged data provenance:
 
 ```csharp
-Console.WriteLine(CurrencyDataVersion.Identifier);  // seed-2026-06-22-7d26419d
-Console.WriteLine(CurrencyDataVersion.SourceKind);  // CheckedInSeed
+Console.WriteLine(CurrencyDataVersion.Identifier);  // iso4217-cldr-2026-06-22-c1f3aaea
+Console.WriteLine(CurrencyDataVersion.SourceKind);  // SIX-ISO4217+Unicode-CLDR
 Console.WriteLine(CurrencyDataVersion.CheckedOn);   // 2026-06-22 UTC midnight
-Console.WriteLine(CurrencyDataVersion.Description); // pinned checked-in prerelease seed; not a full ISO/CLDR snapshot
+Console.WriteLine(CurrencyDataVersion.Description); // pinned SIX/CLDR snapshot; not an official ISO redistribution
 ```

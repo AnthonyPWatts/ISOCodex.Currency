@@ -1,34 +1,34 @@
 # Currency Data Sources
 
-The current data set is a curated pre-1.0 seed, generated from `data/source/currency-data.seed.json` by `scripts/update-currency-data.ps1`.
+The current data set is generated from checked-in SIX ISO 4217 and Unicode CLDR source files.
 
-It is intentionally small and reviewable. It is pinned by `data/source/currency-data.manifest.json`, which records the normalized UTF-8/LF source SHA-256, entry count, checked date, and generated runtime provenance values. It is not yet a complete ISO 4217 list.
+It is pinned by `data/source/currency-data.manifest.json`, which records normalized UTF-8/LF SHA-256 values for:
 
-## Current generation workflow
+- `data/source/currency-data.snapshot.json`
+- `data/source/upstream/six/list-one.xml`
+- `data/source/upstream/cldr/supplementalData.xml`
+
+The generated registry contains 178 current SIX List One currency/fund codes. CLDR supplies cash fraction metadata and current territory-to-currency relationships where available.
+
+## Current Generation Workflow
 
 From the repository root:
 
 ```powershell
+pwsh ./scripts/build-currency-data-snapshot.ps1
 pwsh ./scripts/update-currency-data.ps1
 dotnet test ISOCodex.Currency.sln --filter CurrencyData
 ```
 
-Review `data/source/currency-data.seed.json`, `data/source/currency-data.manifest.json`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` together.
+Review `data/source/currency-data.snapshot.json`, `data/source/currency-data.manifest.json`, `data/source/upstream/`, `src/Currency/Data/CurrencyData.generated.cs`, and `src/Currency/Data/CurrencyDataVersion.cs` together.
 
-## Source provenance
+## Source Provenance
 
-The current seed manifest was checked on 2026-06-22. Source locations were last checked on 2026-06-19:
+The current manifest was checked on 2026-06-22.
 
-- ISO describes ISO 4217 as the international standard for alphabetic and numeric currency codes and links to the SIX-hosted XLS/XML code lists.
 - SIX identifies itself as the official ISO 4217 Maintenance Agency and publishes current and historical currency code lists online free of charge.
+- The checked-in SIX List One XML reports `Pblshd="2026-01-01"`.
 - Unicode CLDR documents supplemental currency data, including `digits`, `rounding`, `cashDigits`, and `cashRounding` attributes.
 - The CLDR repository stores this data in `common/supplemental/supplementalData.xml`.
 
-## Future full-data workflow
-
-A later data epic should replace this seed with pinned source downloads:
-
-- SIX ISO 4217 List One XML for current currencies and funds.
-- Unicode CLDR `common/supplemental/supplementalData.xml` for fraction, cash digit, and cash rounding metadata.
-
-The generator should merge those source files into the public registry and record exact source dates or upstream revisions.
+This package data is a derived metadata snapshot and is not an official ISO 4217 redistribution.

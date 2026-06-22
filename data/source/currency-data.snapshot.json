@@ -1,0 +1,2088 @@
+[
+    {
+        "code":  "AED",
+        "numericCode":  "784",
+        "englishName":  "UAE Dirham",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AE"
+                        ]
+    },
+    {
+        "code":  "AFN",
+        "numericCode":  "971",
+        "englishName":  "Afghani",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AF"
+                        ]
+    },
+    {
+        "code":  "ALL",
+        "numericCode":  "008",
+        "englishName":  "Lek",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AL"
+                        ]
+    },
+    {
+        "code":  "AMD",
+        "numericCode":  "051",
+        "englishName":  "Armenian Dram",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AM"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "AOA",
+        "numericCode":  "973",
+        "englishName":  "Kwanza",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AO"
+                        ]
+    },
+    {
+        "code":  "ARS",
+        "numericCode":  "032",
+        "englishName":  "Argentine Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AR"
+                        ]
+    },
+    {
+        "code":  "AUD",
+        "numericCode":  "036",
+        "englishName":  "Australian Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AU",
+                            "CC",
+                            "CX",
+                            "HM",
+                            "KI",
+                            "NF",
+                            "NR",
+                            "TV"
+                        ]
+    },
+    {
+        "code":  "AWG",
+        "numericCode":  "533",
+        "englishName":  "Aruban Florin",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AW"
+                        ]
+    },
+    {
+        "code":  "AZN",
+        "numericCode":  "944",
+        "englishName":  "Azerbaijan Manat",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AZ"
+                        ]
+    },
+    {
+        "code":  "BAM",
+        "numericCode":  "977",
+        "englishName":  "Convertible Mark",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BA"
+                        ]
+    },
+    {
+        "code":  "BBD",
+        "numericCode":  "052",
+        "englishName":  "Barbados Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BB"
+                        ]
+    },
+    {
+        "code":  "BDT",
+        "numericCode":  "050",
+        "englishName":  "Taka",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BD"
+                        ]
+    },
+    {
+        "code":  "BHD",
+        "numericCode":  "048",
+        "englishName":  "Bahraini Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BH"
+                        ]
+    },
+    {
+        "code":  "BIF",
+        "numericCode":  "108",
+        "englishName":  "Burundi Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BI"
+                        ]
+    },
+    {
+        "code":  "BMD",
+        "numericCode":  "060",
+        "englishName":  "Bermudian Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BM"
+                        ]
+    },
+    {
+        "code":  "BND",
+        "numericCode":  "096",
+        "englishName":  "Brunei Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BN"
+                        ]
+    },
+    {
+        "code":  "BOB",
+        "numericCode":  "068",
+        "englishName":  "Boliviano",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BO"
+                        ]
+    },
+    {
+        "code":  "BOV",
+        "numericCode":  "984",
+        "englishName":  "Mvdol",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "BRL",
+        "numericCode":  "986",
+        "englishName":  "Brazilian Real",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BR"
+                        ]
+    },
+    {
+        "code":  "BSD",
+        "numericCode":  "044",
+        "englishName":  "Bahamian Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BS"
+                        ]
+    },
+    {
+        "code":  "BTN",
+        "numericCode":  "064",
+        "englishName":  "Ngultrum",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BT"
+                        ]
+    },
+    {
+        "code":  "BWP",
+        "numericCode":  "072",
+        "englishName":  "Pula",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BW"
+                        ]
+    },
+    {
+        "code":  "BYN",
+        "numericCode":  "933",
+        "englishName":  "Belarusian Ruble",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BY"
+                        ]
+    },
+    {
+        "code":  "BZD",
+        "numericCode":  "084",
+        "englishName":  "Belize Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BZ"
+                        ]
+    },
+    {
+        "code":  "CAD",
+        "numericCode":  "124",
+        "englishName":  "Canadian Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CA"
+                        ],
+        "cashRoundingIncrement":  0.05
+    },
+    {
+        "code":  "CDF",
+        "numericCode":  "976",
+        "englishName":  "Congolese Franc",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CD"
+                        ]
+    },
+    {
+        "code":  "CHE",
+        "numericCode":  "947",
+        "englishName":  "WIR Euro",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "CHF",
+        "numericCode":  "756",
+        "englishName":  "Swiss Franc",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CH",
+                            "LI"
+                        ],
+        "cashRoundingIncrement":  0.05
+    },
+    {
+        "code":  "CHW",
+        "numericCode":  "948",
+        "englishName":  "WIR Franc",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "CLF",
+        "numericCode":  "990",
+        "englishName":  "Unidad de Fomento",
+        "decimalPlaces":  4,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "CLP",
+        "numericCode":  "152",
+        "englishName":  "Chilean Peso",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CL"
+                        ]
+    },
+    {
+        "code":  "CNY",
+        "numericCode":  "156",
+        "englishName":  "Yuan Renminbi",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CN"
+                        ]
+    },
+    {
+        "code":  "COP",
+        "numericCode":  "170",
+        "englishName":  "Colombian Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CO"
+                        ]
+    },
+    {
+        "code":  "COU",
+        "numericCode":  "970",
+        "englishName":  "Unidad de Valor Real",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "CRC",
+        "numericCode":  "188",
+        "englishName":  "Costa Rican Colon",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CR"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "CUP",
+        "numericCode":  "192",
+        "englishName":  "Cuban Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CU"
+                        ]
+    },
+    {
+        "code":  "CVE",
+        "numericCode":  "132",
+        "englishName":  "Cabo Verde Escudo",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CV"
+                        ]
+    },
+    {
+        "code":  "CZK",
+        "numericCode":  "203",
+        "englishName":  "Czech Koruna",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CZ"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "DJF",
+        "numericCode":  "262",
+        "englishName":  "Djibouti Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "DJ"
+                        ]
+    },
+    {
+        "code":  "DKK",
+        "numericCode":  "208",
+        "englishName":  "Danish Krone",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "DK",
+                            "FO",
+                            "GL"
+                        ],
+        "cashRoundingIncrement":  0.5
+    },
+    {
+        "code":  "DOP",
+        "numericCode":  "214",
+        "englishName":  "Dominican Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "DO"
+                        ]
+    },
+    {
+        "code":  "DZD",
+        "numericCode":  "012",
+        "englishName":  "Algerian Dinar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "DZ"
+                        ]
+    },
+    {
+        "code":  "EGP",
+        "numericCode":  "818",
+        "englishName":  "Egyptian Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "EG"
+                        ]
+    },
+    {
+        "code":  "ERN",
+        "numericCode":  "232",
+        "englishName":  "Nakfa",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ER"
+                        ]
+    },
+    {
+        "code":  "ETB",
+        "numericCode":  "230",
+        "englishName":  "Ethiopian Birr",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ET"
+                        ]
+    },
+    {
+        "code":  "EUR",
+        "numericCode":  "978",
+        "englishName":  "Euro",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AD",
+                            "AT",
+                            "AX",
+                            "BE",
+                            "BG",
+                            "BL",
+                            "CY",
+                            "DE",
+                            "EA",
+                            "EE",
+                            "ES",
+                            "EU",
+                            "FI",
+                            "FR",
+                            "GF",
+                            "GP",
+                            "GR",
+                            "HR",
+                            "IC",
+                            "IE",
+                            "IT",
+                            "LT",
+                            "LU",
+                            "LV",
+                            "MC",
+                            "ME",
+                            "MF",
+                            "MQ",
+                            "MT",
+                            "NL",
+                            "PM",
+                            "PT",
+                            "RE",
+                            "SI",
+                            "SK",
+                            "SM",
+                            "TF",
+                            "VA",
+                            "XK",
+                            "YT"
+                        ]
+    },
+    {
+        "code":  "FJD",
+        "numericCode":  "242",
+        "englishName":  "Fiji Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "FJ"
+                        ]
+    },
+    {
+        "code":  "FKP",
+        "numericCode":  "238",
+        "englishName":  "Falkland Islands Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "FK"
+                        ]
+    },
+    {
+        "code":  "GBP",
+        "numericCode":  "826",
+        "englishName":  "Pound Sterling",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GB",
+                            "GG",
+                            "GS",
+                            "IM",
+                            "JE",
+                            "TA"
+                        ]
+    },
+    {
+        "code":  "GEL",
+        "numericCode":  "981",
+        "englishName":  "Lari",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GE"
+                        ]
+    },
+    {
+        "code":  "GHS",
+        "numericCode":  "936",
+        "englishName":  "Ghana Cedi",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GH"
+                        ]
+    },
+    {
+        "code":  "GIP",
+        "numericCode":  "292",
+        "englishName":  "Gibraltar Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GI"
+                        ]
+    },
+    {
+        "code":  "GMD",
+        "numericCode":  "270",
+        "englishName":  "Dalasi",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GM"
+                        ]
+    },
+    {
+        "code":  "GNF",
+        "numericCode":  "324",
+        "englishName":  "Guinean Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GN"
+                        ]
+    },
+    {
+        "code":  "GTQ",
+        "numericCode":  "320",
+        "englishName":  "Quetzal",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GT"
+                        ]
+    },
+    {
+        "code":  "GYD",
+        "numericCode":  "328",
+        "englishName":  "Guyana Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "GY"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "HKD",
+        "numericCode":  "344",
+        "englishName":  "Hong Kong Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "HK"
+                        ]
+    },
+    {
+        "code":  "HNL",
+        "numericCode":  "340",
+        "englishName":  "Lempira",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "HN"
+                        ]
+    },
+    {
+        "code":  "HTG",
+        "numericCode":  "332",
+        "englishName":  "Gourde",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "HT"
+                        ]
+    },
+    {
+        "code":  "HUF",
+        "numericCode":  "348",
+        "englishName":  "Forint",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "HU"
+                        ],
+        "cashDecimalPlaces":  0,
+        "cashRoundingIncrement":  5
+    },
+    {
+        "code":  "IDR",
+        "numericCode":  "360",
+        "englishName":  "Rupiah",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ID"
+                        ]
+    },
+    {
+        "code":  "ILS",
+        "numericCode":  "376",
+        "englishName":  "New Israeli Sheqel",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "IL",
+                            "PS"
+                        ]
+    },
+    {
+        "code":  "INR",
+        "numericCode":  "356",
+        "englishName":  "Indian Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BT",
+                            "IN"
+                        ]
+    },
+    {
+        "code":  "IQD",
+        "numericCode":  "368",
+        "englishName":  "Iraqi Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "IQ"
+                        ]
+    },
+    {
+        "code":  "IRR",
+        "numericCode":  "364",
+        "englishName":  "Iranian Rial",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "IR"
+                        ]
+    },
+    {
+        "code":  "ISK",
+        "numericCode":  "352",
+        "englishName":  "Iceland Krona",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "IS"
+                        ]
+    },
+    {
+        "code":  "JMD",
+        "numericCode":  "388",
+        "englishName":  "Jamaican Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "JM"
+                        ]
+    },
+    {
+        "code":  "JOD",
+        "numericCode":  "400",
+        "englishName":  "Jordanian Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "JO",
+                            "PS"
+                        ]
+    },
+    {
+        "code":  "JPY",
+        "numericCode":  "392",
+        "englishName":  "Yen",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "JP"
+                        ]
+    },
+    {
+        "code":  "KES",
+        "numericCode":  "404",
+        "englishName":  "Kenyan Shilling",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KE"
+                        ]
+    },
+    {
+        "code":  "KGS",
+        "numericCode":  "417",
+        "englishName":  "Som",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KG"
+                        ]
+    },
+    {
+        "code":  "KHR",
+        "numericCode":  "116",
+        "englishName":  "Riel",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KH"
+                        ]
+    },
+    {
+        "code":  "KMF",
+        "numericCode":  "174",
+        "englishName":  "Comorian Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KM"
+                        ]
+    },
+    {
+        "code":  "KPW",
+        "numericCode":  "408",
+        "englishName":  "North Korean Won",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KP"
+                        ]
+    },
+    {
+        "code":  "KRW",
+        "numericCode":  "410",
+        "englishName":  "Won",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KR"
+                        ]
+    },
+    {
+        "code":  "KWD",
+        "numericCode":  "414",
+        "englishName":  "Kuwaiti Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KW"
+                        ]
+    },
+    {
+        "code":  "KYD",
+        "numericCode":  "136",
+        "englishName":  "Cayman Islands Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KY"
+                        ]
+    },
+    {
+        "code":  "KZT",
+        "numericCode":  "398",
+        "englishName":  "Tenge",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "KZ"
+                        ]
+    },
+    {
+        "code":  "LAK",
+        "numericCode":  "418",
+        "englishName":  "Lao Kip",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LA"
+                        ]
+    },
+    {
+        "code":  "LBP",
+        "numericCode":  "422",
+        "englishName":  "Lebanese Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LB"
+                        ]
+    },
+    {
+        "code":  "LKR",
+        "numericCode":  "144",
+        "englishName":  "Sri Lanka Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LK"
+                        ]
+    },
+    {
+        "code":  "LRD",
+        "numericCode":  "430",
+        "englishName":  "Liberian Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LR"
+                        ]
+    },
+    {
+        "code":  "LSL",
+        "numericCode":  "426",
+        "englishName":  "Loti",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LS"
+                        ]
+    },
+    {
+        "code":  "LYD",
+        "numericCode":  "434",
+        "englishName":  "Libyan Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LY"
+                        ]
+    },
+    {
+        "code":  "MAD",
+        "numericCode":  "504",
+        "englishName":  "Moroccan Dirham",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "EH",
+                            "MA"
+                        ]
+    },
+    {
+        "code":  "MDL",
+        "numericCode":  "498",
+        "englishName":  "Moldovan Leu",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MD"
+                        ]
+    },
+    {
+        "code":  "MGA",
+        "numericCode":  "969",
+        "englishName":  "Malagasy Ariary",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MG"
+                        ]
+    },
+    {
+        "code":  "MKD",
+        "numericCode":  "807",
+        "englishName":  "Denar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MK"
+                        ]
+    },
+    {
+        "code":  "MMK",
+        "numericCode":  "104",
+        "englishName":  "Kyat",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MM"
+                        ]
+    },
+    {
+        "code":  "MNT",
+        "numericCode":  "496",
+        "englishName":  "Tugrik",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MN"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "MOP",
+        "numericCode":  "446",
+        "englishName":  "Pataca",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MO"
+                        ]
+    },
+    {
+        "code":  "MRU",
+        "numericCode":  "929",
+        "englishName":  "Ouguiya",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MR"
+                        ],
+        "cashDecimalPlaces":  2,
+        "cashRoundingIncrement":  0.2
+    },
+    {
+        "code":  "MUR",
+        "numericCode":  "480",
+        "englishName":  "Mauritius Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MU"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "MVR",
+        "numericCode":  "462",
+        "englishName":  "Rufiyaa",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MV"
+                        ]
+    },
+    {
+        "code":  "MWK",
+        "numericCode":  "454",
+        "englishName":  "Malawi Kwacha",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MW"
+                        ]
+    },
+    {
+        "code":  "MXN",
+        "numericCode":  "484",
+        "englishName":  "Mexican Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MX"
+                        ]
+    },
+    {
+        "code":  "MXV",
+        "numericCode":  "979",
+        "englishName":  "Mexican Unidad de Inversion (UDI)",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "MYR",
+        "numericCode":  "458",
+        "englishName":  "Malaysian Ringgit",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MY"
+                        ]
+    },
+    {
+        "code":  "MZN",
+        "numericCode":  "943",
+        "englishName":  "Mozambique Metical",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "MZ"
+                        ]
+    },
+    {
+        "code":  "NAD",
+        "numericCode":  "516",
+        "englishName":  "Namibia Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "NA"
+                        ]
+    },
+    {
+        "code":  "NGN",
+        "numericCode":  "566",
+        "englishName":  "Naira",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "NG"
+                        ]
+    },
+    {
+        "code":  "NIO",
+        "numericCode":  "558",
+        "englishName":  "Cordoba Oro",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "NI"
+                        ]
+    },
+    {
+        "code":  "NOK",
+        "numericCode":  "578",
+        "englishName":  "Norwegian Krone",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BV",
+                            "NO",
+                            "SJ"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "NPR",
+        "numericCode":  "524",
+        "englishName":  "Nepalese Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "NP"
+                        ]
+    },
+    {
+        "code":  "NZD",
+        "numericCode":  "554",
+        "englishName":  "New Zealand Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CK",
+                            "NU",
+                            "NZ",
+                            "PN",
+                            "TK"
+                        ]
+    },
+    {
+        "code":  "OMR",
+        "numericCode":  "512",
+        "englishName":  "Rial Omani",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "OM"
+                        ]
+    },
+    {
+        "code":  "PAB",
+        "numericCode":  "590",
+        "englishName":  "Balboa",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PA"
+                        ]
+    },
+    {
+        "code":  "PEN",
+        "numericCode":  "604",
+        "englishName":  "Sol",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PE"
+                        ]
+    },
+    {
+        "code":  "PGK",
+        "numericCode":  "598",
+        "englishName":  "Kina",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PG"
+                        ]
+    },
+    {
+        "code":  "PHP",
+        "numericCode":  "608",
+        "englishName":  "Philippine Peso",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PH"
+                        ]
+    },
+    {
+        "code":  "PKR",
+        "numericCode":  "586",
+        "englishName":  "Pakistan Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PK"
+                        ]
+    },
+    {
+        "code":  "PLN",
+        "numericCode":  "985",
+        "englishName":  "Zloty",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PL"
+                        ]
+    },
+    {
+        "code":  "PYG",
+        "numericCode":  "600",
+        "englishName":  "Guarani",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "PY"
+                        ]
+    },
+    {
+        "code":  "QAR",
+        "numericCode":  "634",
+        "englishName":  "Qatari Rial",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "QA"
+                        ]
+    },
+    {
+        "code":  "RON",
+        "numericCode":  "946",
+        "englishName":  "Romanian Leu",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "RO"
+                        ]
+    },
+    {
+        "code":  "RSD",
+        "numericCode":  "941",
+        "englishName":  "Serbian Dinar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "RS"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "RUB",
+        "numericCode":  "643",
+        "englishName":  "Russian Ruble",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "RU"
+                        ]
+    },
+    {
+        "code":  "RWF",
+        "numericCode":  "646",
+        "englishName":  "Rwanda Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "RW"
+                        ]
+    },
+    {
+        "code":  "SAR",
+        "numericCode":  "682",
+        "englishName":  "Saudi Riyal",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SA"
+                        ]
+    },
+    {
+        "code":  "SBD",
+        "numericCode":  "090",
+        "englishName":  "Solomon Islands Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SB"
+                        ]
+    },
+    {
+        "code":  "SCR",
+        "numericCode":  "690",
+        "englishName":  "Seychelles Rupee",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SC"
+                        ]
+    },
+    {
+        "code":  "SDG",
+        "numericCode":  "938",
+        "englishName":  "Sudanese Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SD"
+                        ]
+    },
+    {
+        "code":  "SEK",
+        "numericCode":  "752",
+        "englishName":  "Swedish Krona",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SE"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "SGD",
+        "numericCode":  "702",
+        "englishName":  "Singapore Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SG"
+                        ]
+    },
+    {
+        "code":  "SHP",
+        "numericCode":  "654",
+        "englishName":  "Saint Helena Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AC",
+                            "SH"
+                        ]
+    },
+    {
+        "code":  "SLE",
+        "numericCode":  "925",
+        "englishName":  "Leone",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SL"
+                        ]
+    },
+    {
+        "code":  "SOS",
+        "numericCode":  "706",
+        "englishName":  "Somali Shilling",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SO"
+                        ]
+    },
+    {
+        "code":  "SRD",
+        "numericCode":  "968",
+        "englishName":  "Surinam Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SR"
+                        ]
+    },
+    {
+        "code":  "SSP",
+        "numericCode":  "728",
+        "englishName":  "South Sudanese Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SS"
+                        ]
+    },
+    {
+        "code":  "STN",
+        "numericCode":  "930",
+        "englishName":  "Dobra",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ST"
+                        ]
+    },
+    {
+        "code":  "SVC",
+        "numericCode":  "222",
+        "englishName":  "El Salvador Colon",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "SYP",
+        "numericCode":  "760",
+        "englishName":  "Syrian Pound",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SY"
+                        ]
+    },
+    {
+        "code":  "SZL",
+        "numericCode":  "748",
+        "englishName":  "Lilangeni",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "SZ"
+                        ]
+    },
+    {
+        "code":  "THB",
+        "numericCode":  "764",
+        "englishName":  "Baht",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TH"
+                        ]
+    },
+    {
+        "code":  "TJS",
+        "numericCode":  "972",
+        "englishName":  "Somoni",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TJ"
+                        ]
+    },
+    {
+        "code":  "TMT",
+        "numericCode":  "934",
+        "englishName":  "Turkmenistan New Manat",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TM"
+                        ]
+    },
+    {
+        "code":  "TND",
+        "numericCode":  "788",
+        "englishName":  "Tunisian Dinar",
+        "decimalPlaces":  3,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TN"
+                        ]
+    },
+    {
+        "code":  "TOP",
+        "numericCode":  "776",
+        "englishName":  "Pa’anga",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TO"
+                        ]
+    },
+    {
+        "code":  "TRY",
+        "numericCode":  "949",
+        "englishName":  "Turkish Lira",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TR"
+                        ]
+    },
+    {
+        "code":  "TTD",
+        "numericCode":  "780",
+        "englishName":  "Trinidad and Tobago Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TT"
+                        ]
+    },
+    {
+        "code":  "TWD",
+        "numericCode":  "901",
+        "englishName":  "New Taiwan Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TW"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "TZS",
+        "numericCode":  "834",
+        "englishName":  "Tanzanian Shilling",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "TZ"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "UAH",
+        "numericCode":  "980",
+        "englishName":  "Hryvnia",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "UA"
+                        ]
+    },
+    {
+        "code":  "UGX",
+        "numericCode":  "800",
+        "englishName":  "Uganda Shilling",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "UG"
+                        ]
+    },
+    {
+        "code":  "USD",
+        "numericCode":  "840",
+        "englishName":  "US Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AS",
+                            "BQ",
+                            "DG",
+                            "EC",
+                            "FM",
+                            "GU",
+                            "HT",
+                            "IO",
+                            "MH",
+                            "MP",
+                            "PA",
+                            "PR",
+                            "PW",
+                            "SV",
+                            "TC",
+                            "TL",
+                            "UM",
+                            "US",
+                            "VG",
+                            "VI",
+                            "ZW"
+                        ]
+    },
+    {
+        "code":  "USN",
+        "numericCode":  "997",
+        "englishName":  "US Dollar (Next day)",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "UYI",
+        "numericCode":  "940",
+        "englishName":  "Uruguay Peso en Unidades Indexadas (UI)",
+        "decimalPlaces":  0,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "UYU",
+        "numericCode":  "858",
+        "englishName":  "Peso Uruguayo",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "UY"
+                        ]
+    },
+    {
+        "code":  "UYW",
+        "numericCode":  "927",
+        "englishName":  "Unidad Previsional",
+        "decimalPlaces":  4,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "UZS",
+        "numericCode":  "860",
+        "englishName":  "Uzbekistan Sum",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "UZ"
+                        ],
+        "cashDecimalPlaces":  0
+    },
+    {
+        "code":  "VED",
+        "numericCode":  "926",
+        "englishName":  "Bolívar Soberano",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "VES",
+        "numericCode":  "928",
+        "englishName":  "Bolívar Soberano",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "VE"
+                        ]
+    },
+    {
+        "code":  "VND",
+        "numericCode":  "704",
+        "englishName":  "Dong",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "VN"
+                        ]
+    },
+    {
+        "code":  "VUV",
+        "numericCode":  "548",
+        "englishName":  "Vatu",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "VU"
+                        ]
+    },
+    {
+        "code":  "WST",
+        "numericCode":  "882",
+        "englishName":  "Tala",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "WS"
+                        ]
+    },
+    {
+        "code":  "XAD",
+        "numericCode":  "396",
+        "englishName":  "Arab Accounting Dinar",
+        "decimalPlaces":  2,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XAF",
+        "numericCode":  "950",
+        "englishName":  "CFA Franc BEAC",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CF",
+                            "CG",
+                            "CM",
+                            "GA",
+                            "GQ",
+                            "TD"
+                        ]
+    },
+    {
+        "code":  "XAG",
+        "numericCode":  "961",
+        "englishName":  "Silver",
+        "decimalPlaces":  null,
+        "kind":  "PreciousMetal",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XAU",
+        "numericCode":  "959",
+        "englishName":  "Gold",
+        "decimalPlaces":  null,
+        "kind":  "PreciousMetal",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XBA",
+        "numericCode":  "955",
+        "englishName":  "Bond Markets Unit European Composite Unit (EURCO)",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XBB",
+        "numericCode":  "956",
+        "englishName":  "Bond Markets Unit European Monetary Unit (E.M.U.-6)",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XBC",
+        "numericCode":  "957",
+        "englishName":  "Bond Markets Unit European Unit of Account 9 (E.U.A.-9)",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XBD",
+        "numericCode":  "958",
+        "englishName":  "Bond Markets Unit European Unit of Account 17 (E.U.A.-17)",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XCD",
+        "numericCode":  "951",
+        "englishName":  "East Caribbean Dollar",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "AG",
+                            "AI",
+                            "DM",
+                            "GD",
+                            "KN",
+                            "LC",
+                            "MS",
+                            "VC"
+                        ]
+    },
+    {
+        "code":  "XCG",
+        "numericCode":  "532",
+        "englishName":  "Caribbean Guilder",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "CW",
+                            "SX"
+                        ]
+    },
+    {
+        "code":  "XDR",
+        "numericCode":  "960",
+        "englishName":  "SDR (Special Drawing Right)",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XOF",
+        "numericCode":  "952",
+        "englishName":  "CFA Franc BCEAO",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "BF",
+                            "BJ",
+                            "CI",
+                            "GW",
+                            "ML",
+                            "NE",
+                            "SN",
+                            "TG"
+                        ]
+    },
+    {
+        "code":  "XPD",
+        "numericCode":  "964",
+        "englishName":  "Palladium",
+        "decimalPlaces":  null,
+        "kind":  "PreciousMetal",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XPF",
+        "numericCode":  "953",
+        "englishName":  "CFP Franc",
+        "decimalPlaces":  0,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "NC",
+                            "PF",
+                            "WF"
+                        ]
+    },
+    {
+        "code":  "XPT",
+        "numericCode":  "962",
+        "englishName":  "Platinum",
+        "decimalPlaces":  null,
+        "kind":  "PreciousMetal",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XSU",
+        "numericCode":  "994",
+        "englishName":  "Sucre",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XTS",
+        "numericCode":  "963",
+        "englishName":  "Codes specifically reserved for testing purposes",
+        "decimalPlaces":  null,
+        "kind":  "Testing",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XUA",
+        "numericCode":  "965",
+        "englishName":  "ADB Unit of Account",
+        "decimalPlaces":  null,
+        "kind":  "Fund",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "XXX",
+        "numericCode":  "999",
+        "englishName":  "The codes assigned for transactions where no currency is involved",
+        "decimalPlaces":  null,
+        "kind":  "NoCurrency",
+        "isTender":  false,
+        "territories":  [
+
+                        ]
+    },
+    {
+        "code":  "YER",
+        "numericCode":  "886",
+        "englishName":  "Yemeni Rial",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "YE"
+                        ]
+    },
+    {
+        "code":  "ZAR",
+        "numericCode":  "710",
+        "englishName":  "Rand",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "LS",
+                            "NA",
+                            "ZA"
+                        ]
+    },
+    {
+        "code":  "ZMW",
+        "numericCode":  "967",
+        "englishName":  "Zambian Kwacha",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ZM"
+                        ]
+    },
+    {
+        "code":  "ZWG",
+        "numericCode":  "924",
+        "englishName":  "Zimbabwe Gold",
+        "decimalPlaces":  2,
+        "kind":  "NationalCurrency",
+        "isTender":  true,
+        "territories":  [
+                            "ZW"
+                        ]
+    }
+]

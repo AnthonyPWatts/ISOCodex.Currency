@@ -1,26 +1,41 @@
 {
-  "identifier": "seed-2026-06-22-7d26419d",
+  "identifier": "iso4217-cldr-2026-06-22-c1f3aaea",
   "checkedOn": "2026-06-22",
-  "sourceKind": "CheckedInSeed",
-  "description": "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; normalized UTF-8/LF SHA-256 7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573; not a full ISO/CLDR snapshot.",
+  "sourceKind": "SIX-ISO4217+Unicode-CLDR",
+  "description": "Pinned SIX ISO 4217 List One and Unicode CLDR supplemental currency data snapshot generated via scripts/build-currency-data-snapshot.ps1; derived JSON normalized UTF-8/LF SHA-256 c1f3aaea54949be9a7399a105dd61917a293dafb73171b9c1d3f6cf0b9179f95; not an official ISO 4217 redistribution.",
   "sources": [
     {
-      "path": "data/source/currency-data.seed.json",
-      "format": "ISOCodex.Currency seed JSON",
-      "sha256": "7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573",
-      "entryCount": 30,
-      "notes": "Curated prerelease seed used by the generated registry until the full ISO/CLDR data snapshot epic replaces it. The hash is calculated over normalized UTF-8 text with LF line endings."
+      "path": "data/source/currency-data.snapshot.json",
+      "format": "ISOCodex.Currency derived snapshot JSON",
+      "sha256": "c1f3aaea54949be9a7399a105dd61917a293dafb73171b9c1d3f6cf0b9179f95",
+      "entryCount": 178,
+      "notes": "Generated from pinned SIX ISO 4217 List One XML and Unicode CLDR supplementalData.xml by scripts/build-currency-data-snapshot.ps1. The hash is calculated over normalized UTF-8 text with LF line endings."
+    },
+    {
+      "path": "data/source/upstream/six/list-one.xml",
+      "format": "SIX ISO 4217 List One XML",
+      "sourceUrl": "https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml",
+      "publishedOn": "2026-01-01",
+      "sha256": "dabcba431ae77cc18100c3eb5d130a75dcbf56e6a1df9f85a29e6f6d18f1ea43",
+      "notes": "Official ISO 4217 Maintenance Agency current currency and funds code list. The XML source is checked in and pinned by normalized UTF-8/LF SHA-256."
+    },
+    {
+      "path": "data/source/upstream/cldr/supplementalData.xml",
+      "format": "Unicode CLDR supplementalData.xml",
+      "sourceUrl": "https://raw.githubusercontent.com/unicode-org/cldr/main/common/supplemental/supplementalData.xml",
+      "sha256": "4a09ec8b912746517c8e8e8bec883b158ae77489f9ba29fef743095e40602e3d",
+      "notes": "Unicode CLDR supplemental currency fraction and territory currency data. The XML source is checked in and pinned by normalized UTF-8/LF SHA-256."
     }
   ],
   "upstreamReferences": [
     {
       "name": "SIX ISO 4217 currency and funds code list",
-      "usage": "Reference source for ISO-style alpha-3 code, numeric code, English name, and minor-unit fields."
+      "usage": "Authoritative source for current ISO 4217 alpha-3 code, numeric code, English name, and standard minor-unit fields."
     },
     {
       "name": "Unicode CLDR supplemental currency data",
-      "usage": "Reference source for decimal and cash fraction metadata where used."
+      "usage": "Source for cash fraction metadata and current territory-to-currency relationships."
     }
   ],
-  "redistributionNotice": "This package data is a derived, curated metadata snapshot and is not an official ISO 4217 redistribution."
+  "redistributionNotice": "This package data is a derived metadata snapshot and is not an official ISO 4217 redistribution."
 }

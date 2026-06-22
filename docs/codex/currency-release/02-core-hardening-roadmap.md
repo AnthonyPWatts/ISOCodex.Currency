@@ -184,7 +184,7 @@ public static class CurrencyDataVersion
 
 The implemented API uses `DateTime` rather than `DateOnly` because the core package targets `netstandard2.1`.
 
-For the current seed, values can be explicit:
+For the initial seed implementation, values can be explicit:
 
 ```text
 Identifier: seed-0.1.0-alpha.4
@@ -289,7 +289,7 @@ Status: implemented in `0.9.0-alpha.6`.
 
 ## Post-0.1.0 data epic — full auditable currency data snapshot
 
-Status: auditability foundation implemented in `0.9.0-alpha.4`; full ISO/CLDR source replacement remains pending.
+Status: implemented in `0.9.0-alpha.7`.
 
 This is not required for the first NuGet release, but it is the highest credibility improvement after release.
 

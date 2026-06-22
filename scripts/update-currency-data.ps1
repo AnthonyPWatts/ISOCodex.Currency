@@ -1,5 +1,5 @@
 param(
-    [string] $SourcePath = "data/source/currency-data.seed.json",
+    [string] $SourcePath = "data/source/currency-data.snapshot.json",
     [string] $ManifestPath = "data/source/currency-data.manifest.json",
     [string] $OutputPath = "src/Currency/Data/CurrencyData.generated.cs",
     [string] $VersionOutputPath = "src/Currency/Data/CurrencyDataVersion.cs"
@@ -60,37 +60,51 @@ function Get-NormalizedSourceSha256 {
     }
 }
 
+function Resolve-ManifestSourcePath {
+    param([string] $Path)
+
+    $manifestSourcePath = $Path.Replace('/', [IO.Path]::DirectorySeparatorChar)
+    return (Resolve-Path $manifestSourcePath).Path
+}
+
 $source = (Resolve-Path $SourcePath).Path
 $manifestFile = (Resolve-Path $ManifestPath).Path
 $output = Join-Path (Get-Location) $OutputPath
 $versionOutput = Join-Path (Get-Location) $VersionOutputPath
-$manifest = Get-Content -LiteralPath $manifestFile -Raw | ConvertFrom-Json
+$utf8Strict = [Text.UTF8Encoding]::new($false, $true)
+$manifest = [IO.File]::ReadAllText($manifestFile, $utf8Strict) | ConvertFrom-Json
 $manifestSources = @($manifest.sources)
 
-if ($manifestSources.Count -ne 1) {
-    throw "Expected one manifest source entry in '$ManifestPath'."
+if ($manifestSources.Count -eq 0) {
+    throw "Expected at least one manifest source entry in '$ManifestPath'."
 }
 
-$manifestSource = $manifestSources[0]
-$manifestSourcePath = ([string]$manifestSource.path).Replace('/', [IO.Path]::DirectorySeparatorChar)
-$resolvedManifestSource = (Resolve-Path $manifestSourcePath).Path
+$manifestSource = $null
 
-if (-not [string]::Equals($source, $resolvedManifestSource, [StringComparison]::OrdinalIgnoreCase)) {
-    throw "Manifest source '$($manifestSource.path)' does not match SourcePath '$SourcePath'."
+foreach ($sourceEntry in $manifestSources) {
+    $resolvedManifestSource = Resolve-ManifestSourcePath ([string]$sourceEntry.path)
+    $actualSourceHash = Get-NormalizedSourceSha256 $resolvedManifestSource
+    $expectedSourceHash = ([string]$sourceEntry.sha256).ToLowerInvariant()
+
+    if (-not [string]::Equals($actualSourceHash, $expectedSourceHash, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Source hash mismatch for '$($sourceEntry.path)'. Expected '$expectedSourceHash' but found '$actualSourceHash'."
+    }
+
+    if ([string]::Equals($source, $resolvedManifestSource, [StringComparison]::OrdinalIgnoreCase)) {
+        $manifestSource = $sourceEntry
+        $actualHash = $actualSourceHash
+    }
 }
 
-$actualHash = Get-NormalizedSourceSha256 $source
-$expectedHash = ([string]$manifestSource.sha256).ToLowerInvariant()
-
-if (-not [string]::Equals($actualHash, $expectedHash, [StringComparison]::OrdinalIgnoreCase)) {
-    throw "Source hash mismatch for '$SourcePath'. Expected '$expectedHash' but found '$actualHash'."
+if ($null -eq $manifestSource) {
+    throw "Manifest sources do not include SourcePath '$SourcePath'."
 }
 
 $checkedOn = [DateTime]::ParseExact([string]$manifest.checkedOn, "yyyy-MM-dd", [Globalization.CultureInfo]::InvariantCulture)
 $checkedOn = [DateTime]::SpecifyKind($checkedOn, [DateTimeKind]::Utc)
-$entries = Get-Content -LiteralPath $source -Raw | ConvertFrom-Json
+$entries = [IO.File]::ReadAllText($source, $utf8Strict) | ConvertFrom-Json
 
-if ([int]$manifestSource.entryCount -ne $entries.Count) {
+if ($null -ne $manifestSource.entryCount -and [int]$manifestSource.entryCount -ne $entries.Count) {
     throw "Source entry count mismatch for '$SourcePath'. Expected '$($manifestSource.entryCount)' but found '$($entries.Count)'."
 }
 

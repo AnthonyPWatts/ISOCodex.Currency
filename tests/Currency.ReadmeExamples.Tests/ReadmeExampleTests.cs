@@ -171,10 +171,10 @@ public class ReadmeExampleTests
     [Fact]
     public void CurrencyDataVersionExample_ExposesRuntimeProvenance()
     {
-        Assert.Equal("seed-2026-06-22-7d26419d", CurrencyDataVersion.Identifier);
-        Assert.Equal("CheckedInSeed", CurrencyDataVersion.SourceKind);
+        Assert.Equal("iso4217-cldr-2026-06-22-c1f3aaea", CurrencyDataVersion.Identifier);
+        Assert.Equal("SIX-ISO4217+Unicode-CLDR", CurrencyDataVersion.SourceKind);
         Assert.Equal(new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc), CurrencyDataVersion.CheckedOn);
-        Assert.Contains("not a full ISO/CLDR snapshot", CurrencyDataVersion.Description);
+        Assert.Contains("not an official ISO 4217 redistribution", CurrencyDataVersion.Description);
     }
 
     private sealed class StaticExchangeRateProvider : IExchangeRateProvider

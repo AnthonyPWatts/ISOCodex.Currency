@@ -10,14 +10,14 @@ namespace ISOCodex.Currency;
 public static class CurrencyDataVersion
 {
     /// <summary>Gets the version identifier for the packaged currency data.</summary>
-    public static string Identifier { get; } = "seed-2026-06-22-7d26419d";
+    public static string Identifier { get; } = "iso4217-cldr-2026-06-22-c1f3aaea";
 
     /// <summary>Gets the date this source snapshot was checked, expressed as UTC midnight.</summary>
     public static DateTime CheckedOn { get; } = new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc);
 
     /// <summary>Gets a description of the packaged currency data source.</summary>
-    public static string Description { get; } = "Pinned checked-in prerelease seed generated from data/source/currency-data.seed.json; normalized UTF-8/LF SHA-256 7d26419d3ac6743023f346dd3d0f91a446f974f51e92b47b161d662d13c5c573; not a full ISO/CLDR snapshot.";
+    public static string Description { get; } = "Pinned SIX ISO 4217 List One and Unicode CLDR supplemental currency data snapshot generated via scripts/build-currency-data-snapshot.ps1; derived JSON normalized UTF-8/LF SHA-256 c1f3aaea54949be9a7399a105dd61917a293dafb73171b9c1d3f6cf0b9179f95; not an official ISO 4217 redistribution.";
 
     /// <summary>Gets the kind of source used for the packaged currency data.</summary>
-    public static string SourceKind { get; } = "CheckedInSeed";
+    public static string SourceKind { get; } = "SIX-ISO4217+Unicode-CLDR";
 }
