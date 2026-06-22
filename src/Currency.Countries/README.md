@@ -5,7 +5,7 @@ Bridge package connecting `ISOCodex.Currency` with `ISOCodex.Countries`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.8
+dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.9
 ```
 
 ## Usage

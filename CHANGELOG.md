@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.9
+
+Adds optional ASP.NET Core integration.
+
+Includes:
+
+- `ISOCodex.Currency.AspNetCore` targeting `net9.0`.
+- MVC model binding for `CurrencyCode` route, query, and form values.
+- `AddCurrencyAspNetCore()` registration for currency registry, formatter, parser, and MVC binding.
+- Problem-details helpers for failed `MoneyValidationResult` and `MoneyParseResult` values.
+- Package smoke-test and publish-workflow coverage for the ASP.NET Core package.
+
 ## 0.9.0-alpha.8
 
 Adds optional Entity Framework Core integration.

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <PackageId>ISOCodex.Currency.AspNetCore</PackageId>
+    <Title>ISOCodex.Currency.AspNetCore</Title>
+    <RootNamespace>ISOCodex.Currency.AspNetCore</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.AspNetCore</AssemblyName>
+    <Description>ASP.NET Core model binding, DI, and problem-details helpers for ISOCodex.Currency value objects.</Description>
+    <PackageTags>currency;money;iso4217;aspnetcore;model-binding;problem-details;dotnet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -232,6 +232,8 @@ builder.Property(x => x.Currency)
 
 ## Integration package 4 — ASP.NET Core
 
+Status: initial implementation in `0.9.0-alpha.9`.
+
 ### Package
 
 ```text
@@ -245,17 +247,17 @@ ISOCodex.Currency.AspNetCore
 
 ### Scope
 
-- model binding for `CurrencyCode`;
-- minimal API binding for `CurrencyCode` and possibly `Money`;
-- problem-details helpers for `MoneyValidationResult` and parse failures;
-- OpenAPI schemas/examples;
-- DI registration for implemented services, formatters/parsers, and, when later added, policies.
+- MVC model binding for `CurrencyCode`;
+- Minimal API use of the core `CurrencyCode.TryParse(...)` binding shape;
+- problem-details helpers for `MoneyValidationResult` and `MoneyParseResult` failures;
+- DI registration for implemented services, formatters, parsers, and MVC binding.
+
+OpenAPI schema helpers remain future work.
 
 ### API sketch
 
 ```csharp
 builder.Services
-    .AddCurrency()
     .AddCurrencyAspNetCore();
 ```
 
@@ -273,9 +275,9 @@ app.MapPost("/quote", (QuoteRequest request, ICurrencyBoundaryValidator validato
 
 ### Acceptance criteria
 
-- minimal API sample compiles;
+- Minimal API sample compiles using `CurrencyCode`;
 - invalid currency produces structured 400 response;
-- OpenAPI schema shows money object shape;
+- validation-problem helpers preserve stable failure reasons;
 - no hidden rounding.
 
 ## Integration package 5 — validation adapters
@@ -497,7 +499,7 @@ Recommended after first NuGet deploy:
 1. `ISOCodex.Currency.Json.SystemTextJson`
 2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
 3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
-4. `ISOCodex.Currency.AspNetCore`
+4. `ISOCodex.Currency.AspNetCore` - initial implementation in `0.9.0-alpha.9`.
 5. `ISOCodex.Currency.Countries`
 6. `ISOCodex.Currency.Addressing`
 7. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.

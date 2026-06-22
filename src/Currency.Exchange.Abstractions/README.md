@@ -5,7 +5,7 @@ Provider-neutral deterministic exchange-rate abstractions for `ISOCodex.Currency
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.8
+dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.9
 ```
 
 ## Scope

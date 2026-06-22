@@ -75,6 +75,7 @@ jobs:
           $expectedPackageIds = @(
             "ISOCodex.Currency",
             "ISOCodex.Currency.Analyzers",
+            "ISOCodex.Currency.AspNetCore",
             "ISOCodex.Currency.Countries",
             "ISOCodex.Currency.EntityFrameworkCore",
             "ISOCodex.Currency.Exchange.Abstractions",
