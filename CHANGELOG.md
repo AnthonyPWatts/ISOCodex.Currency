@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.2
+
+Polishes rounding, allocation, and installment documentation and tests.
+
+Includes:
+
+- Tax and percentage-discount examples that show explicit midpoint rounding decisions.
+- Custom-increment `Money.Round(...)` test coverage.
+- Side-by-side allocation remainder strategy tests.
+- Fixed-first installment edge-case coverage for configured remainder placement.
+- README examples for explicit rounding and remainder strategies.
+
 ## 0.9.0-alpha.1
 
 Adds explicit registry-backed money creation.

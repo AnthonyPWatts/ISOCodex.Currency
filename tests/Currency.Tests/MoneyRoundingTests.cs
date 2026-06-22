@@ -43,6 +43,40 @@ public class MoneyRoundingTests
     }
 
     [Fact]
+    public void TaxCalculation_UsesExplicitMidpointPolicy()
+    {
+        var taxableAmount = Money.Of(10.05m, CurrencyCode.GBP);
+
+        var toEvenTax = taxableAmount.Multiply(0.10m, CurrencyRoundingPolicy.Standard(MidpointRounding.ToEven));
+        var awayFromZeroTax = taxableAmount.Multiply(0.10m, CurrencyRoundingPolicy.AwayFromZero());
+
+        Assert.Equal(Money.Of(1.00m, CurrencyCode.GBP), toEvenTax);
+        Assert.Equal(Money.Of(1.01m, CurrencyCode.GBP), awayFromZeroTax);
+    }
+
+    [Fact]
+    public void PercentageDiscountCalculation_UsesExplicitRoundingPolicy()
+    {
+        var price = Money.Of(10.05m, CurrencyCode.GBP);
+        var discount = price.Multiply(0.10m, CurrencyRoundingPolicy.AwayFromZero());
+
+        var discountedPrice = price - discount;
+
+        Assert.Equal(Money.Of(1.01m, CurrencyCode.GBP), discount);
+        Assert.Equal(Money.Of(9.04m, CurrencyCode.GBP), discountedPrice);
+    }
+
+    [Fact]
+    public void Round_UsesCustomIncrementPolicy()
+    {
+        var money = Money.Of(1.38m, CurrencyCode.GBP);
+
+        var rounded = money.Round(CurrencyRoundingPolicy.CustomIncrement(0.25m, MidpointRounding.AwayFromZero));
+
+        Assert.Equal(Money.Of(1.50m, CurrencyCode.GBP), rounded);
+    }
+
+    [Fact]
     public void Multiply_SupportsNegativeValues()
     {
         var money = Money.Of(-1m, CurrencyCode.GBP);

@@ -42,6 +42,24 @@ public class MoneyAllocatorTests
     }
 
     [Fact]
+    public void Allocate_RemainderStrategyControlsWhichPartsReceiveExtraMinorUnits()
+    {
+        var first = Money.Of(10.05m, CurrencyCode.GBP)
+            .Allocate(6, AllocationRemainderStrategy.First);
+        var last = Money.Of(10.05m, CurrencyCode.GBP)
+            .Allocate(6, AllocationRemainderStrategy.Last);
+        var spread = Money.Of(10.05m, CurrencyCode.GBP)
+            .Allocate(6, AllocationRemainderStrategy.Spread);
+
+        Assert.Equal(new[] { 1.68m, 1.68m, 1.68m, 1.67m, 1.67m, 1.67m }, first.Parts.Select(part => part.Amount.Amount));
+        Assert.Equal(new[] { 1.67m, 1.67m, 1.67m, 1.68m, 1.68m, 1.68m }, last.Parts.Select(part => part.Amount.Amount));
+        Assert.Equal(new[] { 1.68m, 1.67m, 1.68m, 1.67m, 1.68m, 1.67m }, spread.Parts.Select(part => part.Amount.Amount));
+        Assert.Equal(first.Total, Sum(first.Parts.Select(part => part.Amount), CurrencyCode.GBP));
+        Assert.Equal(last.Total, Sum(last.Parts.Select(part => part.Amount), CurrencyCode.GBP));
+        Assert.Equal(spread.Total, Sum(spread.Parts.Select(part => part.Amount), CurrencyCode.GBP));
+    }
+
+    [Fact]
     public void Allocate_PreservesZeroMinorUnitCurrencyTotals()
     {
         var allocation = Money.Of(100m, CurrencyCode.JPY)

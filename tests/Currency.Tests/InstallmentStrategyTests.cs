@@ -50,6 +50,19 @@ public class InstallmentStrategyTests
     }
 
     [Fact]
+    public void FixedFirstInstallment_HonoursConfiguredRemainderStrategyForRemainingInstallments()
+    {
+        var strategy = new FixedFirstInstallmentStrategy(
+            Money.Of(4.00m, CurrencyCode.GBP),
+            AllocationRemainderStrategy.Last);
+
+        var plan = strategy.CalculateInstallments(new InstallmentRequest(Money.Of(10.04m, CurrencyCode.GBP), 4));
+
+        Assert.Equal(new[] { 4.00m, 2.01m, 2.01m, 2.02m }, plan.Installments.Select(installment => installment.Amount.Amount));
+        Assert.Equal(plan.Total, Sum(plan.Installments.Select(installment => installment.Amount), CurrencyCode.GBP));
+    }
+
+    [Fact]
     public void FixedFirstInstallment_RejectsCurrencyMismatch()
     {
         var strategy = new FixedFirstInstallmentStrategy(Money.Of(4.00m, CurrencyCode.GBP));

@@ -247,6 +247,8 @@ The implemented API also adds `CurrencyCode.CreateCustom(...)` for explicit cust
 
 ## Hardening epic 5 — rounding and allocation documentation polish
 
+Status: implemented in `0.9.0-alpha.2`.
+
 ### Problem
 
 Rounding and allocation are already strong features. Their value should be more obvious in the package README and tests.
@@ -319,5 +321,4 @@ Country-typed territory relationships should live in `ISOCodex.Currency.Countrie
 
 ## Recommended first hardening sequence
 
-1. Documentation polish.
-2. Full data generation epic.
+1. Full data generation epic.

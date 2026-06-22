@@ -62,7 +62,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.9.0-alpha.1`
+- Version: `0.9.0-alpha.2`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -70,7 +70,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.9.0-alpha.1
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.2
 ```
 
 ## Quick start
@@ -174,6 +174,23 @@ var tax = Money.Of(19.99m, CurrencyCode.GBP)
     .Multiply(0.2m, CurrencyRoundingPolicy.Standard(MidpointRounding.ToEven));
 ```
 
+Midpoint policy is a business decision. The same raw tax calculation can produce different valid money values depending on the selected policy:
+
+```csharp
+var taxableAmount = Money.Of(10.05m, CurrencyCode.GBP);
+
+var toEvenTax = taxableAmount
+    .Multiply(0.10m, CurrencyRoundingPolicy.Standard(MidpointRounding.ToEven)); // GBP 1.00
+
+var awayFromZeroTax = taxableAmount
+    .Multiply(0.10m, CurrencyRoundingPolicy.AwayFromZero()); // GBP 1.01
+
+var discount = taxableAmount
+    .Multiply(0.10m, CurrencyRoundingPolicy.AwayFromZero()); // GBP 1.01
+
+var discountedPrice = taxableAmount - discount; // GBP 9.04
+```
+
 Supported policies:
 
 - `CurrencyRoundingPolicy.Standard(...)` uses the currency's standard minor-unit precision.
@@ -187,6 +204,9 @@ Cash rounding example:
 ```csharp
 var cashTotal = Money.Of(1.03m, CurrencyCode.CHF)
     .Round(CurrencyRoundingPolicy.Cash()); // CHF 1.05
+
+var roundedToQuarter = Money.Of(1.38m, CurrencyCode.GBP)
+    .Round(CurrencyRoundingPolicy.CustomIncrement(0.25m, MidpointRounding.AwayFromZero)); // GBP 1.50
 ```
 
 ## Allocation and installments
@@ -206,6 +226,14 @@ Remainder placement is explicit:
 - `AllocationRemainderStrategy.Last`
 - `AllocationRemainderStrategy.Spread`
 
+For example, splitting `GBP 10.05` into six parts produces the same total but places the three extra pennies differently:
+
+```text
+First:  GBP 1.68, GBP 1.68, GBP 1.68, GBP 1.67, GBP 1.67, GBP 1.67
+Last:   GBP 1.67, GBP 1.67, GBP 1.67, GBP 1.68, GBP 1.68, GBP 1.68
+Spread: GBP 1.68, GBP 1.67, GBP 1.68, GBP 1.67, GBP 1.68, GBP 1.67
+```
+
 Installment strategies are built on top of `Money` and allocation:
 
 ```csharp
@@ -218,7 +246,7 @@ var plan = strategy.CalculateInstallments(
 // GBP 4.00, GBP 3.01, GBP 3.00
 ```
 
-Built-in strategies include even split, fixed first installment, and whole-major-unit first installment. They do not hard-code currency symbols.
+Built-in strategies include even split, fixed first installment, and whole-major-unit first installment. Remainder placement is explicit for strategies that allocate the remaining total, and they do not hard-code currency symbols.
 
 ## Formatting and parsing
 
@@ -276,7 +304,7 @@ Failed parses return `MoneyParseResult` with a `MoneyParseFailureReason`; they d
 JSON support lives in the optional `ISOCodex.Currency.Json.SystemTextJson` package so the core package remains independent of `System.Text.Json`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.1
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.2
 ```
 
 Register the converters explicitly:
@@ -297,7 +325,7 @@ options.Converters.Add(new MoneyJsonConverter());
 Country/currency validation lives in the optional `ISOCodex.Currency.Countries` package. The core package does not depend on `ISOCodex.Countries`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.1
+dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.2
 ```
 
 The initial bridge seed is deliberately small:
@@ -320,7 +348,7 @@ The seed currently covers GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD
 Provider-neutral exchange contracts live in the optional `ISOCodex.Currency.Exchange.Abstractions` package. The core package does not include live rates and does not make network calls.
 
 ```bash
-dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.1
+dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.2
 ```
 
 The initial converter supports direct rates only and requires an explicit rounding policy:
@@ -348,7 +376,7 @@ Applications provide their own `IExchangeRateProvider`. `ConversionResult` expos
 Analyzer support lives in the optional `ISOCodex.Currency.Analyzers` package.
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.1" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.2" PrivateAssets="all" />
 ```
 
 The initial rule is `ISOCCUR001`, which warns on `default(Money)` and `default` literals converted to `Money`. Use `Money.Zero(currency)` or `Money.Of(amount, currency)` instead.
@@ -446,14 +474,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require a .NET 9 SDK/runtime because the test project and smoke consumer target `net9.0`.
-If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.1 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
+If a local machine has a newer compatible runtime but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.2 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
 pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts
-pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.1
+pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.2
 ```
 
 ## Currency data workflow

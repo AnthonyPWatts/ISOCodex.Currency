@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.9.0-alpha.1
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.2
 ```
 
 ## What it is useful for
@@ -78,11 +78,16 @@ var tax = Money.Of(19.99m, CurrencyCode.GBP)
     .Multiply(0.2m, CurrencyRoundingPolicy.Standard(MidpointRounding.ToEven));
 ```
 
+The rounding policy matters. For example, `GBP 10.05 * 10%` produces `GBP 1.00` with midpoint-to-even rounding and `GBP 1.01` with away-from-zero rounding.
+
 Cash rounding is available where metadata provides an increment:
 
 ```csharp
 var cashTotal = Money.Of(1.03m, CurrencyCode.CHF)
     .Round(CurrencyRoundingPolicy.Cash()); // CHF 1.05
+
+var roundedToQuarter = Money.Of(1.38m, CurrencyCode.GBP)
+    .Round(CurrencyRoundingPolicy.CustomIncrement(0.25m, MidpointRounding.AwayFromZero)); // GBP 1.50
 ```
 
 ## Allocation and installments
@@ -93,6 +98,8 @@ Split money into exact minor-unit parts:
 var allocation = Money.Of(10.00m, CurrencyCode.GBP)
     .Allocate(3, AllocationRemainderStrategy.First);
 ```
+
+Remainder strategy controls which parts receive the extra minor units. Splitting `GBP 10.05` into six parts can place the extra pennies at the start, at the end, or spread through the allocation while preserving the total.
 
 Create installment plans with Money-based strategies:
 
