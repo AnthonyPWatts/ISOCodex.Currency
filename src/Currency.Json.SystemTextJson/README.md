@@ -5,7 +5,7 @@ System.Text.Json converters for `ISOCodex.Currency`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.9
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.10
 ```
 
 ## Register converters

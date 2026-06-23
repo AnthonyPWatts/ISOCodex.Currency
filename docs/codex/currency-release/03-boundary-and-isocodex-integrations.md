@@ -282,6 +282,8 @@ app.MapPost("/quote", (QuoteRequest request, ICurrencyBoundaryValidator validato
 
 ## Integration package 5 — validation adapters
 
+Status: initial framework-neutral implementation in `0.9.0-alpha.10`.
+
 ### Package
 
 ```text
@@ -314,6 +316,8 @@ Possible adapters:
 - DataAnnotations attributes;
 - FluentValidation extension methods;
 - ASP.NET ModelState helpers.
+
+The `0.9.0-alpha.10` package provides the framework-neutral issue/result types, stable issue codes, primitive boundary validator, and adapters from core money validation/parse results. DataAnnotations, FluentValidation, and ASP.NET-specific adapters remain future work.
 
 ### Acceptance criteria
 
@@ -500,10 +504,11 @@ Recommended after first NuGet deploy:
 2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
 3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore` - initial implementation in `0.9.0-alpha.9`.
-5. `ISOCodex.Currency.Countries`
-6. `ISOCodex.Currency.Addressing`
-7. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
-8. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
+5. `ISOCodex.Currency.Validation` - initial framework-neutral implementation in `0.9.0-alpha.10`.
+6. `ISOCodex.Currency.Countries`
+7. `ISOCodex.Currency.Addressing`
+8. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
+9. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
 
 ## Documentation examples to add over time
 

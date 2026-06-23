@@ -80,7 +80,8 @@ jobs:
             "ISOCodex.Currency.EntityFrameworkCore",
             "ISOCodex.Currency.Exchange.Abstractions",
             "ISOCodex.Currency.Json.NewtonsoftJson",
-            "ISOCodex.Currency.Json.SystemTextJson"
+            "ISOCodex.Currency.Json.SystemTextJson",
+            "ISOCodex.Currency.Validation"
           )
           $expectedPackages = @($expectedPackageIds | ForEach-Object { "$_.$version.nupkg" })
           $expectedSymbols = @($expectedPackageIds | ForEach-Object { "$_.$version.snupkg" })

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.10
+
+Adds optional framework-neutral validation helpers.
+
+Includes:
+
+- `ISOCodex.Currency.Validation` targeting `netstandard2.1`.
+- Stable `CurrencyValidationIssue` and `CurrencyValidationResult` types for API/import boundaries.
+- `CurrencyBoundaryValidator` for primitive currency, amount/currency, minor-unit, and formatted money inputs.
+- Adapters from `MoneyValidationResult` and `MoneyParseResult` to validation results.
+- Package smoke-test and publish-workflow coverage for the validation package.
+
 ## 0.9.0-alpha.9
 
 Adds optional ASP.NET Core integration.

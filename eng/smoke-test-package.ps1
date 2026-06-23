@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.9",
+    [string]$Version = "0.9.0-alpha.10",
     [switch]$UseMajorRollForward
 )
 
@@ -51,6 +51,7 @@ using ISOCodex.Currency.Countries;
 using ISOCodex.Currency.EntityFrameworkCore;
 using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
+using ISOCodex.Currency.Validation;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 using NewtonsoftCurrencyCodeJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.CurrencyCodeJsonConverter;
 using NewtonsoftJson = Newtonsoft.Json.JsonConvert;
@@ -74,6 +75,7 @@ var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
 var dataVersion = CurrencyDataVersion.Identifier;
 var efCurrency = (CurrencyCode)CurrencyCodeValueConverter.Instance.ConvertFromProvider("gbp")!;
 var validationProblem = invalidPrecision.ToValidationProblemDetails("amount");
+var boundaryValidation = new CurrencyBoundaryValidator().ValidateMoney(12.345m, "GBP", "amount", "currency");
 var customCode = CurrencyCode.CreateCustom("zza");
 var customRegistry = new DefaultCurrencyRegistry(new[]
 {
@@ -188,6 +190,13 @@ if ((string?)validationProblem.Extensions["reason"] != nameof(MoneyValidationFai
     throw new InvalidOperationException("ASP.NET Core problem-details smoke test failed.");
 }
 
+if (boundaryValidation.IsValid
+    || boundaryValidation.Issues.Count != 1
+    || boundaryValidation.Issues[0].Code != CurrencyValidationIssueCodes.MoneyAmountPrecision)
+{
+    throw new InvalidOperationException("Validation package smoke test failed.");
+}
+
 if (customMoney.Currency != customCode || customMoney.Amount != 1.2345m || customValidation.Succeeded || customValidation.FailureReason != MoneyValidationFailureReason.AmountPrecision)
 {
     throw new InvalidOperationException("MoneyFactory custom registry smoke test failed.");
@@ -226,6 +235,7 @@ Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
 Console.WriteLine(efCurrency);
 Console.WriteLine(validationProblem.Extensions["reason"]);
+Console.WriteLine(boundaryValidation.Issues[0].Code);
 Console.WriteLine(customMoney);
 Console.WriteLine(customValidation.FailureReason);
 Console.WriteLine(moneyJson);
@@ -302,6 +312,7 @@ Invoke-DotNet add $consumerProject package ISOCodex.Currency.EntityFrameworkCore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Exchange.Abstractions --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.NewtonsoftJson --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.SystemTextJson --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Validation --version $Version --no-restore
 Set-Content -Path "$tempRoot\Program.cs" -Value $program -Encoding UTF8
 Invoke-DotNet restore $consumerProject --configfile $nugetConfig
 Invoke-DotNet run --project $consumerProject -c Release --no-restore
