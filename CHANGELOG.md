@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.0.2
 
-Contains fixes committed after `1.0.1`.
+Patch release containing fixes committed after `1.0.1`.
 
 Includes:
 
@@ -11,6 +11,7 @@ Includes:
 - EF Core currency-code conversion now rejects default `CurrencyCode` values instead of storing an empty string.
 - Analyzer release tracking now records the shipped diagnostics in `AnalyzerReleases.Shipped.md`.
 - `1.0.1` post-publication housekeeping is complete, including package install verification, NuGet README verification, GitHub release notes, and recorded symbol-package evidence.
+- Package smoke testing now follows the current `ISOCodex.Addressing` country-code API.
 
 ## 1.0.1
 

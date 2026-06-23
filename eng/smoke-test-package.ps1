@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "1.0.1",
+    [string]$Version = "1.0.2",
     [switch]$UseMajorRollForward
 )
 
@@ -55,7 +55,6 @@ using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
 using ISOCodex.Currency.Validation;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
-using AddressCountryCode = ISOCodex.Addressing.CountryCode;
 using AddressPostalCode = ISOCodex.Addressing.PostalCode;
 using CurrencyAddressing = ISOCodex.Currency.Addressing;
 using NewtonsoftCurrencyCodeJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.CurrencyCodeJsonConverter;
@@ -118,7 +117,7 @@ var billingAddress = new PostalAddress(
     "London",
     null,
     new AddressPostalCode("SW1A 1AA"),
-    AddressCountryCode.GB);
+    CountryAlpha2Code.Parse("GB"));
 var addressCurrencyValidator = new CurrencyAddressing.AddressCurrencyValidator(
     new SmokeAddressValidatorFactory(AddressValidationResult.Success));
 var addressCurrencyValidation = addressCurrencyValidator.Validate(
@@ -313,12 +312,12 @@ sealed class SmokeAddressValidatorFactory : IAddressValidatorFactory
         _validator = new SmokeAddressValidator(result);
     }
 
-    public IAddressValidator GetValidator(AddressCountryCode countryCode)
+    public IAddressValidator GetValidator(CountryAlpha2Code countryCode)
     {
         return _validator;
     }
 
-    public void RegisterValidator(AddressCountryCode countryCode, IAddressValidator validator)
+    public void RegisterValidator(CountryAlpha2Code countryCode, IAddressValidator validator)
     {
     }
 }

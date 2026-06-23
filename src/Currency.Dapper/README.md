@@ -5,7 +5,7 @@ Dapper type handlers for `ISOCodex.Currency`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Dapper --version 1.0.1
+dotnet add package ISOCodex.Currency.Dapper --version 1.0.2
 ```
 
 This package targets `netstandard2.1` and depends on Dapper.

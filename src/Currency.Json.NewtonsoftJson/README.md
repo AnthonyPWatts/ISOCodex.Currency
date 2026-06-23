@@ -5,7 +5,7 @@ Newtonsoft.Json converters for `ISOCodex.Currency` value objects.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 1.0.1
+dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 1.0.2
 ```
 
 ## Usage

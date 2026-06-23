@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Anthony P Watts</Authors>
     <Company>ISOCodex</Company>
     <RepositoryUrl>https://github.com/AnthonyPWatts/ISOCodex.Currency</RepositoryUrl>

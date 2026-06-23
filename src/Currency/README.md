@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 1.0.1
+dotnet add package ISOCodex.Currency --version 1.0.2
 ```
 
 ## What it is useful for
