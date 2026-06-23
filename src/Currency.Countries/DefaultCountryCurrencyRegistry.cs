@@ -6,7 +6,7 @@ using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 namespace ISOCodex.Currency.Countries;
 
 /// <summary>
-/// Default country/currency registry backed by a small explicit prerelease seed.
+/// Default country/currency registry backed by a small explicit seed.
 /// </summary>
 public sealed class DefaultCountryCurrencyRegistry : ICountryCurrencyRegistry
 {

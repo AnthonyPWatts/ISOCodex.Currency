@@ -12,7 +12,7 @@ dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 1.0.2
 
 This package defines the exchange-rate contracts and a direct-rate `MoneyConverter`. It deliberately does not include a live exchange-rate provider and does not make network calls. Applications supply rates from their own approved source, such as an audited database, file import, internal policy table, or a separately reviewed provider package.
 
-The initial converter supports direct rates only. Inverse, triangulated, cached, and live-provider behaviours are future package work.
+The initial converter supports direct rates only. Inverse, triangulated, cached, and live-provider behaviours are deferred future package work, not part of the `1.0.2` stable scope.
 
 ## Example
 
