@@ -104,6 +104,102 @@ public class AvoidDefaultMoneyAnalyzerTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public async Task ReportsIgnoredMoneyValidationResult()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public void Create()
+                {
+                    Money.TryCreate(12.34m, CurrencyCode.GBP);
+                }
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(DoNotIgnoreMoneyResultAnalyzer.DiagnosticId, diagnostic.Id);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+    }
+
+    [Fact]
+    public async Task ReportsIgnoredMoneyParseResult()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public void Parse()
+                {
+                    new MoneyParser().Parse("GBP 12.34");
+                }
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(DoNotIgnoreMoneyResultAnalyzer.DiagnosticId, diagnostic.Id);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+    }
+
+    [Fact]
+    public async Task ReportsDiscardedMoneyValidationResult()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public void Create()
+                {
+                    _ = Money.TryCreate(12.34m, CurrencyCode.GBP);
+                }
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(DoNotIgnoreMoneyResultAnalyzer.DiagnosticId, diagnostic.Id);
+    }
+
+    [Fact]
+    public async Task DoesNotReportInspectedMoneyValidationResult()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public bool Create()
+                {
+                    var result = Money.TryCreate(12.34m, CurrencyCode.GBP);
+                    return result.Succeeded;
+                }
+            }
+            """);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public async Task DoesNotReportBoolTryCreateOverload()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public bool Create()
+                {
+                    return Money.TryCreate(12.34m, CurrencyCode.GBP, out var money);
+                }
+            }
+            """);
+
+        Assert.Empty(diagnostics);
+    }
+
     private static async Task<ImmutableArray<Diagnostic>> GetDiagnosticsAsync(string source)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -114,7 +210,9 @@ public class AvoidDefaultMoneyAnalyzerTests
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-        var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(new AvoidDefaultMoneyAnalyzer());
+        var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(
+            new AvoidDefaultMoneyAnalyzer(),
+            new DoNotIgnoreMoneyResultAnalyzer());
         var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers);
 
         return await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha.14
+
+Adds ignored-result analyzer coverage for money boundary APIs.
+
+Includes:
+
+- `ISOCCUR003`, warning when `MoneyValidationResult` or `MoneyParseResult` values are ignored as expression statements or explicit discards.
+- Analyzer tests covering ignored validation results, ignored parse results, explicit discards, inspected results, and bool `TryCreate(...)` overloads.
+- Analyzer README updates for all three shipped analyzer rules.
+- Versioned release-gate, package README, and smoke-test defaults for `0.9.0-alpha.14`.
+
 ## 0.9.0-alpha.13
 
 Adds a second compiler-safety analyzer rule.

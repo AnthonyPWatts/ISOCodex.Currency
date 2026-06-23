@@ -5,7 +5,7 @@ Roslyn analyzers for `ISOCodex.Currency`.
 ## Install
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.13" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.14" PrivateAssets="all" />
 ```
 
 ## Diagnostics
@@ -28,4 +28,19 @@ CurrencyCode value = default(CurrencyCode); // ISOCCUR002
 CurrencyCode other = default;               // ISOCCUR002 when converted to CurrencyCode
 ```
 
-This analyzer package does not include code fixes. Future analyzer rules may cover ignored validation results.
+### ISOCCUR003
+
+Do not ignore `MoneyValidationResult` or `MoneyParseResult`. Store the result and check `Succeeded` plus the stable failure reason before continuing.
+
+```csharp
+Money.TryCreate(12.345m, CurrencyCode.GBP);        // ISOCCUR003
+new MoneyParser().Parse("GBP 12.345");             // ISOCCUR003
+
+var result = Money.TryCreate(12.345m, CurrencyCode.GBP);
+if (!result.Succeeded)
+{
+    Console.WriteLine(result.FailureReason);
+}
+```
+
+This analyzer package does not include code fixes.
