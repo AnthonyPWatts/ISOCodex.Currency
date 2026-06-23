@@ -124,7 +124,7 @@ A money library becomes ubiquitous when it is easy to use at boundaries. Newtons
 3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore` - initial implementation in `0.9.0-alpha.9`.
 5. `ISOCodex.Currency.Validation` - initial framework-neutral implementation in `0.9.0-alpha.10`.
-6. `ISOCodex.Currency.Dapper`
+6. `ISOCodex.Currency.Dapper` - initial currency-code handler implemented in `0.9.0-alpha.11`.
 
 ### JSON default
 
@@ -394,7 +394,7 @@ public readonly struct ScaledMoney
 
 ### Then: adoption features
 
-- Dapper helpers.
+- Dapper helpers - initial currency-code handler implemented in `0.9.0-alpha.11`.
 
 ### Then: ISOCodex ecosystem features
 

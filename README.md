@@ -43,6 +43,7 @@ Current implemented scope:
 - optional `ISOCodex.Currency.Json.NewtonsoftJson` converters
 - optional `ISOCodex.Currency.Json.SystemTextJson` converters
 - optional `ISOCodex.Currency.Countries` bridge package
+- optional `ISOCodex.Currency.Dapper` package
 - optional `ISOCodex.Currency.EntityFrameworkCore` package
 - optional `ISOCodex.Currency.Exchange.Abstractions` package
 - optional `ISOCodex.Currency.Validation` package
@@ -53,6 +54,7 @@ Current implemented scope:
 - `src/Currency.Analyzers` - optional Roslyn analyzer package.
 - `src/Currency.AspNetCore` - optional ASP.NET Core integration package.
 - `src/Currency.Countries` - optional Countries bridge package.
+- `src/Currency.Dapper` - optional Dapper integration package.
 - `src/Currency.EntityFrameworkCore` - optional Entity Framework Core integration package.
 - `src/Currency.Exchange.Abstractions` - optional deterministic exchange-rate abstractions package.
 - `src/Currency.Json.NewtonsoftJson` - optional Newtonsoft.Json integration package.
@@ -62,6 +64,7 @@ Current implemented scope:
 - `tests/Currency.Analyzers.Tests` - analyzer xUnit test suite.
 - `tests/Currency.AspNetCore.Tests` - ASP.NET Core integration xUnit test suite.
 - `tests/Currency.Countries.Tests` - Countries bridge xUnit test suite.
+- `tests/Currency.Dapper.Tests` - Dapper integration xUnit test suite.
 - `tests/Currency.EntityFrameworkCore.Tests` - Entity Framework Core integration xUnit test suite.
 - `tests/Currency.Exchange.Abstractions.Tests` - exchange abstractions xUnit test suite.
 - `tests/Currency.Json.NewtonsoftJson.Tests` - Newtonsoft.Json converter xUnit test suite.
@@ -74,7 +77,7 @@ Current implemented scope:
 ## Package identity
 
 - Package ID: `ISOCodex.Currency`
-- Version: `0.9.0-alpha.10`
+- Version: `0.9.0-alpha.11`
 - Root namespace: `ISOCodex.Currency`
 - Target framework: `netstandard2.1`
 - Repository: <https://github.com/AnthonyPWatts/ISOCodex.Currency>
@@ -82,7 +85,7 @@ Current implemented scope:
 Install the current prerelease with:
 
 ```bash
-dotnet add package ISOCodex.Currency --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency --version 0.9.0-alpha.11
 ```
 
 ## Quick start
@@ -318,7 +321,7 @@ JSON support lives in optional packages so the core package remains independent 
 ### System.Text.Json
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.Json.SystemTextJson --version 0.9.0-alpha.11
 ```
 
 Register the converters explicitly:
@@ -337,7 +340,7 @@ options.Converters.Add(new MoneyJsonConverter());
 ### Newtonsoft.Json
 
 ```bash
-dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.Json.NewtonsoftJson --version 0.9.0-alpha.11
 ```
 
 Register the converters explicitly:
@@ -358,7 +361,7 @@ The Newtonsoft.Json package uses the same default wire shape and validation sema
 Country/currency validation lives in the optional `ISOCodex.Currency.Countries` package. The core package does not depend on `ISOCodex.Countries`.
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.11
 ```
 
 The initial bridge seed is deliberately small:
@@ -381,7 +384,7 @@ The seed currently covers GB/GBP, US/USD, IE/EUR, JP/JPY, CH/CHF, CA/CAD, AU/AUD
 Provider-neutral exchange contracts live in the optional `ISOCodex.Currency.Exchange.Abstractions` package. The core package does not include live rates and does not make network calls.
 
 ```bash
-dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.Exchange.Abstractions --version 0.9.0-alpha.11
 ```
 
 The initial converter supports direct rates only and requires an explicit rounding policy:
@@ -409,7 +412,7 @@ Applications provide their own `IExchangeRateProvider`. `ConversionResult` expos
 Entity Framework Core integration lives in the optional `ISOCodex.Currency.EntityFrameworkCore` package. The package targets `net10.0` and references `Microsoft.EntityFrameworkCore.Relational`.
 
 ```bash
-dotnet add package ISOCodex.Currency.EntityFrameworkCore --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.EntityFrameworkCore --version 0.9.0-alpha.11
 ```
 
 Use `HasCurrencyCodeConversion()` when an entity stores a `CurrencyCode` directly:
@@ -433,12 +436,30 @@ builder.ComplexMoney(
 
 The default amount column type is `decimal(19,4)`. For exact payment-style minor-unit storage, model the storage shape explicitly as `long MinorUnits` plus `CurrencyCode CurrencyCode`, and convert at the application boundary with `Money.FromMinorUnits(...)` or `Money.TryFromMinorUnits(...)`.
 
+## Dapper
+
+Dapper integration lives in the optional `ISOCodex.Currency.Dapper` package.
+
+```bash
+dotnet add package ISOCodex.Currency.Dapper --version 0.9.0-alpha.11
+```
+
+Register the type handlers once during application startup:
+
+```csharp
+using ISOCodex.Currency.Dapper;
+
+DapperCurrencyTypeHandlers.Register();
+```
+
+The `CurrencyCodeTypeHandler` maps `CurrencyCode` values to uppercase alpha-3 database strings. For `Money`, keep amount and currency-code columns separate and construct the value explicitly after query materialisation.
+
 ## ASP.NET Core
 
 ASP.NET Core integration lives in the optional `ISOCodex.Currency.AspNetCore` package.
 
 ```bash
-dotnet add package ISOCodex.Currency.AspNetCore --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.AspNetCore --version 0.9.0-alpha.11
 ```
 
 Register the default services and MVC model binder:
@@ -475,7 +496,7 @@ return result.Succeeded
 Framework-neutral validation helpers live in the optional `ISOCodex.Currency.Validation` package.
 
 ```bash
-dotnet add package ISOCodex.Currency.Validation --version 0.9.0-alpha.10
+dotnet add package ISOCodex.Currency.Validation --version 0.9.0-alpha.11
 ```
 
 Use `CurrencyBoundaryValidator` for primitive API, import, and integration inputs when the output should be a stable issue list rather than an exception or framework-specific model state.
@@ -499,7 +520,7 @@ Each `CurrencyValidationIssue` has a stable `Code`, a human-readable `Message`, 
 Analyzer support lives in the optional `ISOCodex.Currency.Analyzers` package.
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.10" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.11" PrivateAssets="all" />
 ```
 
 The initial rule is `ISOCCUR001`, which warns on `default(Money)` and `default` literals converted to `Money`. Use `Money.Zero(currency)` or `Money.Of(amount, currency)` instead.
@@ -582,6 +603,7 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 - Money parsing is conservative and does not infer a currency from ambiguous symbols without an expected currency.
 - JSON converters are available in the optional `ISOCodex.Currency.Json.SystemTextJson` and `ISOCodex.Currency.Json.NewtonsoftJson` packages.
 - ASP.NET Core helpers are available in the optional `ISOCodex.Currency.AspNetCore` package.
+- Dapper handlers are available in the optional `ISOCodex.Currency.Dapper` package.
 - Framework-neutral validation helpers are available in the optional `ISOCodex.Currency.Validation` package.
 - Exchange abstractions are available in the optional `ISOCodex.Currency.Exchange.Abstractions` package, but no live provider is included.
 - Entity Framework Core helpers target EF Core 10+ in the optional `ISOCodex.Currency.EntityFrameworkCore` package.
@@ -599,14 +621,14 @@ See [ExtendedTestRigs/README.md](ExtendedTestRigs/README.md) for details.
 From the repository root:
 
 These checks require .NET 9 and .NET 10 SDK/runtime support because the main package/test surface targets `net9.0` consumers and the EF Core integration targets `net10.0`.
-If a local machine has newer compatible runtimes but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.10 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 and .NET 10 explicitly.
+If a local machine has newer compatible runtimes but not the .NET 9 runtime, use `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.11 -UseMajorRollForward` for the smoke test. This is a local workaround; CI installs .NET 9 and .NET 10 explicitly.
 
 ```bash
 dotnet restore ISOCodex.Currency.sln
 dotnet build ISOCodex.Currency.sln -c Release --no-restore
 dotnet test ISOCodex.Currency.sln -c Release --no-build
-pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.10
-pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.10
+pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.11
+pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.11
 ```
 
 ## Currency data workflow

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>ISOCodex.Currency.Dapper</PackageId>
+    <Title>ISOCodex.Currency.Dapper</Title>
+    <RootNamespace>ISOCodex.Currency.Dapper</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.Dapper</AssemblyName>
+    <Description>Dapper type handlers for ISOCodex.Currency value objects.</Description>
+    <PackageTags>currency;money;iso4217;dapper;data-access;dotnet;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.79" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

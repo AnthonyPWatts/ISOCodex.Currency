@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.11
+
+Adds optional Dapper integration.
+
+Includes:
+
+- `ISOCodex.Currency.Dapper` targeting `netstandard2.1`.
+- `CurrencyCodeTypeHandler` for mapping `CurrencyCode` values to uppercase alpha-3 database strings.
+- `DapperCurrencyTypeHandlers.Register()` startup helper.
+- Tests covering Dapper parameter writing, database value parsing, and invalid database values.
+- Package smoke-test and publish-workflow coverage for the Dapper package.
+
 ## 0.9.0-alpha.10
 
 Adds optional framework-neutral validation helpers.

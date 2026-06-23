@@ -31,7 +31,7 @@ ISOCodex.Currency.AspNetCore
     Model binding, minimal API binding, problem-details helpers, OpenAPI schema helpers.
 
 ISOCodex.Currency.Dapper
-    Dapper type handlers.
+    Dapper type handlers. Initial currency-code handler implemented in `0.9.0-alpha.11`.
 
 ISOCodex.Currency.Validation
     Framework-neutral validation adapters plus optional FluentValidation/DataAnnotations helpers.
@@ -505,10 +505,11 @@ Recommended after first NuGet deploy:
 3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore` - initial implementation in `0.9.0-alpha.9`.
 5. `ISOCodex.Currency.Validation` - initial framework-neutral implementation in `0.9.0-alpha.10`.
-6. `ISOCodex.Currency.Countries`
-7. `ISOCodex.Currency.Addressing`
-8. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
-9. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
+6. `ISOCodex.Currency.Dapper` - initial currency-code handler implemented in `0.9.0-alpha.11`.
+7. `ISOCodex.Currency.Countries`
+8. `ISOCodex.Currency.Addressing`
+9. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
+10. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
 
 ## Documentation examples to add over time
 

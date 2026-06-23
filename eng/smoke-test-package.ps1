@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.10",
+    [string]$Version = "0.9.0-alpha.11",
     [switch]$UseMajorRollForward
 )
 
@@ -48,6 +48,7 @@ using System.Text.Json;
 using ISOCodex.Currency;
 using ISOCodex.Currency.AspNetCore;
 using ISOCodex.Currency.Countries;
+using ISOCodex.Currency.Dapper;
 using ISOCodex.Currency.EntityFrameworkCore;
 using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
@@ -74,6 +75,8 @@ var invalidPrecision = Money.TryCreate(12.345m, CurrencyCode.GBP);
 var invalidMinorUnits = Money.TryFromMinorUnits(123, CurrencyCode.XXX);
 var dataVersion = CurrencyDataVersion.Identifier;
 var efCurrency = (CurrencyCode)CurrencyCodeValueConverter.Instance.ConvertFromProvider("gbp")!;
+var dapperCurrency = CurrencyCodeTypeHandler.Instance.Parse("gbp");
+DapperCurrencyTypeHandlers.Register();
 var validationProblem = invalidPrecision.ToValidationProblemDetails("amount");
 var boundaryValidation = new CurrencyBoundaryValidator().ValidateMoney(12.345m, "GBP", "amount", "currency");
 var customCode = CurrencyCode.CreateCustom("zza");
@@ -184,6 +187,11 @@ if (efCurrency != gbp)
     throw new InvalidOperationException("Entity Framework Core converter smoke test failed.");
 }
 
+if (dapperCurrency != gbp)
+{
+    throw new InvalidOperationException("Dapper type handler smoke test failed.");
+}
+
 if ((string?)validationProblem.Extensions["reason"] != nameof(MoneyValidationFailureReason.AmountPrecision)
     || !validationProblem.Errors.ContainsKey("amount"))
 {
@@ -234,6 +242,7 @@ Console.WriteLine(parsed.Money);
 Console.WriteLine(validated.Succeeded);
 Console.WriteLine(dataVersion);
 Console.WriteLine(efCurrency);
+Console.WriteLine(dapperCurrency);
 Console.WriteLine(validationProblem.Extensions["reason"]);
 Console.WriteLine(boundaryValidation.Issues[0].Code);
 Console.WriteLine(customMoney);
@@ -308,6 +317,7 @@ Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version 
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.AspNetCore --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Dapper --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.EntityFrameworkCore --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Exchange.Abstractions --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Json.NewtonsoftJson --version $Version --no-restore
