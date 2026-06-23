@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ISOCodex.Addressing;
 using ISOCodex.Addressing.Validation;
 using ISOCodex.Currency.Countries;
-using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 
 namespace ISOCodex.Currency.Addressing;
 
@@ -48,30 +47,19 @@ public sealed class AddressCurrencyValidator
 
         if (address != null)
         {
-            if (TryConvertCountryCode(address.CountryCode, out var countryAlpha2Code))
-            {
-                var validationPolicy = policy ?? AddressCurrencyValidationPolicy.CheckoutDefault;
-                countryCurrencyValidationResult = _countryCurrencyRegistry.Validate(
-                    countryAlpha2Code,
-                    currencyCode,
-                    validationPolicy.CountryCurrencyPolicy);
+            var validationPolicy = policy ?? AddressCurrencyValidationPolicy.CheckoutDefault;
+            countryCurrencyValidationResult = _countryCurrencyRegistry.Validate(
+                address.CountryCode,
+                currencyCode,
+                validationPolicy.CountryCurrencyPolicy);
 
-                if (!countryCurrencyValidationResult.Succeeded)
-                {
-                    issues.Add(new AddressCurrencyValidationIssue(
-                        AddressCurrencyValidationIssueSource.CountryCurrency,
-                        AddressCurrencyValidationIssueCodes.ForCountryCurrencyFailure(countryCurrencyValidationResult.FailureReason),
-                        countryCurrencyValidationResult.ErrorMessage ?? "Currency is not valid for the address country.",
-                        nameof(currencyCode)));
-                }
-            }
-            else
+            if (!countryCurrencyValidationResult.Succeeded)
             {
                 issues.Add(new AddressCurrencyValidationIssue(
-                    AddressCurrencyValidationIssueSource.Address,
-                    AddressCurrencyValidationIssueCodes.AddressCountryInvalid,
-                    $"Address country code '{address.CountryCode}' could not be converted to an ISOCodex.Countries alpha-2 code.",
-                    nameof(Address.CountryCode)));
+                    AddressCurrencyValidationIssueSource.CountryCurrency,
+                    AddressCurrencyValidationIssueCodes.ForCountryCurrencyFailure(countryCurrencyValidationResult.FailureReason),
+                    countryCurrencyValidationResult.ErrorMessage ?? "Currency is not valid for the address country.",
+                    nameof(currencyCode)));
             }
         }
 
@@ -115,11 +103,6 @@ public sealed class AddressCurrencyValidator
         }
 
         return result;
-    }
-
-    private static bool TryConvertCountryCode(CountryCode countryCode, out CountryAlpha2Code countryAlpha2Code)
-    {
-        return CountryAlpha2Code.TryParse(countryCode.Code, out countryAlpha2Code);
     }
 
     private static AddressCurrencyValidationIssue MapAddressIssue(AddressValidationIssue issue)

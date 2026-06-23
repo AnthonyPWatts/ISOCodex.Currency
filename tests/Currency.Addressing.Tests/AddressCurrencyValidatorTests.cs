@@ -3,6 +3,7 @@ using ISOCodex.Addressing.Validation;
 using ISOCodex.Currency;
 using ISOCodex.Currency.Addressing;
 using ISOCodex.Currency.Countries;
+using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
 
 namespace Currency.Addressing.Tests;
 
@@ -13,7 +14,7 @@ public class AddressCurrencyValidatorTests
     {
         var validator = new AddressCurrencyValidator(new StubAddressValidatorFactory(AddressValidationResult.Success));
 
-        var result = validator.Validate(CreateAddress(CountryCode.GB), CurrencyCode.GBP);
+        var result = validator.Validate(CreateAddress(CountryAlpha2Code.Parse("GB")), CurrencyCode.GBP);
 
         Assert.True(result.Succeeded);
         Assert.Empty(result.Issues);
@@ -27,7 +28,7 @@ public class AddressCurrencyValidatorTests
         var addressIssue = new AddressValidationIssue("Address.Line1.Required", "Line1 is required.", "Line1");
         var validator = new AddressCurrencyValidator(new StubAddressValidatorFactory(new AddressValidationResult(new[] { addressIssue })));
 
-        var result = validator.Validate(CreateAddress(CountryCode.GB), CurrencyCode.USD);
+        var result = validator.Validate(CreateAddress(CountryAlpha2Code.Parse("GB")), CurrencyCode.USD);
 
         Assert.False(result.Succeeded);
         Assert.Contains(result.Issues, issue =>
@@ -59,7 +60,7 @@ public class AddressCurrencyValidatorTests
     {
         var validator = new AddressCurrencyValidator(new ThrowingAddressValidatorFactory());
 
-        var result = validator.Validate(CreateAddress(CountryCode.GB), CurrencyCode.GBP);
+        var result = validator.Validate(CreateAddress(CountryAlpha2Code.Parse("GB")), CurrencyCode.GBP);
 
         Assert.False(result.Succeeded);
         Assert.Contains(result.Issues, issue =>
@@ -69,7 +70,7 @@ public class AddressCurrencyValidatorTests
         Assert.True(result.CountryCurrencyValidationResult?.Succeeded);
     }
 
-    private static Address CreateAddress(CountryCode countryCode)
+    private static Address CreateAddress(CountryAlpha2Code countryCode)
     {
         return new Address(
             "1 High Street",
@@ -89,24 +90,24 @@ public class AddressCurrencyValidatorTests
             _validator = new StubAddressValidator(result);
         }
 
-        public IAddressValidator GetValidator(CountryCode countryCode)
+        public IAddressValidator GetValidator(CountryAlpha2Code countryCode)
         {
             return _validator;
         }
 
-        public void RegisterValidator(CountryCode countryCode, IAddressValidator validator)
+        public void RegisterValidator(CountryAlpha2Code countryCode, IAddressValidator validator)
         {
         }
     }
 
     private sealed class ThrowingAddressValidatorFactory : IAddressValidatorFactory
     {
-        public IAddressValidator GetValidator(CountryCode countryCode)
+        public IAddressValidator GetValidator(CountryAlpha2Code countryCode)
         {
-            throw new InvalidOperationException($"No address validator registered for country code '{countryCode.Code}'.");
+            throw new InvalidOperationException($"No address validator registered for country code '{countryCode.Value}'.");
         }
 
-        public void RegisterValidator(CountryCode countryCode, IAddressValidator validator)
+        public void RegisterValidator(CountryAlpha2Code countryCode, IAddressValidator validator)
         {
         }
     }

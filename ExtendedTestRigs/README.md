@@ -22,6 +22,3 @@ dotnet run --project ExtendedTestRigs/CheckoutPricingApi --urls http://localhost
 
 For the API rig, use `CheckoutPricingApi/CheckoutPricingApi.http` or call the endpoints directly.
 
-## Working notes
-
-`FINDINGS.md` is intentionally a living notes file. Add friction and suspected defects as they are discovered instead of waiting for polished conclusions.
