@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ISOCodex.Currency.EntityFrameworkCore;
@@ -13,9 +14,19 @@ public sealed class CurrencyCodeValueConverter : ValueConverter<CurrencyCode, st
     /// <summary>Creates a converter for currency code values.</summary>
     public CurrencyCodeValueConverter()
         : base(
-            currency => currency.IsDefault ? string.Empty : currency.Code,
+            currency => ConvertToProviderValue(currency),
             value => CurrencyCode.Parse(value),
             new ConverterMappingHints(size: 3, unicode: false))
     {
+    }
+
+    private static string ConvertToProviderValue(CurrencyCode currency)
+    {
+        if (currency.IsDefault)
+        {
+            throw new InvalidOperationException("Currency code must be initialised before it can be stored.");
+        }
+
+        return currency.Code;
     }
 }

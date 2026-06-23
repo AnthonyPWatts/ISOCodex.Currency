@@ -18,6 +18,14 @@ public class EntityFrameworkCurrencyTests
     }
 
     [Fact]
+    public void CurrencyCodeValueConverter_RejectsDefaultCurrencyCode()
+    {
+        var converter = CurrencyCodeValueConverter.Instance;
+
+        Assert.Throws<InvalidOperationException>(() => converter.ConvertToProvider(default(CurrencyCode)));
+    }
+
+    [Fact]
     public void ModelBuilder_MapsMoneyToAmountAndCurrencyColumns()
     {
         using var connection = new SqliteConnection("Data Source=:memory:");
