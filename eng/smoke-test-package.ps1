@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.11",
+    [string]$Version = "0.9.0-alpha.12",
     [switch]$UseMajorRollForward
 )
 
@@ -45,6 +45,7 @@ Invoke-DotNet new console -n CurrencySmoke -o $tempRoot
 $program = @'
 using System;
 using System.Text.Json;
+using ISOCodex.Addressing.Validation;
 using ISOCodex.Currency;
 using ISOCodex.Currency.AspNetCore;
 using ISOCodex.Currency.Countries;
@@ -54,9 +55,13 @@ using ISOCodex.Currency.Exchange.Abstractions;
 using ISOCodex.Currency.Json.SystemTextJson;
 using ISOCodex.Currency.Validation;
 using CountryAlpha2Code = ISOCodex.Countries.CountryAlpha2Code;
+using AddressCountryCode = ISOCodex.Addressing.CountryCode;
+using AddressPostalCode = ISOCodex.Addressing.PostalCode;
+using CurrencyAddressing = ISOCodex.Currency.Addressing;
 using NewtonsoftCurrencyCodeJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.CurrencyCodeJsonConverter;
 using NewtonsoftJson = Newtonsoft.Json.JsonConvert;
 using NewtonsoftMoneyJsonConverter = ISOCodex.Currency.Json.NewtonsoftJson.MoneyJsonConverter;
+using PostalAddress = ISOCodex.Addressing.Address;
 
 var gbp = CurrencyCode.Parse("gbp");
 var metadata = DefaultCurrencyRegistry.Instance.Get(gbp);
@@ -107,6 +112,19 @@ var countryCurrency = DefaultCountryCurrencyRegistry.Instance.Validate(
     CountryAlpha2Code.Parse("GB"),
     CurrencyCode.GBP,
     CountryCurrencyValidationPolicy.PrimaryTenderOnly);
+var billingAddress = new PostalAddress(
+    "1 High Street",
+    null,
+    "London",
+    null,
+    new AddressPostalCode("SW1A 1AA"),
+    AddressCountryCode.GB);
+var addressCurrencyValidator = new CurrencyAddressing.AddressCurrencyValidator(
+    new SmokeAddressValidatorFactory(AddressValidationResult.Success));
+var addressCurrencyValidation = addressCurrencyValidator.Validate(
+    billingAddress,
+    CurrencyCode.GBP,
+    CurrencyAddressing.AddressCurrencyValidationPolicy.CheckoutDefault);
 var exchangeEffectiveDate = new DateTime(2026, 6, 22, 0, 0, 0, DateTimeKind.Utc);
 var exchangeRate = new ExchangeRate(
     new CurrencyPair(CurrencyCode.GBP, CurrencyCode.USD),
@@ -225,6 +243,12 @@ if (!countryCurrency.Succeeded || countryCurrency.CountryCurrency?.CurrencyCode 
     throw new InvalidOperationException("Country/currency bridge smoke test failed.");
 }
 
+if (!addressCurrencyValidation.Succeeded
+    || addressCurrencyValidation.CountryCurrencyValidationResult?.CountryCurrency?.CurrencyCode != CurrencyCode.GBP)
+{
+    throw new InvalidOperationException("Address/currency bridge smoke test failed.");
+}
+
 if (converted.RawAmount != 12.345000m || converted.Output != Money.Of(12.35m, CurrencyCode.USD) || converted.RateSource != "smoke-test-feed")
 {
     throw new InvalidOperationException("Exchange abstractions smoke test failed.");
@@ -250,6 +274,7 @@ Console.WriteLine(customValidation.FailureReason);
 Console.WriteLine(moneyJson);
 Console.WriteLine(newtonsoftMoneyJson);
 Console.WriteLine(countryCurrency.CountryCurrency?.CountryAlpha2Code);
+Console.WriteLine(addressCurrencyValidation.Succeeded);
 Console.WriteLine(defaultMoneyDetected);
 Console.WriteLine(converted.Output);
 Console.WriteLine(converted.RateSource);
@@ -276,6 +301,40 @@ sealed class StaticExchangeRateProvider : IExchangeRateProvider
         return ExchangeRateLookupResult.Failure(
             ExchangeRateLookupFailureReason.RateUnavailable,
             $"No direct rate for {pair} on {effectiveDate:O}.");
+    }
+}
+
+sealed class SmokeAddressValidatorFactory : IAddressValidatorFactory
+{
+    private readonly IAddressValidator _validator;
+
+    public SmokeAddressValidatorFactory(AddressValidationResult result)
+    {
+        _validator = new SmokeAddressValidator(result);
+    }
+
+    public IAddressValidator GetValidator(AddressCountryCode countryCode)
+    {
+        return _validator;
+    }
+
+    public void RegisterValidator(AddressCountryCode countryCode, IAddressValidator validator)
+    {
+    }
+}
+
+sealed class SmokeAddressValidator : IAddressValidator
+{
+    private readonly AddressValidationResult _result;
+
+    public SmokeAddressValidator(AddressValidationResult result)
+    {
+        _result = result;
+    }
+
+    public AddressValidationResult Validate(PostalAddress? address)
+    {
+        return _result;
     }
 }
 '@
@@ -315,6 +374,7 @@ Set-Content -Path $nugetConfig -Value $config -Encoding UTF8
 $env:NUGET_PACKAGES = $packages
 Invoke-DotNet add $consumerProject package ISOCodex.Currency --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Analyzers --version $Version --no-restore
+Invoke-DotNet add $consumerProject package ISOCodex.Currency.Addressing --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.AspNetCore --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Countries --version $Version --no-restore
 Invoke-DotNet add $consumerProject package ISOCodex.Currency.Dapper --version $Version --no-restore

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0-alpha.12
+
+Adds optional Addressing integration.
+
+Includes:
+
+- `ISOCodex.Currency.Addressing` targeting `netstandard2.1`.
+- `AddressCurrencyValidator` for combining `ISOCodex.Addressing` address validation with `ISOCodex.Currency.Countries` country/currency policy validation.
+- `AddressCurrencyValidationPolicy`, `AddressCurrencyValidationResult`, and stable bridge issue types.
+- Tests covering valid address/currency combinations, combined address and country/currency failures, missing addresses, and missing address validators.
+- Package smoke-test and publish-workflow coverage for the Addressing bridge package.
+
 ## 0.9.0-alpha.11
 
 Adds optional Dapper integration.

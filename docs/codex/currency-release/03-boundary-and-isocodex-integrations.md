@@ -40,7 +40,7 @@ ISOCodex.Currency.Countries
     Country/currency relationships using ISOCodex.Countries.
 
 ISOCodex.Currency.Addressing
-    Address/currency validation helpers using ISOCodex.Addressing and ISOCodex.Countries.
+    Address/currency validation helpers using ISOCodex.Addressing and ISOCodex.Countries. Initial bridge implemented in `0.9.0-alpha.12`.
 
 ISOCodex.Currency.Exchange.Abstractions
     Provider-neutral, deterministic exchange-rate abstractions. Initial direct-rate package implemented in `0.1.0-alpha.8`.
@@ -432,6 +432,8 @@ Future version can generate richer mappings from pinned sources.
 
 ## Bridge package — ISOCodex.Currency.Addressing
 
+Status: initial implementation in `0.9.0-alpha.12`.
+
 ### Package
 
 ```text
@@ -507,7 +509,7 @@ Recommended after first NuGet deploy:
 5. `ISOCodex.Currency.Validation` - initial framework-neutral implementation in `0.9.0-alpha.10`.
 6. `ISOCodex.Currency.Dapper` - initial currency-code handler implemented in `0.9.0-alpha.11`.
 7. `ISOCodex.Currency.Countries`
-8. `ISOCodex.Currency.Addressing`
+8. `ISOCodex.Currency.Addressing` - initial bridge implemented in `0.9.0-alpha.12`.
 9. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
 10. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.
 

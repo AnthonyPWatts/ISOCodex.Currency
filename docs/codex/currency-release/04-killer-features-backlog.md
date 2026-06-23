@@ -398,7 +398,7 @@ public readonly struct ScaledMoney
 
 ### Then: ISOCodex ecosystem features
 
-- `ISOCodex.Currency.Addressing`.
+- `ISOCodex.Currency.Addressing` - initial bridge implemented in `0.9.0-alpha.12`.
 
 ### Later: advanced enterprise features
 

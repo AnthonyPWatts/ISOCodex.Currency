@@ -74,6 +74,7 @@ jobs:
           $version = "${{ steps.release.outputs.version }}"
           $expectedPackageIds = @(
             "ISOCodex.Currency",
+            "ISOCodex.Currency.Addressing",
             "ISOCodex.Currency.Analyzers",
             "ISOCodex.Currency.AspNetCore",
             "ISOCodex.Currency.Countries",

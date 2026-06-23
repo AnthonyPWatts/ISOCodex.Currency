@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.9.0-alpha.11</Version>
+    <Version>0.9.0-alpha.12</Version>
     <Authors>Anthony P Watts</Authors>
     <Company>ISOCodex</Company>
     <RepositoryUrl>https://github.com/AnthonyPWatts/ISOCodex.Currency</RepositoryUrl>

@@ -1,6 +1,6 @@
 # Release Gate
 
-Version: `0.9.0-alpha.11`
+Version: `0.9.0-alpha.12`
 
 ## Required checks
 
@@ -8,11 +8,11 @@ Version: `0.9.0-alpha.11`
 - [ ] `dotnet restore ISOCodex.Currency.sln`
 - [ ] `dotnet build ISOCodex.Currency.sln -c Release --no-restore`
 - [ ] `dotnet test ISOCodex.Currency.sln -c Release --no-build`
-- [ ] `pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.11`
+- [ ] `pwsh ./eng/pack-packages.ps1 -Configuration Release -OutputPath artifacts -Version 0.9.0-alpha.12`
 - [ ] Expected `.nupkg` files produced for all packable package projects.
 - [ ] Matching `.snupkg` files produced for all packable package projects.
-- [ ] `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.11`
-- [ ] If the local machine lacks the .NET 9 runtime but has a newer compatible runtime, `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.11 -UseMajorRollForward`
+- [ ] `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.12`
+- [ ] If the local machine lacks the .NET 9 runtime but has a newer compatible runtime, `pwsh ./eng/smoke-test-package.ps1 -Version 0.9.0-alpha.12 -UseMajorRollForward`
 - [ ] Local package smoke test installs package references from the local package folder, not from project references.
 - [ ] README package section is accurate.
 - [ ] Changelog entry exists.
@@ -36,7 +36,7 @@ Use `.github/workflows/publish-nuget.yml`.
 Recommended publish tag:
 
 ```text
-v0.9.0-alpha.11
+v0.9.0-alpha.12
 ```
 
 Pushing a `v*` tag starts the trusted-publishing workflow. The workflow uses GitHub OIDC and `NuGet/login@v1` to obtain a short-lived NuGet API key, so no long-lived `NUGET_API_KEY` repository secret is required.
@@ -48,5 +48,5 @@ For recovery or rerun scenarios, the workflow can also be started manually with 
 - [ ] Install `ISOCodex.Currency` from NuGet.org in a fresh local project.
 - [ ] Confirm the package README renders correctly on NuGet.org.
 - [ ] Confirm symbol package indexing succeeds or record the NuGet validation error.
-- [ ] Create GitHub release notes for `v0.9.0-alpha.11`.
+- [ ] Create GitHub release notes for `v0.9.0-alpha.12`.
 - [ ] Open follow-up issues for data snapshot and additional bridge/provider packages as needed.

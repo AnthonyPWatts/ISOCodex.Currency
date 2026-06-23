@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>ISOCodex.Currency.Addressing</PackageId>
+    <Title>ISOCodex.Currency.Addressing</Title>
+    <RootNamespace>ISOCodex.Currency.Addressing</RootNamespace>
+    <AssemblyName>ISOCodex.Currency.Addressing</AssemblyName>
+    <Description>Address and currency validation helpers for ISOCodex.Currency and ISOCodex.Addressing.</Description>
+    <PackageTags>currency;money;addressing;countries;iso4217;iso3166;validation;dotnet;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ISOCodex.Addressing" Version="1.3.0" />
+    <PackageReference Include="ISOCodex.Countries" Version="1.0.0-alpha.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Currency\Currency.csproj" />
+    <ProjectReference Include="..\Currency.Countries\Currency.Countries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
