@@ -43,11 +43,11 @@ public sealed class MoneyJsonConverter : JsonConverter<Money>
 
             if (string.Equals(propertyName, AmountPropertyName, StringComparison.Ordinal))
             {
-                amount = reader.GetDecimal();
+                amount = ReadAmount(ref reader);
             }
             else if (string.Equals(propertyName, CurrencyPropertyName, StringComparison.Ordinal))
             {
-                currencyCode = reader.GetString();
+                currencyCode = ReadCurrencyCode(ref reader);
             }
             else
             {
@@ -70,6 +70,31 @@ public sealed class MoneyJsonConverter : JsonConverter<Money>
         writer.WriteNumber(AmountPropertyName, value.Amount);
         writer.WriteString(CurrencyPropertyName, value.Currency.Code);
         writer.WriteEndObject();
+    }
+
+    private static decimal ReadAmount(ref Utf8JsonReader reader)
+    {
+        if (reader.TokenType != JsonTokenType.Number)
+        {
+            throw new JsonException("Money JSON amount property must be a number.");
+        }
+
+        if (!reader.TryGetDecimal(out var amount))
+        {
+            throw new JsonException("Money JSON amount property must be a valid decimal number.");
+        }
+
+        return amount;
+    }
+
+    private static string? ReadCurrencyCode(ref Utf8JsonReader reader)
+    {
+        if (reader.TokenType != JsonTokenType.String)
+        {
+            throw new JsonException("Money JSON currency property must be a string.");
+        }
+
+        return reader.GetString();
     }
 
     private static Money CreateMoney(decimal? amount, string? currencyCode)

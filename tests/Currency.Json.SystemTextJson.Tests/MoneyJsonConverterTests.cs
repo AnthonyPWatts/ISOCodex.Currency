@@ -64,6 +64,18 @@ public class MoneyJsonConverterTests
     }
 
     [Fact]
+    public void Deserialize_RejectsStringAmountByDefault()
+    {
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<Money>("{\"amount\":\"12.34\",\"currency\":\"GBP\"}", Options));
+    }
+
+    [Fact]
+    public void Deserialize_RejectsNonStringCurrency()
+    {
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<Money>("{\"amount\":12.34,\"currency\":826}", Options));
+    }
+
+    [Fact]
     public void Serialize_RejectsDefaultMoney()
     {
         Assert.Throws<JsonException>(() => JsonSerializer.Serialize(default(Money), Options));
