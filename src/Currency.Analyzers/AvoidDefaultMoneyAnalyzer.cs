@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace ISOCodex.Currency.Analyzers;
 
 /// <summary>
-/// Reports direct default Money creation.
+/// Reports direct default Currency value creation.
 /// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class AvoidDefaultMoneyAnalyzer : DiagnosticAnalyzer
@@ -15,7 +15,10 @@ public sealed class AvoidDefaultMoneyAnalyzer : DiagnosticAnalyzer
     /// <summary>The diagnostic identifier for default Money usage.</summary>
     public const string DiagnosticId = "ISOCCUR001";
 
-    private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+    /// <summary>The diagnostic identifier for default CurrencyCode usage.</summary>
+    public const string CurrencyCodeDiagnosticId = "ISOCCUR002";
+
+    private static readonly DiagnosticDescriptor MoneyRule = new DiagnosticDescriptor(
         DiagnosticId,
         "Avoid default Money values",
         "Avoid default(Money). Use Money.Zero(currency) or Money.Of(amount, currency).",
@@ -24,8 +27,17 @@ public sealed class AvoidDefaultMoneyAnalyzer : DiagnosticAnalyzer
         isEnabledByDefault: true,
         description: "Money is a value type, so default(Money) can exist but is not a meaningful domain value.");
 
+    private static readonly DiagnosticDescriptor CurrencyCodeRule = new DiagnosticDescriptor(
+        CurrencyCodeDiagnosticId,
+        "Avoid default CurrencyCode values",
+        "Avoid default(CurrencyCode). Parse, TryParse, or use a known currency code.",
+        "Usage",
+        DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        description: "CurrencyCode is a value type, so default(CurrencyCode) can exist but is not a meaningful domain value.");
+
     /// <inheritdoc />
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(MoneyRule, CurrencyCodeRule);
 
     /// <inheritdoc />
     public override void Initialize(AnalysisContext context)
@@ -41,9 +53,10 @@ public sealed class AvoidDefaultMoneyAnalyzer : DiagnosticAnalyzer
         var defaultExpression = (DefaultExpressionSyntax)context.Node;
         var type = context.SemanticModel.GetTypeInfo(defaultExpression.Type, context.CancellationToken).Type;
 
-        if (IsMoney(type))
+        var rule = GetDefaultValueRule(type);
+        if (rule != null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(Rule, defaultExpression.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(rule, defaultExpression.GetLocation()));
         }
     }
 
@@ -52,16 +65,26 @@ public sealed class AvoidDefaultMoneyAnalyzer : DiagnosticAnalyzer
         var defaultLiteral = (LiteralExpressionSyntax)context.Node;
         var type = context.SemanticModel.GetTypeInfo(defaultLiteral, context.CancellationToken).ConvertedType;
 
-        if (IsMoney(type))
+        var rule = GetDefaultValueRule(type);
+        if (rule != null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(Rule, defaultLiteral.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(rule, defaultLiteral.GetLocation()));
         }
     }
 
-    private static bool IsMoney(ITypeSymbol? type)
+    private static DiagnosticDescriptor? GetDefaultValueRule(ITypeSymbol? type)
     {
-        return type is INamedTypeSymbol namedType
-            && namedType.Name == "Money"
-            && namedType.ContainingNamespace.ToDisplayString() == "ISOCodex.Currency";
+        if (type is not INamedTypeSymbol namedType
+            || namedType.ContainingNamespace.ToDisplayString() != "ISOCodex.Currency")
+        {
+            return null;
+        }
+
+        return namedType.Name switch
+        {
+            "Money" => MoneyRule,
+            "CurrencyCode" => CurrencyCodeRule,
+            _ => null
+        };
     }
 }

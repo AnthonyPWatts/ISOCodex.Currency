@@ -1,6 +1,6 @@
 param(
     [string]$Configuration = "Release",
-    [string]$Version = "0.9.0-alpha.12",
+    [string]$Version = "0.9.0-alpha.13",
     [switch]$UseMajorRollForward
 )
 
@@ -140,10 +140,10 @@ var converted = exchangeConverter.Convert(
         exchangeEffectiveDate,
         ExchangeRateKind.MidMarket,
         CurrencyRoundingPolicy.AwayFromZero()));
-#pragma warning disable ISOCCUR001
+#pragma warning disable ISOCCUR001, ISOCCUR002
 var defaultCurrencyDetected = default(CurrencyCode).IsDefault;
 var defaultMoneyDetected = default(Money).IsDefault;
-#pragma warning restore ISOCCUR001
+#pragma warning restore ISOCCUR001, ISOCCUR002
 
 if (metadata.Code != gbp)
 {

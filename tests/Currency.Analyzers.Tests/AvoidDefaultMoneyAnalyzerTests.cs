@@ -57,7 +57,7 @@ public class AvoidDefaultMoneyAnalyzerTests
     }
 
     [Fact]
-    public async Task DoesNotReportDefaultCurrencyCode()
+    public async Task ReportsDefaultCurrencyCodeExpression()
     {
         var diagnostics = await GetDiagnosticsAsync("""
             using ISOCodex.Currency;
@@ -65,6 +65,39 @@ public class AvoidDefaultMoneyAnalyzerTests
             public class Sample
             {
                 public CurrencyCode Create() => default(CurrencyCode);
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(AvoidDefaultMoneyAnalyzer.CurrencyCodeDiagnosticId, diagnostic.Id);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+    }
+
+    [Fact]
+    public async Task ReportsDefaultLiteralConvertedToCurrencyCode()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public CurrencyCode Create() => default;
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(AvoidDefaultMoneyAnalyzer.CurrencyCodeDiagnosticId, diagnostic.Id);
+    }
+
+    [Fact]
+    public async Task DoesNotReportValidCurrencyCodeFactoryUsage()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public CurrencyCode Create() => CurrencyCode.Parse("GBP");
             }
             """);
 

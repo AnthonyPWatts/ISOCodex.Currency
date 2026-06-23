@@ -328,13 +328,13 @@ Make Currency attractive to large codebases and high-volume systems through anal
 ISOCodex.Currency.Analyzers
 ```
 
-Status: initial package and `ISOCCUR001` implemented in `0.1.0-alpha.7`.
+Status: initial package and `ISOCCUR001` implemented in `0.1.0-alpha.7`; `ISOCCUR002` implemented in `0.9.0-alpha.13`.
 
 ### Baseline analyzer rules
 
 ```text
 ISOCCUR001 Avoid default(Money). Use Money.Zero(currency) or Money.Of(amount, currency).
-ISOCCUR002 Avoid default(CurrencyCode). Parse, TryParse, or use a known static code.
+ISOCCUR002 Avoid default(CurrencyCode). Parse, TryParse, or use a known static code. Implemented in `0.9.0-alpha.13`.
 ISOCCUR003 Do not ignore MoneyValidationResult, and do not ignore MoneyParseResult.
 ISOCCUR004 Do not store formatted money strings as identifiers or persistence values.
 ISOCCUR005 Do not infer currency from a symbol without an expected currency.

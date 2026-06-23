@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha.13
+
+Adds a second compiler-safety analyzer rule.
+
+Includes:
+
+- `ISOCCUR002`, warning on `default(CurrencyCode)` and `default` literals converted to `CurrencyCode`.
+- Analyzer tests covering explicit and inferred default `CurrencyCode` values.
+- Analyzer README updates for both default-value rules.
+- Versioned release-gate, package README, and smoke-test defaults for `0.9.0-alpha.13`.
+
 ## 0.9.0-alpha.12
 
 Adds optional Addressing integration.
