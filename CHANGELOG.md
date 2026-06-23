@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+Contains fixes committed after `1.0.1`.
+
+Includes:
+
+- Exchange conversion now honours explicit currency registries when creating converted money values for custom target currencies.
+- System.Text.Json money deserialisation now rejects invalid amount and currency token types with `JsonException`.
+- EF Core currency-code conversion now rejects default `CurrencyCode` values instead of storing an empty string.
+- Analyzer release tracking now records the shipped diagnostics in `AnalyzerReleases.Shipped.md`.
+- `1.0.1` post-publication housekeeping is complete, including package install verification, NuGet README verification, GitHub release notes, and recorded symbol-package evidence.
+
 ## 1.0.1
 
 Corrects package README and release-status documentation after the stable release.
@@ -7,7 +19,7 @@ Corrects package README and release-status documentation after the stable releas
 Includes:
 
 - Package README wording no longer describes the core package as pre-1.0.
-- Release notes, release gate, and roadmap status docs now reflect the stable `1.0.x` package line.
+- Release notes, release gate, and package status docs now reflect the stable `1.0.x` package line.
 
 ## 1.0.0
 
