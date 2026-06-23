@@ -75,7 +75,7 @@ Created `ISOCodex.Currency.Countries` with:
 - `CountryCurrencyValidationResult`
 - small checked-in seed for initial country/currency mappings
 
-Future enrichment can add a bridge-specific data version/provenance class when the country/currency seed grows beyond the initial prerelease skeleton.
+Future enrichment can add a bridge-specific data version/provenance class when the country/currency mapping grows beyond the small checked-in bridge seed.
 
 ### Example API
 
@@ -381,12 +381,12 @@ public readonly struct ScaledMoney
 
 ## Priority map
 
-### Now: NuGet readiness
+### Completed: NuGet readiness
 
 - CI/release workflows.
 - Package smoke test.
 - Accurate README/changelog/release gate.
-- First prerelease publish.
+- Stable `1.0.0` publish.
 
 ### Next: core safety
 
@@ -403,6 +403,6 @@ public readonly struct ScaledMoney
 ### Later: advanced enterprise features
 
 - named monetary policy engine;
-- exchange abstractions;
-- analyzers;
+- richer exchange providers;
+- additional analyzer/code-fix coverage;
 - high-throughput money types.

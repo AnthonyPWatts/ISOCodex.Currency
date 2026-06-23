@@ -28,13 +28,13 @@ ISOCodex.Currency.EntityFrameworkCore
     EF Core value converters and owned-type mapping helpers.
 
 ISOCodex.Currency.AspNetCore
-    Model binding, minimal API binding, problem-details helpers, OpenAPI schema helpers.
+    Model binding, minimal API binding, and problem-details helpers. OpenAPI schema helpers remain future work.
 
 ISOCodex.Currency.Dapper
     Dapper type handlers. Initial currency-code handler implemented in `0.9.0-alpha.11`.
 
 ISOCodex.Currency.Validation
-    Framework-neutral validation adapters plus optional FluentValidation/DataAnnotations helpers.
+    Framework-neutral validation helpers. Optional FluentValidation/DataAnnotations adapters remain future work.
 
 ISOCodex.Currency.Countries
     Country/currency relationships using ISOCodex.Countries.
@@ -500,15 +500,15 @@ public sealed class AddressCurrencyValidator
 
 ## Integration priority
 
-Recommended after first NuGet deploy:
+Implemented during the prerelease-to-1.0 release cycle:
 
-1. `ISOCodex.Currency.Json.SystemTextJson`
+1. `ISOCodex.Currency.Json.SystemTextJson` - implemented in `0.1.0-alpha.5`.
 2. `ISOCodex.Currency.Json.NewtonsoftJson` - implemented in `0.9.0-alpha.5`.
 3. `ISOCodex.Currency.EntityFrameworkCore` - initial implementation in `0.9.0-alpha.8`.
 4. `ISOCodex.Currency.AspNetCore` - initial implementation in `0.9.0-alpha.9`.
 5. `ISOCodex.Currency.Validation` - initial framework-neutral implementation in `0.9.0-alpha.10`.
 6. `ISOCodex.Currency.Dapper` - initial currency-code handler implemented in `0.9.0-alpha.11`.
-7. `ISOCodex.Currency.Countries`
+7. `ISOCodex.Currency.Countries` - initial skeleton implemented in `0.1.0-alpha.6`.
 8. `ISOCodex.Currency.Addressing` - initial bridge implemented in `0.9.0-alpha.12`.
 9. `ISOCodex.Currency.Exchange.Abstractions` - initial direct-rate package implemented in `0.1.0-alpha.8`.
 10. `ISOCodex.Currency.Analyzers` - initial rule implemented in `0.1.0-alpha.7`.

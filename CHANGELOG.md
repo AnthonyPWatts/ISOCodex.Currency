@@ -1,8 +1,17 @@
 # Changelog
 
+## 1.0.1
+
+Corrects package README and release-status documentation after the stable release.
+
+Includes:
+
+- Package README wording no longer describes the core package as pre-1.0.
+- Release notes, release gate, and roadmap status docs now reflect the stable `1.0.x` package line.
+
 ## 1.0.0
 
-Prepares the Currency package family for its first stable release.
+First stable release of the Currency package family.
 
 Includes:
 

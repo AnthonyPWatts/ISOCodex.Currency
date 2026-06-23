@@ -1,5 +1,19 @@
 # Release Notes
 
+## 1.0.1
+
+Documentation-only patch release for package README and release-status correctness after the stable release.
+
+This release keeps the `1.0.0` API and package dependency surface unchanged while correcting published README wording that still described the core package as pre-1.0.
+
+## 1.0.0
+
+First stable release of the `ISOCodex.Currency` package family.
+
+This release promotes the core, bridge, integration, exchange-abstraction, and analyzer packages to stable `1.0.0`. `ISOCodex.Currency.Countries` and `ISOCodex.Currency.Addressing` now depend on stable `ISOCodex.Countries` `1.0.0`.
+
+The `v1.0.0` trusted-publishing workflow pushed the packages and symbol packages to NuGet.org. See `CHANGELOG.md` for the full release history.
+
 ## 0.1.0-alpha.7
 
 Adds the optional `ISOCodex.Currency.Analyzers` package.

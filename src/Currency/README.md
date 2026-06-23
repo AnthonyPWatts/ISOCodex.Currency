@@ -5,7 +5,7 @@ Small, framework-agnostic ISO 4217-style currency metadata, immutable money valu
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency --version 1.0.0
+dotnet add package ISOCodex.Currency --version 1.0.1
 ```
 
 ## What it is useful for
@@ -166,7 +166,7 @@ var money = factory.Of(12.3456m, customCode);
 
 ## Current limitations
 
-This pre-1.0 core package does not include EF Core helpers or live exchange-rate providers.
+The core package does not include EF Core helpers or live exchange-rate providers.
 JSON converters are available in the optional `ISOCodex.Currency.Json.SystemTextJson` and `ISOCodex.Currency.Json.NewtonsoftJson` packages.
 Country/currency validation helpers are available in the optional `ISOCodex.Currency.Countries` bridge package.
 Analyzer diagnostics are available in the optional `ISOCodex.Currency.Analyzers` package.

@@ -1,6 +1,6 @@
 # ISOCodex.Currency Core Hardening Roadmap
 
-Purpose: identify issue-sized improvements to make the core package safer and more attractive after, or just before, the first NuGet prerelease.
+Purpose: capture issue-sized improvements that made the core package safer through the first stable release cycle, plus any remaining core-hardening ideas.
 
 This roadmap deliberately avoids optional Countries, Addressing, EF Core, ASP.NET Core, or exchange provider dependencies in the core package.
 
@@ -166,7 +166,7 @@ Status: implemented in `0.1.0-alpha.4`.
 
 ### Problem
 
-The README states that current data is generated from a small checked-in seed rather than a full ISO/CLDR snapshot. That is acceptable for prerelease but must be transparent and machine-readable.
+At the time this epic was opened, the README stated that current data was generated from a small checked-in seed rather than a full ISO/CLDR snapshot. The stable package now uses a generated, pinned SIX ISO 4217 and Unicode CLDR snapshot, but runtime-visible provenance remains the important API contract.
 
 ### MVP API
 
@@ -291,7 +291,7 @@ Status: implemented in `0.9.0-alpha.6`.
 
 Status: implemented in `0.9.0-alpha.7`.
 
-This is not required for the first NuGet release, but it is the highest credibility improvement after release.
+This was not required for the first prerelease, but it became the highest credibility improvement before the stable release.
 
 ### Target outcome
 
