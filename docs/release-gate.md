@@ -4,7 +4,7 @@ Version: `1.0.2`
 
 ## Current status
 
-`v1.0.2` is the follow-up patch release for the fixes committed after `v1.0.1`.
+`v1.0.2` has been pushed and the trusted-publishing workflow completed successfully. The workflow restored, built, tested, packed, verified the expected artifacts, uploaded package artifacts, authenticated with NuGet trusted publishing, and pushed the package and symbol package set.
 
 Use the checklist below as the evidence record for `1.0.2` and as the template for future releases. NuGet Gallery and symbol indexing can lag a successful package push, so post-publication visibility should still be checked separately.
 
@@ -23,7 +23,7 @@ Use the checklist below as the evidence record for `1.0.2` and as the template f
 - [x] Changelog entry exists.
 - [x] NuGet trusted publisher exists for repository `AnthonyPWatts/ISOCodex.Currency`, workflow `publish-nuget.yml`, and environment `release`.
 - [x] GitHub environment `release` is configured with the intended approval rules.
-- [ ] Release workflow ran from the intended `v*` tag.
+- [x] Release workflow ran from the intended `v*` tag.
 
 ## Manual review
 
@@ -55,5 +55,12 @@ For recovery or rerun scenarios, the workflow can also be started manually with 
 - [ ] Install `ISOCodex.Currency` from NuGet.org in a fresh local project.
 - [ ] Confirm the package README renders correctly on NuGet.org.
 - [ ] Confirm symbol package indexing succeeds or record the NuGet validation error.
-- [ ] Create GitHub release notes for `v1.0.2`.
+- [x] Create GitHub release notes for `v1.0.2`.
 - [ ] Review whether follow-up issues are needed for additional bridge, provider, validation-adapter, or analyzer packages.
+
+Publication evidence:
+
+- GitHub Actions run `28020914341` completed successfully for tag `v1.0.2`: `https://github.com/AnthonyPWatts/ISOCodex.Currency/actions/runs/28020914341`.
+- The publish log recorded HTTP `Created` responses from NuGet.org for all `1.0.2` `.nupkg` and `.snupkg` artifacts.
+- GitHub release notes were created at `https://github.com/AnthonyPWatts/ISOCodex.Currency/releases/tag/v1.0.2`.
+- On 2026-06-23 immediately after publication, the public NuGet.org package page and flat-container package URLs for `ISOCodex.Currency` `1.0.2` still returned HTTP 404. Treat the remaining NuGet.org install, README, and symbol checks as Gallery/indexing follow-up rather than publish failures.
