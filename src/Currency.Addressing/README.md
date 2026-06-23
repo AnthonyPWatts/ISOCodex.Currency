@@ -5,7 +5,7 @@ Address/currency validation helpers for `ISOCodex.Currency` and `ISOCodex.Addres
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Addressing --version 0.9.0-alpha.14
+dotnet add package ISOCodex.Currency.Addressing --version 0.9.0-alpha.15
 ```
 
 This package targets `netstandard2.1` and depends on `ISOCodex.Addressing`, `ISOCodex.Countries`, and `ISOCodex.Currency.Countries`.

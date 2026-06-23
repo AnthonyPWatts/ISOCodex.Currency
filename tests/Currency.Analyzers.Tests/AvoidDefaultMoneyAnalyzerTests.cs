@@ -200,6 +200,95 @@ public class AvoidDefaultMoneyAnalyzerTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public async Task ReportsSymbolParsingWithoutExpectedCurrency()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using System.Globalization;
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public MoneyParseOptions Create()
+                {
+                    return new MoneyParseOptions(
+                        new CultureInfo("en-GB"),
+                        currencyStyles: MoneyParseCurrencyStyles.Symbol);
+                }
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(RequireExpectedCurrencyForSymbolParsingAnalyzer.DiagnosticId, diagnostic.Id);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+    }
+
+    [Fact]
+    public async Task ReportsCodeOrSymbolParsingWithoutExpectedCurrency()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using System.Globalization;
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public MoneyParseOptions Create()
+                {
+                    return new MoneyParseOptions(
+                        new CultureInfo("en-GB"),
+                        null,
+                        MoneyParseCurrencyStyles.CodeOrSymbol);
+                }
+            }
+            """);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(RequireExpectedCurrencyForSymbolParsingAnalyzer.DiagnosticId, diagnostic.Id);
+    }
+
+    [Fact]
+    public async Task DoesNotReportSymbolParsingWithExpectedCurrency()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using System.Globalization;
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public MoneyParseOptions Create()
+                {
+                    return new MoneyParseOptions(
+                        new CultureInfo("en-GB"),
+                        CurrencyCode.GBP,
+                        MoneyParseCurrencyStyles.CodeOrSymbol);
+                }
+            }
+            """);
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public async Task DoesNotReportCodeOnlyParsingWithoutExpectedCurrency()
+    {
+        var diagnostics = await GetDiagnosticsAsync("""
+            using System.Globalization;
+            using ISOCodex.Currency;
+
+            public class Sample
+            {
+                public MoneyParseOptions Create()
+                {
+                    return new MoneyParseOptions(
+                        new CultureInfo("en-GB"),
+                        currencyStyles: MoneyParseCurrencyStyles.Code);
+                }
+            }
+            """);
+
+        Assert.Empty(diagnostics);
+    }
+
     private static async Task<ImmutableArray<Diagnostic>> GetDiagnosticsAsync(string source)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -212,7 +301,8 @@ public class AvoidDefaultMoneyAnalyzerTests
 
         var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(
             new AvoidDefaultMoneyAnalyzer(),
-            new DoNotIgnoreMoneyResultAnalyzer());
+            new DoNotIgnoreMoneyResultAnalyzer(),
+            new RequireExpectedCurrencyForSymbolParsingAnalyzer());
         var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers);
 
         return await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha.15
+
+Adds symbol-parsing analyzer coverage.
+
+Includes:
+
+- `ISOCCUR005`, warning when `MoneyParseOptions` enables symbol parsing without an expected currency.
+- Analyzer tests covering symbol-only and code-or-symbol parsing with and without expected currencies.
+- Analyzer README updates for the symbol-parsing rule.
+- Versioned release-gate, package README, and smoke-test defaults for `0.9.0-alpha.15`.
+
 ## 0.9.0-alpha.14
 
 Adds ignored-result analyzer coverage for money boundary APIs.

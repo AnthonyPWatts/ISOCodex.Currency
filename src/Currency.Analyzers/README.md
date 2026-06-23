@@ -5,7 +5,7 @@ Roslyn analyzers for `ISOCodex.Currency`.
 ## Install
 
 ```xml
-<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.14" PrivateAssets="all" />
+<PackageReference Include="ISOCodex.Currency.Analyzers" Version="0.9.0-alpha.15" PrivateAssets="all" />
 ```
 
 ## Diagnostics
@@ -41,6 +41,21 @@ if (!result.Succeeded)
 {
     Console.WriteLine(result.FailureReason);
 }
+```
+
+### ISOCCUR005
+
+Do not enable symbol parsing without an expected currency. Currency symbols are ambiguous across cultures and territories, so symbol parsing should be anchored to the currency the caller already expects.
+
+```csharp
+new MoneyParseOptions(
+    new CultureInfo("en-GB"),
+    currencyStyles: MoneyParseCurrencyStyles.CodeOrSymbol); // ISOCCUR005
+
+new MoneyParseOptions(
+    new CultureInfo("en-GB"),
+    CurrencyCode.GBP,
+    MoneyParseCurrencyStyles.CodeOrSymbol);                 // ok
 ```
 
 This analyzer package does not include code fixes.

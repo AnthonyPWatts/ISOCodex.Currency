@@ -5,7 +5,7 @@ ASP.NET Core integration helpers for `ISOCodex.Currency`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.AspNetCore --version 0.9.0-alpha.14
+dotnet add package ISOCodex.Currency.AspNetCore --version 0.9.0-alpha.15
 ```
 
 This package targets `net9.0` and uses the ASP.NET Core shared framework.
