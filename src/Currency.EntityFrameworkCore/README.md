@@ -5,7 +5,7 @@ Entity Framework Core integration helpers for `ISOCodex.Currency`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.EntityFrameworkCore --version 0.9.0-alpha.15
+dotnet add package ISOCodex.Currency.EntityFrameworkCore --version 1.0.0
 ```
 
 This package targets `net10.0` and references `Microsoft.EntityFrameworkCore.Relational`.

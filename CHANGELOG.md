@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0
+
+Prepares the Currency package family for its first stable release.
+
+Includes:
+
+- Stable package versioning for the core, bridge, integration, exchange-abstraction, and analyzer packages.
+- `ISOCodex.Currency.Countries` and `ISOCodex.Currency.Addressing` now depend on stable `ISOCodex.Countries` `1.0.0`.
+- Release-gate, package README, and smoke-test defaults updated for `1.0.0`.
+
 ## 0.9.0-alpha.15
 
 Adds symbol-parsing analyzer coverage.

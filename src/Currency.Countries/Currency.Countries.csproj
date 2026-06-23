@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ISOCodex.Countries" Version="1.0.0-alpha.1" />
+    <PackageReference Include="ISOCodex.Countries" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

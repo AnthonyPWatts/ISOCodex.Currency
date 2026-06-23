@@ -5,7 +5,7 @@ Framework-neutral validation helpers for `ISOCodex.Currency`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Validation --version 0.9.0-alpha.15
+dotnet add package ISOCodex.Currency.Validation --version 1.0.0
 ```
 
 This package targets `netstandard2.1` and does not depend on FluentValidation, ASP.NET Core, or DataAnnotations.

@@ -5,7 +5,7 @@ Bridge package connecting `ISOCodex.Currency` with `ISOCodex.Countries`.
 ## Install
 
 ```bash
-dotnet add package ISOCodex.Currency.Countries --version 0.9.0-alpha.15
+dotnet add package ISOCodex.Currency.Countries --version 1.0.0
 ```
 
 ## Usage
@@ -40,4 +40,4 @@ The initial seed is deliberately small and currently covers:
 
 This package does not duplicate country-code types. Country codes come from `ISOCodex.Countries`, and currencies come from `ISOCodex.Currency`.
 
-The seed is not geopolitical authority and is not a complete legal-tender dataset. Treat it as a small prerelease bridge for common validation examples.
+The seed is not geopolitical authority and is not a complete legal-tender dataset. Treat it as a small bridge for common validation examples.
