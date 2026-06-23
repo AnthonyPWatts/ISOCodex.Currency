@@ -67,7 +67,7 @@ public sealed class MoneyConverter
         var targetCurrency = _currencyRegistry.Get(options.TargetCurrency);
         var rawAmount = input.Amount * rate.Rate;
         var roundedAmount = _roundingService.RoundAmount(rawAmount, targetCurrency, options.RoundingPolicy);
-        var output = Money.Of(roundedAmount, options.TargetCurrency);
+        var output = new MoneyFactory(_currencyRegistry).Of(roundedAmount, options.TargetCurrency);
 
         return new ConversionResult(
             input,

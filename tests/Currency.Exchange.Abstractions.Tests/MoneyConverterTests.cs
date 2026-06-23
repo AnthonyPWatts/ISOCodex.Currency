@@ -61,6 +61,44 @@ public class MoneyConverterTests
     }
 
     [Fact]
+    public void Convert_CreatesOutputUsingExplicitCurrencyRegistry()
+    {
+        var customCode = CurrencyCode.CreateCustom("zza");
+        var customRegistry = new DefaultCurrencyRegistry(new[]
+        {
+            DefaultCurrencyRegistry.Instance.Get(CurrencyCode.GBP),
+            new CurrencyInfo(
+                customCode,
+                "999",
+                "Test account unit",
+                new CurrencyMinorUnit(4),
+                CurrencyKind.Testing,
+                false)
+        });
+        var rate = new ExchangeRate(
+            new CurrencyPair(CurrencyCode.GBP, customCode),
+            1.23456m,
+            ExchangeRateKind.MidMarket,
+            EffectiveDate,
+            "unit-test-feed");
+        var converter = new MoneyConverter(
+            new StaticExchangeRateProvider(rate),
+            customRegistry,
+            new CurrencyRoundingService());
+
+        var result = converter.Convert(
+            Money.Of(10.00m, CurrencyCode.GBP),
+            new ConversionOptions(
+                customCode,
+                EffectiveDate,
+                ExchangeRateKind.MidMarket,
+                CurrencyRoundingPolicy.Standard()));
+
+        Assert.Equal(customCode, result.Output.Currency);
+        Assert.Equal(12.3456m, result.Output.Amount);
+    }
+
+    [Fact]
     public void ConversionOptions_RejectsMissingRoundingPolicy()
     {
         var exception = Assert.Throws<ArgumentNullException>(() =>
