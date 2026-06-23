@@ -4,7 +4,7 @@ Version: `1.0.1`
 
 ## Current status
 
-`v1.0.1` has been prepared as a documentation-only patch release for package README and release-status correctness after `1.0.0`.
+`v1.0.1` has been pushed and the trusted-publishing workflow completed successfully. The workflow restored, built, tested, packed, verified the expected artifacts, uploaded package artifacts, authenticated with NuGet trusted publishing, and pushed the package and symbol package set.
 
 Use the checklist below as the evidence record for `1.0.1` and as the template for future releases. NuGet Gallery and symbol indexing can lag a successful package push, so post-publication visibility should still be checked separately.
 
